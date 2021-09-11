@@ -1,4 +1,6 @@
 class Gameboard
+    attr_reader :grid
+
     def initialize
         @grid = build_grid()
     end
@@ -18,7 +20,7 @@ class Gameboard
         grid
     end
 
-    def dispay_grid(grid)
+    def sort_grid(grid = self.grid)
         new_grid = []
         i = 8
         until i < 1 do
@@ -26,16 +28,13 @@ class Gameboard
             i -= 1
         end
        p new_grid
+
     end
-    
+
 end
 
 
 
 
-
-
-
-
-# grid = build_grid()
-# dispay_grid(grid)
+board = Gameboard.new
+board.sort_grid
