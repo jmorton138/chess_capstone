@@ -27,8 +27,20 @@ class Gameboard
             new_grid += grid.select { |item| item.include?(i.to_s) }
             i -= 1
         end
-       p new_grid
+       new_grid
+    end
 
+    def display_grid(sorted_grid)
+        sorted_grid.each_with_index do |item, index|
+            index_plus_one = index + 1
+            if index_plus_one % 8 == 0
+                puts " #{item} "
+                puts "--------------------------------"
+            else
+                print " #{item} "
+            end
+        end
+        puts ""
     end
 
 end
@@ -37,4 +49,5 @@ end
 
 
 board = Gameboard.new
-board.sort_grid
+sorted_grid = board.sort_grid
+board.display_grid(sorted_grid)
