@@ -18,13 +18,14 @@ class Gameboard
             end
         end
         grid
-        new_grid = []
+        #sort grid
+        sorted_grid = []
         i = 8
         until i < 1 do
-            new_grid += grid.select { |item| item.include?(i.to_s) }
+            sorted_grid += grid.select { |item| item.include?(i.to_s) }
             i -= 1
         end
-       new_grid
+       sorted_grid
     end
 
     def display_grid(sorted_grid)
