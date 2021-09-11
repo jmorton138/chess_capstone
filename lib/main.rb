@@ -17,5 +17,25 @@ class Gameboard
         end
         grid
     end
+
+    def dispay_grid(grid)
+        new_grid = []
+        i = 8
+        until i < 1 do
+            new_grid += grid.select { |item| item.include?(i.to_s) }
+            i -= 1
+        end
+       p new_grid
+    end
+    
 end
 
+
+
+
+
+
+
+
+# grid = build_grid()
+# dispay_grid(grid)
