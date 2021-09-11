@@ -18,9 +18,6 @@ class Gameboard
             end
         end
         grid
-    end
-
-    def sort_grid(grid = self.grid)
         new_grid = []
         i = 8
         until i < 1 do
@@ -49,5 +46,5 @@ end
 
 
 board = Gameboard.new
-sorted_grid = board.sort_grid
-board.display_grid(sorted_grid)
+#board.display_grid(board.grid)
+
