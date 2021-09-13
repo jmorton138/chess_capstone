@@ -2,16 +2,22 @@ require_relative '../lib/main.rb'
 
 describe Gameboard do
     describe "#find_pawn_moves" do
-        context "when pawn starts at a3 with no pawns at diagonal" do
+        context "when white pawn starts at a3 with no pawns at diagonal" do
             subject(:simple_pawn_move) { described_class.new }
             it "returns a4" do
-                expect(simple_pawn_move.find_pawn_moves("a3")).to eq("a4")
+                expect(simple_pawn_move.find_pawn_moves("a3")).to eq(["a4"])
                 simple_pawn_move.find_pawn_moves("a3")
             end
         end
         #handle diagonals in both directions"
         #handle pawn first move"
-        
+        context "when white pawn start makes first move at c2 with no pawns at diagonal" do
+            subject(:init_pawn) { described_class.new }
+            it "returns ['c3', 'c4']" do
+                expect(init_pawn.find_pawn_moves("c2")).to eq(["c3", "c4"])
+                init_pawn.find_pawn_moves("c2")
+            end
+        end
     end
 end
 

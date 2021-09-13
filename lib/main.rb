@@ -43,11 +43,18 @@ class Gameboard
 
     def find_pawn_moves(start_pt)
         #split starting point and increment column
-        arr = start_pt.split(//)
-        arr[1] = (arr[1].to_i + 1).to_s
-        arr = arr.join()
-        arr
-
+        moves = []
+        move_1 = start_pt.split(//)
+        move_1[1] = (move_1[1].to_i + 1).to_s
+        move_1 = move_1.join()
+        moves.push(move_1)
+        if start_pt.split(//)[1] == "2"
+            move_2 = start_pt.split(//)
+            move_2[1] = (move_2[1].to_i + 2).to_s
+            move_2 = move_2.join()
+            moves.push(move_2)
+        end
+        moves
         #add 1 to asccii
         #arr[1] = (arr[1].to_i + 1).to_s
         #convert back into chess notation
