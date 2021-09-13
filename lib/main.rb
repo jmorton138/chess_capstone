@@ -102,7 +102,11 @@ class Gameboard
             moves = paths.reduce([]) do |sum, item|
                 item[0] = (split_point[0].ord + item[0]).chr
                 item[1] = (split_point[1].to_i + item[1]).to_s
-                sum.push(item.join())
+                item = item.join()
+                if grid.include?(item) 
+                    sum.push(item)
+                end
+                sum
             end
             moves.sort
     end
