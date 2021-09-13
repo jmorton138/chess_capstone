@@ -86,6 +86,18 @@ describe Gameboard do
             end
         end
     end
+
+    describe "#find_king_moves" do
+        context "when white king is at e4 with no obstructing pieces or checks" do
+            subject(:king_moves) { described_class.new }
+
+            it "returns moves [d5, e5, f5, d4, f4, d3, e3, f3]" do
+                moves = ["d5", "e5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
+                expect(king_moves.find_king_moves("e4")).to eq(moves)
+                king_moves.find_king_moves("e4")
+            end
+        end
+    end
  
 end
 
