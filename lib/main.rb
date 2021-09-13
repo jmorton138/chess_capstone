@@ -64,18 +64,26 @@ class Gameboard
     def find_rook_moves(start_pt)
         moves = []
         split_point = start_pt.split(//)
+        x = 1
+        x_axis = ["a", "b", "c", "d", "e", "f", "g", "h"]
         #x-axis moves
-        #ascii_val = split_point[0].ord
-        #y-axis moves
-        i = 1
-        until i == 8
+        x_axis.each do |letter|
+            temp = letter + split_point[1]
+            moves.push(temp)
+            x += 1
+        end 
+        #y-axis moves 
+        y = 1
+        until y > 8
             temp = split_point
-            temp[1] = temp[1].to_i + 1
-            moves.push(temp.join())
-            i += 1 
+            temp = temp[0] + y.to_s
+            moves.push(temp)
+            y += 1 
         end
+        moves = moves.uniq
+        st_pt_index = moves.index(start_pt)
+        moves.slice!(st_pt_index)
         moves
-       
 
     end
 
