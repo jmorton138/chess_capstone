@@ -162,9 +162,80 @@ class Gameboard
         moves = diagonal_lines + straight_lines
         moves.sort
     end
+
+    def find_king_moves(start_pt)
+        split_point = start_pt.split(//)
+        paths = [[1, 1],
+        [1, (-1)],
+        [(-1),(-1)],
+        [(-1), 1],
+        [0, 1],
+        [1, 0],
+        [0, (-1)],
+        [(-1), 0]]
+
+        moves = paths.reduce([]) do |sum, item|
+            item[0] = (split_point[0].ord + item[0]).chr
+            item[1] = (split_point[1].to_i + item[1]).to_s
+            item = item.join()
+            if grid.include?(item) 
+                sum.push(item)
+            end
+            sum
+        end
+        moves.sort
+
+    end
 end
 
+class Player
+    def initialize(piece_color)
+        @piece_color = piece_color
+        @moves = build_moves_hash(piece_color)
+    end
 
+    def build_moves_hash(piece_color)
+        if piece_color == "white"
+            hash = {
+                pawn1: "a2",
+                pawn2: "b2",
+                pawn3: "c2",
+                pawn4: "d2",
+                pawn5: "e2",
+                pawn6: "f2",
+                pawn7: "g2",
+                pawn8: "h2",
+                rook1: "a1",
+                knight1: "b1",
+                bishop1: "c1",
+                queen: "d1",
+                king: "e1",
+                bishop2: "f1",
+                knight2: "g1",
+                rook2: "h1"
+            }
+        elsif piece_color == "black"
+            hash = {
+                pawn1: "a7",
+                pawn2: "b7",
+                pawn3: "c7",
+                pawn4: "d7",
+                pawn5: "e7",
+                pawn6: "f7",
+                pawn7: "g7",
+                pawn8: "h7",
+                rook1: "a8",
+                knight1: "b8",
+                bishop1: "c8",
+                queen: "d8",
+                king: "e8",
+                bishop2: "f8",
+                knight2: "g8",
+                rook2: "h8"
+            }
+        end
+    end
+end
 
 
 # board = Gameboard.new
@@ -185,3 +256,4 @@ end
 #  a2  b2  c2  d2  e2  f2  g2  h2 
 # --------------------------------
 #  a1  b1  c1  d1  e1  f1  g1  h1 
+
