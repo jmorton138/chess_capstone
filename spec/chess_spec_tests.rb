@@ -51,8 +51,42 @@ describe Gameboard do
                 knight_moves.find_knight_moves("d3")
             end
         end
+
+        context "when white knight  is at b3" do
+            subject(:knight_moves_bounds) { described_class.new }
+
+            it "only returns moves on the board ['a1','a5', 'c1', 'c5', 'd2', 'd4']" do
+                moves = ["a1","a5", "c1", "c5", "d2", "d4"].sort
+                expect(knight_moves_bounds.find_knight_moves("b3")).to eq(moves)
+                knight_moves_bounds.find_knight_moves("b3")
+            end
+        end
     end
 
+    describe "#find_bishop_moves" do
+        context "when white bishop is at e4 with no obstructing pieces" do
+            subject(:bishop_moves) { described_class.new }
+
+            it "returns available moves [b1, c2, d3, f5, g6, h7, h1, g2, f3, d5, c6, b7, a8]" do
+                moves = ["b1", "c2", "d3", "f5", "g6", "h7", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
+                expect(bishop_moves.find_bishop_moves("e4")).to eq(moves)
+                bishop_moves.find_knight_moves("e4")
+            end
+        end
+    end
+
+    describe "#find_queen_moves" do
+        context "when white queen is at e4 with no obstructing pieces" do
+            subject(:queen_moves) { described_class.new }
+
+            it "returns available moves at [b1, c2, d3, f5, g6, h7, h1, g2, f3, d5, c6, b7, a8, e1, e2, e3, e5, e6, e7, e8, a4, b4, c4, c5, c6, c7, c8]" do
+                moves = ["b1", "c2", "d3", "f5", "g6", "h7", "h1", "g2", "f3", "d5", "c6", "b7", "a8", "e1", "e2", "e3", "e5", "e6", "e7", "e8", "a4", "b4", "c4", "c5", "c6", "c7", "c8"].sort
+                expect(queen_moves.find_queen_moves("d3")). to eq(moves)
+                queen_moves.find_queen_moves("d3")
+            end
+        end
+    end
+ 
 end
 
 
