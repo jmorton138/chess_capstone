@@ -9,13 +9,25 @@ describe Gameboard do
                 simple_pawn_move.find_pawn_moves("a3")
             end
         end
-        #handle diagonals in both directions"
-        #handle pawn first move"
+        
         context "when white pawn start makes first move at c2 with no pawns at diagonal" do
             subject(:init_pawn) { described_class.new }
             it "returns ['c3', 'c4']" do
                 expect(init_pawn.find_pawn_moves("c2")).to eq(["c3", "c4"])
                 init_pawn.find_pawn_moves("c2")
+            end
+        end
+        #handle diagonals in both directions"
+        #handles being blocked by opponnents piece
+    end
+
+    describe "#find_rook_moves" do
+        context "when white rook is at b1 with no obstructions" do
+            subject(:rook_moves) { described_class.new }
+
+            it "returns b2-b8 and a1-h1" do
+                moves = ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
+                expect(rook_moves.find_rook_moves("b1")).to eq(moves)
             end
         end
     end
