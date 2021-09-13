@@ -41,11 +41,24 @@ class Gameboard
         puts ""
     end
 
+    def find_pawn_moves(start_pt)
+        #split starting point and increment column
+        arr = start_pt.split(//)
+        arr[1] = (arr[1].to_i + 1).to_s
+        arr = arr.join()
+        arr
+
+        #add 1 to asccii
+        #arr[1] = (arr[1].to_i + 1).to_s
+        #convert back into chess notation
+        #return space coordinates
+    end
+
 end
 
 
 
 
-board = Gameboard.new
-#board.display_grid(board.grid)
+# board = Gameboard.new
+# board.display_grid(board.grid)
 
