@@ -25,9 +25,18 @@ describe Gameboard do
         context "when white rook is at b1 with no obstructions" do
             subject(:rook_moves) { described_class.new }
 
-            it "returns b2-b8 and a1-h1" do
-                moves = ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
+            it "returns ['a1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8']" do
+                moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
                 expect(rook_moves.find_rook_moves("b1")).to eq(moves)
+            end
+        end
+
+        context "when white rook is at c4 with no obstructions" do
+            subject(:rook_moves_2) { described_class.new }
+
+            it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3', 'c5', 'c6', 'c7', 'c8']" do
+                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"]
+                expect(rook_moves_2.find_rook_moves("c4")).to eq(moves)
             end
         end
     end
