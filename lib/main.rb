@@ -86,7 +86,26 @@ class Gameboard
         moves
 
     end
-
+    def find_knight_moves(start_pt)
+ 
+        split_point = start_pt.split(//)
+        paths = [
+            [1, 2],
+            [1, (-2)],
+            [(-1), 2],
+            [(-1), (-2)],
+            [2, 1],
+            [2, (-1)],
+            [(-2),(-1)],
+            [(-2), 1]]
+    
+            moves = paths.reduce([]) do |sum, item|
+                item[0] = (split_point[0].ord + item[0]).chr
+                item[1] = (split_point[1].to_i + item[1]).to_s
+                sum.push(item.join())
+            end
+            moves.sort
+    end
 end
 
 

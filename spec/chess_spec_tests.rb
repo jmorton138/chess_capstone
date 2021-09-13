@@ -40,6 +40,19 @@ describe Gameboard do
             end
         end
     end
+
+    describe "#find_knight_moves" do
+        context "when white knight is at d3 with no obstructions" do
+            subject(:knight_moves) { described_class.new }
+            
+            it "returns ['b2', 'b4', 'c1', 'c5', 'e1', 'e5', 'f2', 'f4']" do
+                moves = ["c1", "b2", "b4", "c5", "e5", "f4", "f2", "e1"].sort
+                expect(knight_moves.find_knight_moves("d3")).to eq(moves)
+                knight_moves.find_knight_moves("d3")
+            end
+        end
+    end
+
 end
 
 
