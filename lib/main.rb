@@ -86,8 +86,8 @@ class Gameboard
         moves
 
     end
+
     def find_knight_moves(start_pt)
- 
         split_point = start_pt.split(//)
         paths = [
             [1, 2],
@@ -109,6 +109,51 @@ class Gameboard
                 sum
             end
             moves.sort
+    end
+
+    def find_bishop_moves(start_pt)
+        split_point = start_pt.split(//)
+        moves = []
+        i = split_point[0].ord
+        j = split_point[1].to_i
+        
+        #find up slope right moves
+        until j == 8
+            i += 1
+            j += 1
+            move = i.chr + j.to_s
+            moves.push(move)
+        end    
+        #find down slope right moves
+        i = split_point[0].ord
+        j = split_point[1].to_i
+        until j == 1
+            i += 1
+            j -= 1
+            move = i.chr + j.to_s
+            moves.push(move)
+        end
+        
+        #find up slope left moves
+        i = split_point[0].ord
+        j = split_point[1].to_i
+        until j == 8
+            i -= 1
+            j += 1
+            move = i.chr + j.to_s
+            moves.push(move)
+        end
+        #find down slope left moves
+        i = split_point[0].ord
+        j = split_point[1].to_i
+        until j == 1
+            i -= 1
+            j -= 1
+            move = i.chr + j.to_s
+            moves.push(move)
+        end
+        moves = moves.select {|item| grid.include?(item) }.sort
+
     end
 end
 
