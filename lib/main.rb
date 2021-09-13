@@ -155,6 +155,13 @@ class Gameboard
         moves = moves.select {|item| grid.include?(item) }.sort
 
     end
+
+    def find_queen_moves(start_pt)
+        diagonal_lines = find_bishop_moves(start_pt)
+        straight_lines = find_rook_moves(start_pt)
+        moves = diagonal_lines + straight_lines
+        moves.sort
+    end
 end
 
 
