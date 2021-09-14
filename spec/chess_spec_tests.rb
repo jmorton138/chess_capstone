@@ -226,8 +226,19 @@ describe Player do
                 moves = update_player_moves.moves
                 start_pt = "b1"
                 end_pt = "c3"
-                expect(update_player_moves.update_player_moves(start_pt, end_pt)).to change(moves[:knght1]).from("b1").to("c3")
+                expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ moves[:knght1] }.from("b1").to("c3")
             end
+        end
+    end
+
+    context "when player moves knight1 from f1 to d3" do
+        subject(:update_player_moves_bishop) { described_class.new("white") }
+
+        it "updates Player instance of bish2 from f1 to d3" do
+            moves = update_player_moves_bishop.moves
+            start_pt = "f1"
+            end_pt = "d3"
+            expect{ update_player_moves_bishop.update_player_moves(start_pt, end_pt) }.to change{ moves[:bish2] }.from("f1").to("d3")
         end
     end
 end
