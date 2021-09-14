@@ -51,7 +51,7 @@ describe Gameboard do
         end
 
         #handle diagonals in both directions"
-        context "when white pawn has opponnents pawn at diagonal d3" do
+        context "when white pawn has opponnent's pawn at diagonal d3" do
             subject(:opp_pawn_at_diag) { described_class.new }
 
             it "adds d3 to available moves" do
@@ -61,6 +61,19 @@ describe Gameboard do
                 opp_pawn_at_diag.find_pawn_moves("c2", opp_moves)
             end
         end
+
+        context "when white pawn has opponnent's pawns at diagonal d3 and diagonal b3" do
+            subject(:opp_pawns_at_diags) { described_class.new }
+
+            it "adds d3 to available moves" do
+                opp_moves[:pawn3] = "d3"
+                opp_moves[:pawn4] = "b3"
+                moves = ["b3", "c3", "c4", "d3"]
+                expect(opp_pawns_at_diags.find_pawn_moves("c2", opp_moves)).to eq(moves)
+                opp_pawns_at_diags.find_pawn_moves("c2", opp_moves)
+            end
+        end
+
     end
 
     describe "#find_rook_moves" do
