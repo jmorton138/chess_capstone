@@ -100,7 +100,7 @@ describe Gameboard do
     end
 
     describe "#validate_player_input" do
-        context "when player inputs coordinates b1b2" do
+        context "when player inputs coordinates b1b2 at start of game" do
             subject(:validate_player_input) { described_class.new }
             it "returns true" do
                 expect(validate_player_input.validate_player_input("b1b2")).to eq(true)
@@ -108,6 +108,18 @@ describe Gameboard do
             end
         end
     end
+
+    describe "#return_piece_type" do
+        context "when starting input coordinate is b1" do
+            subject(:return_piece_type) { described_class.new }
+
+            it "returns pawn" do
+                expect(return_piece_type.return_piece_type("b1")).to eq("pawn")
+                return_piece_type.return_piece_type("b1")
+            end
+        end
+    end
+
  
 end
 
