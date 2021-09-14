@@ -28,14 +28,27 @@ class Gameboard
        sorted_grid
     end
 
-    def display_grid(sorted_grid)
+    def display_grid(sorted_grid, p1_moves, p2_moves)
         sorted_grid.each_with_index do |item, index|
             index_plus_one = index + 1
             if index_plus_one % 8 == 0
-                puts " #{item} "
-                puts "--------------------------------"
+                if p1_moves.key(item) != nil
+                    puts " #{p1_moves.key(item)} "
+                elsif  p2_moves.key(item) != nil
+                    puts " #{p2_moves.key(item)} "
+                else
+                    puts "  #{item}   "
+                end
+                puts "-------------------------------------------------------"
             else
-                print " #{item} "
+                # if p1.moves.[key] == item print key
+                if p1_moves.key(item) != nil
+                    print " #{p1_moves.key(item)} "
+                elsif  p2_moves.key(item) != nil
+                    print " #{p2_moves.key(item)} "
+                else
+                    print "  #{item}   "
+                end
             end
         end
         puts ""
@@ -189,6 +202,7 @@ class Gameboard
 end
 
 class Player
+    attr_accessor :moves
     def initialize(piece_color)
         @piece_color = piece_color
         @moves = build_moves_hash(piece_color)
@@ -196,7 +210,7 @@ class Player
 
     def build_moves_hash(piece_color)
         if piece_color == "white"
-            hash = {
+            pieces = {
                 pawn1: "a2",
                 pawn2: "b2",
                 pawn3: "c2",
@@ -206,16 +220,16 @@ class Player
                 pawn7: "g2",
                 pawn8: "h2",
                 rook1: "a1",
-                knight1: "b1",
-                bishop1: "c1",
+                knght1: "b1",
+                bish1: "c1",
                 queen: "d1",
                 king: "e1",
-                bishop2: "f1",
-                knight2: "g1",
+                bish2: "f1",
+                knght2: "g1",
                 rook2: "h1"
             }
         elsif piece_color == "black"
-            hash = {
+            pieces = {
                 pawn1: "a7",
                 pawn2: "b7",
                 pawn3: "c7",
@@ -225,21 +239,29 @@ class Player
                 pawn7: "g7",
                 pawn8: "h7",
                 rook1: "a8",
-                knight1: "b8",
-                bishop1: "c8",
+                knght1: "b8",
+                bish1: "c8",
                 queen: "d8",
                 king: "e8",
-                bishop2: "f8",
-                knight2: "g8",
+                bish2: "f8",
+                knght2: "g8",
                 rook2: "h8"
             }
         end
+        pieces
     end
 end
 
 
-# board = Gameboard.new
-# board.display_grid(board.grid)
+board = Gameboard.new
+p1 = Player.new("white")
+p2 = Player.new("black")
+# p2.moves.each do |item|
+#     item if item[1] == "a7"
+# end
+# p p2.moves.key("a7")
+
+board.display_grid(board.grid, p1.moves, p2.moves)
 
 # a8  b8  c8  d8  e8  f8  g8  h8 
 # --------------------------------
