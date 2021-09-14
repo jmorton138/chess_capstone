@@ -76,8 +76,8 @@ describe Gameboard do
             
             it "returns ['b2', 'b4', 'c1', 'c5', 'e1', 'e5', 'f2', 'f4']" do
                 moves = ["c1", "b2", "b4", "c5", "e5", "f4", "f2", "e1"].sort
-                expect(knight_moves.find_knight_moves("d3")).to eq(moves)
-                knight_moves.find_knight_moves("d3")
+                expect(knight_moves.find_knight_moves("d3", opp_moves)).to eq(moves)
+                knight_moves.find_knight_moves("d3", opp_moves)
             end
         end
 
@@ -86,8 +86,8 @@ describe Gameboard do
 
             it "only returns moves on the board ['a1','a5', 'c1', 'c5', 'd2', 'd4']" do
                 moves = ["a1","a5", "c1", "c5", "d2", "d4"].sort
-                expect(knight_moves_bounds.find_knight_moves("b3")).to eq(moves)
-                knight_moves_bounds.find_knight_moves("b3")
+                expect(knight_moves_bounds.find_knight_moves("b3", opp_moves)).to eq(moves)
+                knight_moves_bounds.find_knight_moves("b3", opp_moves)
             end
         end
     end
@@ -99,7 +99,7 @@ describe Gameboard do
             it "returns available moves [b1, c2, d3, f5, g6, h7, h1, g2, f3, d5, c6, b7, a8]" do
                 moves = ["b1", "c2", "d3", "f5", "g6", "h7", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
                 expect(bishop_moves.find_bishop_moves("e4")).to eq(moves)
-                bishop_moves.find_knight_moves("e4")
+                bishop_moves.find_bishop_moves("e4")
             end
         end
     end
