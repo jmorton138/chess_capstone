@@ -197,7 +197,17 @@ class Gameboard
             sum
         end
         moves.sort
+    end
 
+    def validate_player_input(input, player_moves)
+        #return false if input.length > 4
+        sliced = input.chars.each_slice(2).map(&:join)
+        #check if starting point is point on the board
+        return false if !grid.include?(sliced[0])
+        #check if starting point has player's piece on it
+        return false if player_moves.key(sliced[0]) == nil
+        # determine type of chess piece
+        #check if end point is in available moves returned from find_#{piece}_moves method
     end
 end
 
@@ -253,15 +263,18 @@ class Player
 end
 
 
-board = Gameboard.new
-p1 = Player.new("white")
-p2 = Player.new("black")
+
+# board = Gameboard.new
+# p1 = Player.new("white")
+# p board.validate_player_input("b3b4", p1.moves)
+
+# p2 = Player.new("black")
 # p2.moves.each do |item|
 #     item if item[1] == "a7"
 # end
 # p p2.moves.key("a7")
 
-board.display_grid(board.grid, p1.moves, p2.moves)
+#board.display_grid(board.grid, p1.moves, p2.moves)
 
 # a8  b8  c8  d8  e8  f8  g8  h8 
 # --------------------------------
@@ -278,4 +291,3 @@ board.display_grid(board.grid, p1.moves, p2.moves)
 #  a2  b2  c2  d2  e2  f2  g2  h2 
 # --------------------------------
 #  a1  b1  c1  d1  e1  f1  g1  h1 
-
