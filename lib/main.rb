@@ -207,7 +207,7 @@ class Gameboard
         #check if starting point has player's piece on it
         return false if player_moves.key(sliced[0]) == nil
         # determine type of chess piece
-        #check if end point is in available moves returned from find_#{piece}_moves method
+  
     end
 
     def return_piece_type(start_pt, player_moves)
@@ -228,8 +228,23 @@ class Gameboard
             return "queen"
         elsif peice_abbr[0] == "K"
             return "King"
+        end    
+    end
+
+    def return_available_moves(piece, start_pt)
+        if piece == "pawn"
+            find_pawn_moves(start_pt)
+        elsif piece == "rook"
+            find_rook_moves(start_pt)
+        elsif piece == "knight"
+            find_knight_moves(start_pt)
+        elsif piece == "bishop"
+            find_bishop_moves(start_pt)
+        elsif piece == "queen"
+            find_queen_moves(start_pt)
+        elsif piece == "King"
+            find_king_moves(start_pt)
         end
-        
     end
 end
 

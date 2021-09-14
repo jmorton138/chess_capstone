@@ -99,16 +99,36 @@ describe Gameboard do
         end
     end
 
-    # describe "#validate_player_input" do
-    #     context "when player inputs coordinates b1b2 at start of game" do
-    #         subject(:validate_player_input) { described_class.new }
-       
-    #         it "returns true" do
-    #             expect(validate_player_input.validate_player_input("b1b2")).to eq(true)
-    #             validate_player_input.validate_player_input("b1b2")
-    #         end
-    #     end
-    # end
+    describe "#validate_player_input" do
+        context "when player inputs coordinates b1b2 at start of game" do
+            subject(:validate_player_input) { described_class.new }
+            let(:moves)  {
+                {
+                pawn1: "a2",
+                pawn2: "b2",
+                pawn3: "c2",
+                pawn4: "d2",
+                pawn5: "e2",
+                pawn6: "f2",
+                pawn7: "g2",
+                pawn8: "h2",
+                rook1: "a1",
+                knght1: "b1",
+                bish1: "c1",
+                queen: "d1",
+                King: "e1",
+                bish2: "f1",
+                knght2: "g1",
+                rook2: "h1"
+            }
+        }
+            it "returns true" do
+                expect(validate_player_input.validate_player_input("b1b2", moves)).to eq(true)
+                validate_player_input.validate_player_input("b1b2", moves)
+            end
+
+        end
+    end
 
     describe "#return_piece_type" do
         context "when starting input coordinate is b1" do
@@ -137,6 +157,33 @@ describe Gameboard do
             end
         end
     end
+
+    describe "#return_available_moves" do
+        context "when piece/arg is a pawn at b2" do
+            subject(:find_moves) { described_class.new }
+            before do
+                allow(find_moves).to receive(:find_pawn_moves).with("b2")
+            end
+            it "receives #find_pawn_moves" do
+                piece = "pawn"
+                expect(find_moves).to receive(:find_pawn_moves).with("b2")
+                find_moves.return_available_moves(piece, "b2")
+            end
+        end
+
+        context "when piece/arg is a knight at b4" do
+            subject(:find_moves) { described_class.new }
+            before do
+                allow(find_moves).to receive(:find_knight_moves).with("b4")
+            end
+            it "receives #find_knight_moves" do
+                piece = "knight"
+                expect(find_moves).to receive(:find_knight_moves).with("b4")
+                find_moves.return_available_moves(piece, "b4")
+            end
+        end
+    end
+
 
  
 end
