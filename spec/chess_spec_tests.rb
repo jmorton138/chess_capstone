@@ -231,11 +231,11 @@ describe Gameboard do
         context "when piece/arg is a knight at b4" do
             subject(:find_moves_knight) { described_class.new }
             before do
-                allow(find_moves_knight).to receive(:find_knight_moves).with("b4")
+                allow(find_moves_knight).to receive(:find_knight_moves).with("b4", opp_moves)
             end
             it "receives #find_knight_moves" do
                 piece = "knight"
-                expect(find_moves_knight).to receive(:find_knight_moves).with("b4")
+                expect(find_moves_knight).to receive(:find_knight_moves).with("b4", opp_moves)
                 find_moves_knight.return_available_moves(piece, "b4", opp_moves)
             end
         end
