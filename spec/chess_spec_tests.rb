@@ -217,6 +217,22 @@ describe Gameboard do
  
 end
 
+describe Player do
+    describe "#update_player_moves" do
+        context "when player moves knight1 from b1 to c3" do
+            subject(:update_player_moves) { described_class.new("white") }
+
+            it "updates Player instance of knight1 from b1 to c3" do
+                moves = update_player_moves.moves
+                start_pt = "b1"
+                end_pt = "c3"
+                expect(update_player_moves.update_player_moves(start_pt, end_pt)).to change(moves[:knght1]).from("b1").to("c3")
+            end
+        end
+    end
+end
+
+
 
 
 
