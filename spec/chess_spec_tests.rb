@@ -1,27 +1,28 @@
 require_relative '../lib/main.rb'
 
 describe Gameboard do
+    let(:opp_moves) {
+        {
+        pawn1: "a7",
+        pawn2: "b7",
+        pawn3: "c3",
+        pawn4: "d7",
+        pawn5: "e7",
+        pawn6: "f7",
+        pawn7: "g7",
+        pawn8: "h7",
+        rook1: "a8",
+        knght1: "b8",
+        bish1: "c8",
+        queen: "d8",
+        King: "e8",
+        bish2: "f8",
+        knght2: "g8",
+        rook2: "h8"
+    }
+    }
     describe "#find_pawn_moves" do
-        let(:opp_moves) {
-            {
-            pawn1: "a7",
-            pawn2: "b7",
-            pawn3: "c3",
-            pawn4: "d7",
-            pawn5: "e7",
-            pawn6: "f7",
-            pawn7: "g7",
-            pawn8: "h7",
-            rook1: "a8",
-            knght1: "b8",
-            bish1: "c8",
-            queen: "d8",
-            King: "e8",
-            bish2: "f8",
-            knght2: "g8",
-            rook2: "h8"
-        }
-        }
+
         context "when white pawn starts at a3 with no pawns at diagonal" do
             subject(:simple_pawn_move) { described_class.new }
             it "returns a4" do
@@ -151,8 +152,8 @@ describe Gameboard do
             }
         }
             it "returns false" do
-                expect(validate_player_input_invalid.validate_player_input("b1b2", moves)).to eq(false)
-                validate_player_input_invalid.validate_player_input("b1b2", moves)
+                expect(validate_player_input_invalid.validate_player_input("b1b2", moves, opp_moves)).to eq(false)
+                validate_player_input_invalid.validate_player_input("b1b2", moves, opp_moves)
             end
 
         end
@@ -180,8 +181,8 @@ describe Gameboard do
             }
         }
             it "returns true" do
-                expect(validate_player_input_valid.validate_player_input("a2a3", moves)).to eq(true)
-                validate_player_input_valid.validate_player_input("a2a3", moves)
+                expect(validate_player_input_valid.validate_player_input("a2a3", moves, opp_moves)).to eq(true)
+                validate_player_input_valid.validate_player_input("a2a3", moves, opp_moves)
             end
         end
     end
@@ -218,12 +219,12 @@ describe Gameboard do
         context "when piece/arg is a pawn at b2" do
             subject(:find_moves_pawn) { described_class.new }
             before do
-                allow(find_moves_pawn).to receive(:find_pawn_moves).with("b2")
+                allow(find_moves_pawn).to receive(:find_pawn_moves).with("b2", opp_moves)
             end
             it "receives #find_pawn_moves" do
                 piece = "pawn"
-                expect(find_moves_pawn).to receive(:find_pawn_moves).with("b2")
-                find_moves_pawn.return_available_moves(piece, "b2")
+                expect(find_moves_pawn).to receive(:find_pawn_moves).with("b2", opp_moves)
+                find_moves_pawn.return_available_moves(piece, "b2", opp_moves)
             end
         end
 
@@ -235,7 +236,7 @@ describe Gameboard do
             it "receives #find_knight_moves" do
                 piece = "knight"
                 expect(find_moves_knight).to receive(:find_knight_moves).with("b4")
-                find_moves_knight.return_available_moves(piece, "b4")
+                find_moves_knight.return_available_moves(piece, "b4", opp_moves)
             end
         end
     end
