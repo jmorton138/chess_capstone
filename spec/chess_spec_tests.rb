@@ -99,23 +99,41 @@ describe Gameboard do
         end
     end
 
-    describe "#validate_player_input" do
-        context "when player inputs coordinates b1b2 at start of game" do
-            subject(:validate_player_input) { described_class.new }
-            it "returns true" do
-                expect(validate_player_input.validate_player_input("b1b2")).to eq(true)
-                validate_player_input.validate_player_input("b1b2")
-            end
-        end
-    end
+    # describe "#validate_player_input" do
+    #     context "when player inputs coordinates b1b2 at start of game" do
+    #         subject(:validate_player_input) { described_class.new }
+       
+    #         it "returns true" do
+    #             expect(validate_player_input.validate_player_input("b1b2")).to eq(true)
+    #             validate_player_input.validate_player_input("b1b2")
+    #         end
+    #     end
+    # end
 
     describe "#return_piece_type" do
         context "when starting input coordinate is b1" do
             subject(:return_piece_type) { described_class.new }
-
             it "returns pawn" do
-                expect(return_piece_type.return_piece_type("b1")).to eq("pawn")
-                return_piece_type.return_piece_type("b1")
+                moves = {
+                    pawn1: "a2",
+                    pawn2: "b2",
+                    pawn3: "c2",
+                    pawn4: "d2",
+                    pawn5: "e2",
+                    pawn6: "f2",
+                    pawn7: "g2",
+                    pawn8: "h2",
+                    rook1: "a1",
+                    knght1: "b1",
+                    bish1: "c1",
+                    queen: "d1",
+                    King: "e1",
+                    bish2: "f1",
+                    knght2: "g1",
+                    rook2: "h1"
+                }
+                expect(return_piece_type.return_piece_type("b2", moves)).to eq("pawn")
+                return_piece_type.return_piece_type("b2", moves)
             end
         end
     end
