@@ -188,29 +188,30 @@ describe Gameboard do
 
     describe "#return_available_moves" do
         context "when piece/arg is a pawn at b2" do
-            subject(:find_moves) { described_class.new }
+            subject(:find_moves_pawn) { described_class.new }
             before do
-                allow(find_moves).to receive(:find_pawn_moves).with("b2")
+                allow(find_moves_pawn).to receive(:find_pawn_moves).with("b2")
             end
             it "receives #find_pawn_moves" do
                 piece = "pawn"
-                expect(find_moves).to receive(:find_pawn_moves).with("b2")
-                find_moves.return_available_moves(piece, "b2")
+                expect(find_moves_pawn).to receive(:find_pawn_moves).with("b2")
+                find_moves_pawn.return_available_moves(piece, "b2")
             end
         end
 
         context "when piece/arg is a knight at b4" do
-            subject(:find_moves) { described_class.new }
+            subject(:find_moves_knight) { described_class.new }
             before do
-                allow(find_moves).to receive(:find_knight_moves).with("b4")
+                allow(find_moves_knight).to receive(:find_knight_moves).with("b4")
             end
             it "receives #find_knight_moves" do
                 piece = "knight"
-                expect(find_moves).to receive(:find_knight_moves).with("b4")
-                find_moves.return_available_moves(piece, "b4")
+                expect(find_moves_knight).to receive(:find_knight_moves).with("b4")
+                find_moves_knight.return_available_moves(piece, "b4")
             end
         end
     end
+
 
 
  
