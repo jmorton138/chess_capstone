@@ -65,7 +65,7 @@ describe Gameboard do
         context "when white pawn has opponnent's pawns at diagonal d3 and diagonal b3" do
             subject(:opp_pawns_at_diags) { described_class.new }
 
-            it "adds d3 to available moves" do
+            it "adds b3 and d3 to available moves" do
                 opp_moves[:pawn3] = "d3"
                 opp_moves[:pawn4] = "b3"
                 moves = ["b3", "c3", "c4", "d3"]
@@ -73,7 +73,18 @@ describe Gameboard do
                 opp_pawns_at_diags.find_pawn_moves("c2", opp_moves)
             end
         end
+        context "when white pawn has opponnent's pawns at diagonal d3, diagonal b3, and blocked at c3" do
+            subject(:opp_pawns_at_diags_block) { described_class.new }
 
+            it "adds b3 and d3 to available moves" do
+                opp_moves[:pawn3] = "d3"
+                opp_moves[:pawn4] = "b3"
+                opp_moves[:pawn5] = "c3"
+                moves = ["b3", "d3"]
+                expect(opp_pawns_at_diags_block.find_pawn_moves("c2", opp_moves)).to eq(moves)
+                opp_pawns_at_diags_block.find_pawn_moves("c2", opp_moves)
+            end
+        end
     end
 
     describe "#find_rook_moves" do
