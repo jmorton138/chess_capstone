@@ -54,14 +54,16 @@ class Gameboard
         puts ""
     end
 
-    def find_pawn_moves(start_pt)
+    def find_pawn_moves(start_pt, opp_moves)
         #split starting point and increment column
         moves = []
         move_1 = start_pt.split(//)
         move_1[1] = (move_1[1].to_i + 1).to_s
         move_1 = move_1.join()
         moves.push(move_1)
-        if start_pt.split(//)[1] == "2"
+        if opp_moves.key(move_1) != nil
+            return moves = []
+        elsif start_pt.split(//)[1] == "2"
             move_2 = start_pt.split(//)
             move_2[1] = (move_2[1].to_i + 2).to_s
             move_2 = move_2.join()
@@ -100,7 +102,7 @@ class Gameboard
 
     end
 
-    def find_knight_moves(start_pt)
+    def find_knight_moves(start_pt, opp_moves)
         split_point = start_pt.split(//)
         paths = [
             [1, 2],
@@ -199,7 +201,7 @@ class Gameboard
         moves.sort
     end
 
-    def validate_player_input(input, player_moves)
+    def validate_player_input(input, player_moves, opp_moves)
         return false if input.length > 4
         sliced = input.chars.each_slice(2).map(&:join)
         #check if starting point is point on the board
@@ -208,7 +210,7 @@ class Gameboard
         return false if player_moves.key(sliced[0]) == nil
         # determine type of chess piece
         piece_type = return_piece_type(sliced[0], player_moves)
-        valid_moves = return_available_moves(piece_type, sliced[0])
+        valid_moves = return_available_moves(piece_type, sliced[0], opp_moves)
         #check if end point is in available moves returned from find_#{piece}_moves method
         if valid_moves.include?(sliced[1])
             return true
@@ -238,13 +240,13 @@ class Gameboard
         end    
     end
 
-    def return_available_moves(piece, start_pt)
+    def return_available_moves(piece, start_pt, opp_moves)
         if piece == "pawn"
-            find_pawn_moves(start_pt)
+            find_pawn_moves(start_pt, opp_moves)
         elsif piece == "rook"
             find_rook_moves(start_pt)
         elsif piece == "knight"
-            find_knight_moves(start_pt)
+            find_knight_moves(start_pt, opp_moves)
         elsif piece == "bishop"
             find_bishop_moves(start_pt)
         elsif piece == "queen"
@@ -314,6 +316,7 @@ class Player
     end
 
 end
+
 
 
 

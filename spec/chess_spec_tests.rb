@@ -5,7 +5,7 @@ describe Gameboard do
         {
         pawn1: "a7",
         pawn2: "b7",
-        pawn3: "c3",
+        pawn3: "c7",
         pawn4: "d7",
         pawn5: "e7",
         pawn6: "f7",
@@ -44,6 +44,7 @@ describe Gameboard do
             subject(:blocked_pawn) { described_class.new }
   
             it "returns empty array, no valid moves" do
+                opp_moves[:pawn3] = "c3"
                 expect(blocked_pawn.find_pawn_moves("c2", opp_moves)).to eq([])
                 blocked_pawn.find_pawn_moves("c2", opp_moves)
             end
