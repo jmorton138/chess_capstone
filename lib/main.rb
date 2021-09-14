@@ -57,11 +57,30 @@ class Gameboard
     def find_pawn_moves(start_pt, opp_moves)
         #split starting point and increment column
         moves = []
+        diag_moves = []
         move_1 = start_pt.split(//)
+        diag_r = move_1
+        diag_l = move_1
         move_1[1] = (move_1[1].to_i + 1).to_s
+        #right diagonal edge case
+        diag_r[1] = move_1[1]
+        diag_r[0] = (diag_r[0].ord + 1).chr
+        diag_r = diag_r.join()
+        #left diagonal edge case
+        diag_l[1] = move_1[1]
+        diag_l[0] = (diag_l[0].ord - 1).chr
+        diag_l = diag_l.join()
+        if opp_moves.key(diag_l) != nil
+            moves.push(diag_l)
+            diag_moves.push(diag_l)
+        end
+        if opp_moves.key(diag_r) != nil
+            moves.push(diag_r)
+            diag_moves.push(diag_r)
+        end
         move_1 = move_1.join()
         moves.push(move_1)
-        if opp_moves.key(move_1) != nil
+        if opp_moves.key(move_1) != nil && diag_moves != []
             return moves = []
         elsif start_pt.split(//)[1] == "2"
             move_2 = start_pt.split(//)
@@ -69,7 +88,7 @@ class Gameboard
             move_2 = move_2.join()
             moves.push(move_2)
         end
-        moves
+        moves.sort
         #add 1 to asccii
         #arr[1] = (arr[1].to_i + 1).to_s
         #convert back into chess notation
