@@ -209,10 +209,32 @@ class Gameboard
         # determine type of chess piece
         #check if end point is in available moves returned from find_#{piece}_moves method
     end
+
+    def return_piece_type(start_pt, player_moves)
+        kv_pair = nil
+        player_moves.each do |item|
+            kv_pair = item if item[1] == start_pt
+        end
+        peice_abbr = kv_pair[0].to_s.split(//)
+        if peice_abbr[0] == "p"
+            return "pawn"
+        elsif peice_abbr[0] == "r"
+            return "rook"
+        elsif peice_abbr[0] == "k"
+            return "knight"
+        elsif peice_abbr[0] == "b"
+            return "bishop"
+        elsif peice_abbr[0] == "q"
+            return "queen"
+        elsif peice_abbr[0] == "K"
+            return "King"
+        end
+        
+    end
 end
 
 class Player
-    attr_accessor :moves
+    attr_accessor :moves, :piece_color
     def initialize(piece_color)
         @piece_color = piece_color
         @moves = build_moves_hash(piece_color)
@@ -233,7 +255,7 @@ class Player
                 knght1: "b1",
                 bish1: "c1",
                 queen: "d1",
-                king: "e1",
+                King: "e1",
                 bish2: "f1",
                 knght2: "g1",
                 rook2: "h1"
@@ -252,7 +274,7 @@ class Player
                 knght1: "b8",
                 bish1: "c8",
                 queen: "d8",
-                king: "e8",
+                King: "e8",
                 bish2: "f8",
                 knght2: "g8",
                 rook2: "h8"
@@ -266,9 +288,10 @@ end
 
 # board = Gameboard.new
 # p1 = Player.new("white")
-# p board.validate_player_input("b3b4", p1.moves)
+# # p board.validate_player_input("b3b4", p1.moves)
 
 # p2 = Player.new("black")
+# p board.return_piece_type("e1",p1.moves)
 # p2.moves.each do |item|
 #     item if item[1] == "a7"
 # end
