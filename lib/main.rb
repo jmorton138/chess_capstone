@@ -64,9 +64,7 @@ class Gameboard
         move_1[1] = (move_1[1].to_i + 1).to_s
         move_1 = move_1.join()
         moves.push(move_1)
-        if opp_moves.key(move_1) != nil && diag_moves == []
-            return moves = []
-        elsif start_pt.split(//)[1] == "2"
+        if start_pt.split(//)[1] == "2"
             move_2 = start_pt.split(//)
             move_2[1] = (move_2[1].to_i + 2).to_s
             move_2 = move_2.join()
@@ -85,6 +83,11 @@ class Gameboard
         end
         if opp_moves.key(diag_r) != nil
             diag_moves.push(diag_r)
+        end
+        diag_moves
+        if opp_moves.key(move_1) != nil
+            p move_1
+            moves = []
         end
         moves += diag_moves
         moves.sort
