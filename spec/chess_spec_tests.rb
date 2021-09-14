@@ -98,6 +98,16 @@ describe Gameboard do
             end
         end
     end
+
+    describe "#validate_player_input" do
+        context "when player inputs coordinates b1b2" do
+            subject(:validate_player_input) { described_class.new }
+            it "returns true" do
+                expect(validate_player_input.validate_player_input("b1b2")).to eq(true)
+                validate_player_input.validate_player_input("b1b2")
+            end
+        end
+    end
  
 end
 
