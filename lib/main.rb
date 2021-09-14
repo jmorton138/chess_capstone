@@ -200,14 +200,21 @@ class Gameboard
     end
 
     def validate_player_input(input, player_moves)
-        #return false if input.length > 4
+        return false if input.length > 4
         sliced = input.chars.each_slice(2).map(&:join)
         #check if starting point is point on the board
         return false if !grid.include?(sliced[0])
         #check if starting point has player's piece on it
         return false if player_moves.key(sliced[0]) == nil
         # determine type of chess piece
-  
+        piece_type = return_piece_type(sliced[0], player_moves)
+        valid_moves = return_available_moves(piece_type, sliced[0])
+        #check if end point is in available moves returned from find_#{piece}_moves method
+        if valid_moves.include?(sliced[1])
+            return true
+        else
+            return false
+        end
     end
 
     def return_piece_type(start_pt, player_moves)
