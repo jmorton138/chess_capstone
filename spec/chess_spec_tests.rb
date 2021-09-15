@@ -232,6 +232,8 @@ describe Gameboard do
                 subject(:player_piece_true) { described_class.new }
 
                 it "returns true" do
+                    expect(player_piece_true.has_player_piece("c6", player_moves)).to eq(true)
+                    player_piece_true.has_player_piece("c6", player_moves)
 
                 end
             end
