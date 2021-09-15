@@ -237,7 +237,19 @@ describe Gameboard do
                     player_piece_true.has_player_piece?("c6", player_moves)
                 end
             end
+
+            context "when space on board(c6) is not occupied by player's own piece" do
+                subject(:player_piece_false) { described_class.new }
+    
+                it "returns true" do
+                    expect(player_piece_false.has_player_piece?("c6", player_moves)).to eq(false)
+                    player_piece_false.has_player_piece?("c6", player_moves)
+                end
+            end
         end
+
+  
+ 
     end
 
     describe "#return_piece_type" do
