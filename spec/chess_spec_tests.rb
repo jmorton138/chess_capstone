@@ -127,6 +127,15 @@ describe Gameboard do
             end
         end
 
+        context "when white rook is at c4 with player's own peice obstructing at c5" do
+            subject(:rook_blocked_once) { described_class.new }
+
+            it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3']" do
+                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3"]
+                expect(rook_blocked_once.find_rook_moves("c4")).to eq(moves)
+            end
+        end
+
     end
 
     describe "#find_knight_moves" do
@@ -247,8 +256,6 @@ describe Gameboard do
                 end
             end
         end
-
-  
  
     end
 
