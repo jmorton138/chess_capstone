@@ -86,7 +86,6 @@ class Gameboard
         end
         diag_moves
         if opp_moves.key(move_1) != nil
-            p move_1
             moves = []
         end
         moves += diag_moves
@@ -271,6 +270,16 @@ class Gameboard
         elsif piece == "King"
             find_king_moves(start_pt)
         end
+    end
+    
+    def has_opp_piece?(space, opp_moves)
+        return true if opp_moves.key(space) != nil
+        false
+    end
+
+    def has_player_piece?(space, player_moves)
+        return true if player_moves.key(space) != nil
+        false
     end
 end
 
