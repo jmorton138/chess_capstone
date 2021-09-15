@@ -236,8 +236,10 @@ describe Gameboard do
 
             it "returns available moves at [b1, c2, d3, f5, g6, h7, h1, g2, f3, d5, c6, b7, a8, e1, e2, e3, e5, e6, e7, e8, a4, b4, c4, c5, c6, c7, c8]" do
                 moves = ["b1", "c2", "d3", "f5", "g6", "h7", "h1", "g2", "f3", "d5", "c6", "b7", "a8", "e1", "e2", "e3", "e5", "e6", "e7", "e8", "a4", "b4", "c4", "d4", "f4", "g4", "h4"].sort
-                expect(queen_moves.find_queen_moves("e4", player_moves)). to eq(moves)
-                queen_moves.find_queen_moves("e4")
+                opp_moves = {}
+                player_moves = {}
+                expect(queen_moves.find_queen_moves("e4", player_moves, opp_moves)). to eq(moves)
+                queen_moves.find_queen_moves("e4", player_moves, opp_moves)
             end
         end
     end

@@ -121,7 +121,7 @@ class Gameboard
             end
             y += 1 
         end
-        p moves = moves.uniq
+        moves = moves.uniq
         st_pt_index = moves.index(start_pt)
         moves.slice!(st_pt_index)
         moves
@@ -197,9 +197,9 @@ class Gameboard
 
     end
 
-    def find_queen_moves(start_pt, player_moves)
+    def find_queen_moves(start_pt, player_moves, opp_moves)
         diagonal_lines = find_bishop_moves(start_pt)
-        straight_lines = find_rook_moves(start_pt, player_moves)
+        straight_lines = find_rook_moves(start_pt, player_moves, opp_moves)
         moves = diagonal_lines + straight_lines
         moves.sort
     end
