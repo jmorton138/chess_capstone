@@ -234,6 +234,14 @@ describe Gameboard do
                     opp_piece_true.has_opp_piece?("c5", opp_moves)
                 end
             end
+            context "when space on board(c5) is not occupied by an opponnents piece" do
+                subject(:opp_piece_false) { described_class.new }
+
+                it "returns false" do
+                    expect(opp_piece_false.has_opp_piece?("c5", opp_moves)).to eq(false)
+                    opp_piece_false.has_opp_piece?("c5", opp_moves)
+                end
+            end
         end
     end
 
