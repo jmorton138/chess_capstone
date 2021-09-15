@@ -92,7 +92,7 @@ class Gameboard
         moves.sort
     end
 
-    def find_rook_moves(start_pt, player_moves)
+    def find_rook_moves(start_pt, player_moves, opp_moves)
         moves = []
         split_point = start_pt.split(//)
         x = 1
@@ -113,8 +113,11 @@ class Gameboard
             temp = temp[0] + y.to_s
             if has_player_piece?(temp, player_moves) && temp !=start_pt
                 break
-            else
+            elsif has_opp_piece?(temp, opp_moves)
                 moves.push(temp)  
+                break
+            else
+                moves.push(temp) 
             end
             y += 1 
         end

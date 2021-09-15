@@ -163,7 +163,7 @@ describe Gameboard do
 
         context "when white rook is at c4 with player's own peices obstructing at c5 and at f4" do
             subject(:rook_blocked_twice) { described_class.new }
-            
+
             it "returns ['a4', 'b4','d4', 'e4', 'c1', 'c2', 'c3']" do
                 player_moves[:bish1] = "f4"
                 player_moves[:pawn3] = "d5"
@@ -171,6 +171,20 @@ describe Gameboard do
                 moves = ["a4", "b4","d4", "e4", "c1", "c2", "c3"]
                 expect(rook_blocked_twice.find_rook_moves("c4", player_moves)).to eq(moves)
                 rook_blocked_twice.find_rook_moves("c4", player_moves)
+            end
+        end
+
+        context "when white rook is at c4 with player's own peices obstructing at c5 and at f4 and opponent at c2" do
+            subject(:rook_blocked_opp) { described_class.new }
+            
+            it "returns ['a4', 'b4','d4', 'e4', 'c1', 'c2', 'c3']" do
+                player_moves[:bish1] = "f4"
+                player_moves[:pawn3] = "d5"
+                player_moves[:bish2] = "c5"
+                opp_moves[:pawn3] = "c2"
+                moves = ["a4", "b4","d4", "e4", "c1", "c2"]
+                expect(rook_blocked_opp.find_rook_moves("c4", player_moves, opp_moves)).to eq(moves)
+                rook_blocked_opp.find_rook_moves("c4", player_moves, opp_moves)
             end
         end
 
