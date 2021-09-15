@@ -21,6 +21,27 @@ describe Gameboard do
         rook2: "h8"
     }
     }
+
+    let(:player_moves)  {
+                {
+                pawn1: "a2",
+                pawn2: "b2",
+                pawn3: "c2",
+                pawn4: "d2",
+                pawn5: "e2",
+                pawn6: "f2",
+                pawn7: "g2",
+                pawn8: "h2",
+                rook1: "a1",
+                knght1: "b1",
+                bish1: "c1",
+                queen: "d1",
+                King: "e1",
+                bish2: "f1",
+                knght2: "g1",
+                rook2: "h1"
+            }
+        }
     describe "#find_pawn_moves" do
 
         context "when white pawn starts at a3 with no pawns at diagonal" do
@@ -169,58 +190,20 @@ describe Gameboard do
     describe "#validate_player_input" do
         context "when player inputs coordinates b1b2(invalid) at start of game" do
             subject(:validate_player_input_invalid) { described_class.new }
-            let(:moves)  {
-                {
-                pawn1: "a2",
-                pawn2: "b2",
-                pawn3: "c2",
-                pawn4: "d2",
-                pawn5: "e2",
-                pawn6: "f2",
-                pawn7: "g2",
-                pawn8: "h2",
-                rook1: "a1",
-                knght1: "b1",
-                bish1: "c1",
-                queen: "d1",
-                King: "e1",
-                bish2: "f1",
-                knght2: "g1",
-                rook2: "h1"
-            }
-        }
+       
             it "returns false" do
-                expect(validate_player_input_invalid.validate_player_input("b1b2", moves, opp_moves)).to eq(false)
-                validate_player_input_invalid.validate_player_input("b1b2", moves, opp_moves)
+                expect(validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)).to eq(false)
+                validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)
             end
 
         end
 
         context "when player inputs coordinates a2a3(valid) at start of game" do
             subject(:validate_player_input_valid) { described_class.new }
-            let(:moves)  {
-                {
-                pawn1: "a2",
-                pawn2: "b2",
-                pawn3: "c2",
-                pawn4: "d2",
-                pawn5: "e2",
-                pawn6: "f2",
-                pawn7: "g2",
-                pawn8: "h2",
-                rook1: "a1",
-                knght1: "b1",
-                bish1: "c1",
-                queen: "d1",
-                King: "e1",
-                bish2: "f1",
-                knght2: "g1",
-                rook2: "h1"
-            }
-        }
+        
             it "returns true" do
-                expect(validate_player_input_valid.validate_player_input("a2a3", moves, opp_moves)).to eq(true)
-                validate_player_input_valid.validate_player_input("a2a3", moves, opp_moves)
+                expect(validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)).to eq(true)
+                validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
             end
         end
 
@@ -240,6 +223,16 @@ describe Gameboard do
                 it "returns false" do
                     expect(opp_piece_false.has_opp_piece?("c5", opp_moves)).to eq(false)
                     opp_piece_false.has_opp_piece?("c5", opp_moves)
+                end
+            end
+        end
+
+        describe "#has_player_piece?" do
+            context "when space on board(c6) is occupied by player's own piece" do
+                subject(:player_piece_true) { described_class.new }
+
+                it "returns true" do
+
                 end
             end
         end
