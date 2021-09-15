@@ -105,6 +105,7 @@ describe Gameboard do
                 expect(rook_moves_2.find_rook_moves("c4")).to eq(moves)
             end
         end
+
     end
 
     describe "#find_knight_moves" do
@@ -220,6 +221,18 @@ describe Gameboard do
             it "returns true" do
                 expect(validate_player_input_valid.validate_player_input("a2a3", moves, opp_moves)).to eq(true)
                 validate_player_input_valid.validate_player_input("a2a3", moves, opp_moves)
+            end
+        end
+
+        describe "#has_opp_piece?" do
+            context "when space on board(c5) is occupied by an opponnents piece" do
+                subject(:opp_piece_true) { described_class.new }
+
+                it "returns true" do
+                    opp_moves[:queen] = "c5"
+                    expect(opp_piece_true.has_opp_piece?("c5", opp_moves)).to eq(true)
+                    opp_piece_true.has_opp_piece?("c5", opp_moves)
+                end
             end
         end
     end
