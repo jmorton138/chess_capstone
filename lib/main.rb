@@ -92,7 +92,7 @@ class Gameboard
         moves.sort
     end
 
-    def find_rook_moves(start_pt)
+    def find_rook_moves(start_pt, player_moves)
         moves = []
         split_point = start_pt.split(//)
         x = 1
@@ -100,18 +100,25 @@ class Gameboard
         #x-axis moves
         x_axis.each do |letter|
             temp = letter + split_point[1]
-            moves.push(temp)
-            x += 1
+            if has_player_piece?(temp, player_moves) && temp != start_pt
+                break
+            else
+                moves.push(temp)
+            end
         end 
         #y-axis moves 
         y = 1
         until y > 8
             temp = split_point
             temp = temp[0] + y.to_s
-            moves.push(temp)
+            if has_player_piece?(temp, player_moves) && temp !=start_pt
+                break
+            else
+                moves.push(temp)  
+            end
             y += 1 
         end
-        moves = moves.uniq
+        p moves = moves.uniq
         st_pt_index = moves.index(start_pt)
         moves.slice!(st_pt_index)
         moves
@@ -187,9 +194,9 @@ class Gameboard
 
     end
 
-    def find_queen_moves(start_pt)
+    def find_queen_moves(start_pt, player_moves)
         diagonal_lines = find_bishop_moves(start_pt)
-        straight_lines = find_rook_moves(start_pt)
+        straight_lines = find_rook_moves(start_pt, player_moves)
         moves = diagonal_lines + straight_lines
         moves.sort
     end
@@ -260,7 +267,7 @@ class Gameboard
         if piece == "pawn"
             find_pawn_moves(start_pt, opp_moves)
         elsif piece == "rook"
-            find_rook_moves(start_pt)
+            find_rook_moves(start_pt, player_moves)
         elsif piece == "knight"
             find_knight_moves(start_pt, opp_moves)
         elsif piece == "bishop"

@@ -113,8 +113,9 @@ describe Gameboard do
             subject(:rook_moves) { described_class.new }
 
             it "returns ['a1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8']" do
+                player_moves = {}
                 moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
-                expect(rook_moves.find_rook_moves("b1")).to eq(moves)
+                expect(rook_moves.find_rook_moves("b1", player_moves)).to eq(moves)
             end
         end
 
@@ -122,17 +123,40 @@ describe Gameboard do
             subject(:rook_moves_2) { described_class.new }
 
             it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3', 'c5', 'c6', 'c7', 'c8']" do
+                player_moves = {}
                 moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"]
-                expect(rook_moves_2.find_rook_moves("c4")).to eq(moves)
+                expect(rook_moves_2.find_rook_moves("c4", player_moves)).to eq(moves)
             end
         end
 
         context "when white rook is at c4 with player's own peice obstructing at c5" do
             subject(:rook_blocked_once) { described_class.new }
-
+        #     let(:player_moves)  {
+        #         {
+        #         pawn1: "a2",
+        #         pawn2: "b2",
+        #         pawn3: "c2",
+        #         pawn4: "d2",
+        #         pawn5: "e2",
+        #         pawn6: "f2",
+        #         pawn7: "g2",
+        #         pawn8: "h2",
+        #         rook1: "a1",
+        #         knght1: "b1",
+        #         bish1: "c1",
+        #         queen: "d1",
+        #         King: "e1",
+        #         bish2: "f1",
+        #         knght2: "g1",
+        #         rook2: "h1"
+        #     }
+        # }
             it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3']" do
+                player_moves[:bish1] = "c4"
+                player_moves[:pawn3] = "d5"
+                player_moves[:bish2] = "c5"
                 moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3"]
-                expect(rook_blocked_once.find_rook_moves("c4")).to eq(moves)
+                expect(rook_blocked_once.find_rook_moves("c4", player_moves)).to eq(moves)
             end
         end
 
@@ -178,7 +202,7 @@ describe Gameboard do
 
             it "returns available moves at [b1, c2, d3, f5, g6, h7, h1, g2, f3, d5, c6, b7, a8, e1, e2, e3, e5, e6, e7, e8, a4, b4, c4, c5, c6, c7, c8]" do
                 moves = ["b1", "c2", "d3", "f5", "g6", "h7", "h1", "g2", "f3", "d5", "c6", "b7", "a8", "e1", "e2", "e3", "e5", "e6", "e7", "e8", "a4", "b4", "c4", "d4", "f4", "g4", "h4"].sort
-                expect(queen_moves.find_queen_moves("e4")). to eq(moves)
+                expect(queen_moves.find_queen_moves("e4", player_moves)). to eq(moves)
                 queen_moves.find_queen_moves("e4")
             end
         end
