@@ -114,8 +114,10 @@ describe Gameboard do
 
             it "returns ['a1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8']" do
                 player_moves = {}
+                opp_moves = {}
                 moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
-                expect(rook_moves.find_rook_moves("b1", player_moves)).to eq(moves)
+                expect(rook_moves.find_rook_moves("b1", player_moves, opp_moves)).to eq(moves)
+                rook_moves.find_rook_moves("b1", player_moves, opp_moves)
             end
         end
 
@@ -124,8 +126,10 @@ describe Gameboard do
 
             it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3', 'c5', 'c6', 'c7', 'c8']" do
                 player_moves = {}
+                opp_moves = {}
                 moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"]
-                expect(rook_moves_2.find_rook_moves("c4", player_moves)).to eq(moves)
+                expect(rook_moves_2.find_rook_moves("c4", player_moves, opp_moves)).to eq(moves)
+                rook_moves_2.find_rook_moves("c4", player_moves, opp_moves)
             end
         end
 
@@ -155,9 +159,10 @@ describe Gameboard do
                 player_moves[:bish1] = "c4"
                 player_moves[:pawn3] = "d5"
                 player_moves[:bish2] = "c5"
+                opp_moves = {}
                 moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3"]
-                expect(rook_blocked_once.find_rook_moves("c4", player_moves)).to eq(moves)
-                rook_blocked_once.find_rook_moves("c4", player_moves)
+                expect(rook_blocked_once.find_rook_moves("c4", player_moves, opp_moves)).to eq(moves)
+                rook_blocked_once.find_rook_moves("c4", player_moves, opp_moves)
             end
         end
 
@@ -168,9 +173,10 @@ describe Gameboard do
                 player_moves[:bish1] = "f4"
                 player_moves[:pawn3] = "d5"
                 player_moves[:bish2] = "c5"
+                opp_moves = {}
                 moves = ["a4", "b4","d4", "e4", "c1", "c2", "c3"]
-                expect(rook_blocked_twice.find_rook_moves("c4", player_moves)).to eq(moves)
-                rook_blocked_twice.find_rook_moves("c4", player_moves)
+                expect(rook_blocked_twice.find_rook_moves("c4", player_moves, opp_moves)).to eq(moves)
+                rook_blocked_twice.find_rook_moves("c4", player_moves, opp_moves)
             end
         end
 
