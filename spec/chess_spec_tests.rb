@@ -202,8 +202,10 @@ describe Gameboard do
             
             it "returns ['b2', 'b4', 'c1', 'c5', 'e1', 'e5', 'f2', 'f4']" do
                 moves = ["c1", "b2", "b4", "c5", "e5", "f4", "f2", "e1"].sort
-                expect(knight_moves.find_knight_moves("d3", opp_moves)).to eq(moves)
-                knight_moves.find_knight_moves("d3", opp_moves)
+                player_moves = {}
+                opp_moves = {}
+                expect(knight_moves.find_knight_moves("d3", player_moves, opp_moves)).to eq(moves)
+                knight_moves.find_knight_moves("d3", player_moves, opp_moves)
             end
         end
 
@@ -212,8 +214,24 @@ describe Gameboard do
 
             it "only returns moves on the board ['a1','a5', 'c1', 'c5', 'd2', 'd4']" do
                 moves = ["a1","a5", "c1", "c5", "d2", "d4"].sort
-                expect(knight_moves_bounds.find_knight_moves("b3", opp_moves)).to eq(moves)
-                knight_moves_bounds.find_knight_moves("b3", opp_moves)
+                player_moves = {}
+                opp_moves = {}
+                expect(knight_moves_bounds.find_knight_moves("b3", player_moves, opp_moves)).to eq(moves)
+                knight_moves_bounds.find_knight_moves("b3", player_moves, opp_moves)
+            end
+        end
+
+        context "when white knight is at b3 with own pieces at c1 and c5" do
+            subject(:knight_moves_block) { described_class.new }
+
+            it "only returns free moves on the board ['a1','a5', 'd2', 'd4']" do
+                player_moves[:pawn3] = "c5"
+                player_moves[:pawn4] = "d5"
+                player_moves[:rook1] = "a7"
+
+                moves = ["a1","a5", "d2", "d4"].sort
+                expect(knight_moves_block.find_knight_moves("b3", player_moves, opp_moves)).to eq(moves)
+                knight_moves_block.find_knight_moves("b3", player_moves, opp_moves)
             end
         end
     end
