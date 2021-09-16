@@ -267,19 +267,19 @@ class Gameboard
         end    
     end
 
-    def return_available_moves(piece, start_pt, opp_moves)
+    def return_available_moves(piece, start_pt, player_moves, opp_moves)
         if piece == "pawn"
-            find_pawn_moves(start_pt, opp_moves)
+            find_pawn_moves(start_pt, player_moves, opp_moves)
         elsif piece == "rook"
-            find_rook_moves(start_pt, player_moves)
+            find_rook_moves(start_pt, player_moves, opp_moves)
         elsif piece == "knight"
-            find_knight_moves(start_pt, opp_moves)
+            find_knight_moves(start_pt, player_moves, opp_moves)
         elsif piece == "bishop"
             find_bishop_moves(start_pt, player_moves, opp_moves)
         elsif piece == "queen"
-            find_queen_moves(start_pt)
+            find_queen_moves(start_pt, player_moves, opp_moves)
         elsif piece == "King"
-            find_king_moves(start_pt)
+            find_king_moves(start_pt, player_moves, opp_moves)
         end
     end
     
