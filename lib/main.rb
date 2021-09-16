@@ -166,6 +166,9 @@ class Gameboard
             move = i.chr + j.to_s
             if has_player_piece?(move, player_moves) && move !=start_pt
                 break
+            elsif has_opp_piece?(move, opp_moves)
+                moves.push(move)  
+                break
             else
                 moves.push(move)
             end
@@ -178,6 +181,9 @@ class Gameboard
             j -= 1
             move = i.chr + j.to_s
             if has_player_piece?(move, player_moves) && move !=start_pt
+                break
+            elsif has_opp_piece?(move, opp_moves)
+                moves.push(move)  
                 break
             else
                 moves.push(move)
@@ -193,6 +199,9 @@ class Gameboard
             move = i.chr + j.to_s
             if has_player_piece?(move, player_moves) && move !=start_pt
                 break
+            elsif has_opp_piece?(move, opp_moves)
+                moves.push(move)  
+                break
             else
                 moves.push(move)
             end
@@ -205,6 +214,9 @@ class Gameboard
             j -= 1
             move = i.chr + j.to_s
             if has_player_piece?(move, player_moves) && move !=start_pt
+                break
+            elsif has_opp_piece?(move, opp_moves)
+                moves.push(move)  
                 break
             else
                 moves.push(move)
