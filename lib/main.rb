@@ -153,7 +153,7 @@ class Gameboard
             
     end
 
-    def find_bishop_moves(start_pt)
+    def find_bishop_moves(start_pt, player_moves, opp_moves)
         split_point = start_pt.split(//)
         moves = []
         i = split_point[0].ord
@@ -199,7 +199,7 @@ class Gameboard
     end
 
     def find_queen_moves(start_pt, player_moves, opp_moves)
-        diagonal_lines = find_bishop_moves(start_pt)
+        diagonal_lines = find_bishop_moves(start_pt, player_moves, opp_moves)
         straight_lines = find_rook_moves(start_pt, player_moves, opp_moves)
         moves = diagonal_lines + straight_lines
         moves.sort
@@ -275,7 +275,7 @@ class Gameboard
         elsif piece == "knight"
             find_knight_moves(start_pt, opp_moves)
         elsif piece == "bishop"
-            find_bishop_moves(start_pt)
+            find_bishop_moves(start_pt, player_moves, opp_moves)
         elsif piece == "queen"
             find_queen_moves(start_pt)
         elsif piece == "King"

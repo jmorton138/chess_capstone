@@ -228,7 +228,6 @@ describe Gameboard do
                 player_moves[:pawn3] = "c5"
                 player_moves[:pawn4] = "d5"
                 player_moves[:rook1] = "a7"
-
                 moves = ["a1","a5", "d2", "d4"].sort
                 expect(knight_moves_block.find_knight_moves("b3", player_moves, opp_moves)).to eq(moves)
                 knight_moves_block.find_knight_moves("b3", player_moves, opp_moves)
@@ -242,10 +241,21 @@ describe Gameboard do
 
             it "returns available moves [b1, c2, d3, f5, g6, h7, h1, g2, f3, d5, c6, b7, a8]" do
                 moves = ["b1", "c2", "d3", "f5", "g6", "h7", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
-                expect(bishop_moves.find_bishop_moves("e4")).to eq(moves)
-                bishop_moves.find_bishop_moves("e4")
+                expect(bishop_moves.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
+                bishop_moves.find_bishop_moves("e4", player_moves, opp_moves)
             end
         end
+
+        context "when white bishop is at e4 with obstructing pieces at g6" do
+            subject(:bishop_blocked_once) { described_class.new }
+
+            it "returns available moves [b1, c2, d3, f5, h1, g2, f3, d5, c6, b7, a8]" do
+                moves = ["b1", "c2", "d3", "f5", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
+                expect(bishop_blocked_once.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
+                bishop_blocked_once.find_bishop_moves("e4", player_moves, opp_moves)
+            end
+        end
+
     end
 
     describe "#find_queen_moves" do
