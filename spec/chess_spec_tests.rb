@@ -248,16 +248,61 @@ describe Gameboard do
             end
         end
 
-        context "when white bishop is at e4 with obstructing pieces at g6" do
+        context "when white bishop is at e4 with player's own obstructing pieces at g6" do
             subject(:bishop_blocked_once) { described_class.new }
 
             it "returns available moves [b1, c2, d3, f5, h1, g2, f3, d5, c6, b7, a8]" do
                 moves = ["b1", "c2", "d3", "f5", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
+                player_moves[:pawn3] = "g6"
+                player_moves[:pawn7] = "g5"
+                player_moves[:rook2] ="h2"
+                player_moves[:knght1] = "b5"
                 expect(bishop_blocked_once.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
                 bishop_blocked_once.find_bishop_moves("e4", player_moves, opp_moves)
             end
         end
 
+        context "when white bishop is at e4 with player's own obstructing pieces at g6 and g2" do
+            subject(:bishop_blocked_twice) { described_class.new }
+
+            it "returns available moves [b1, c2, d3, f5, h1, g2, f3, d5, c6, b7, a8]" do
+                moves = ["b1", "c2", "d3", "f5", "f3", "d5", "c6", "b7", "a8"].sort
+                player_moves[:pawn3] = "g6"
+                player_moves[:knght2] = "g2"
+                player_moves[:knght1] = "b5"
+                expect(bishop_blocked_twice.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
+                bishop_blocked_twice.find_bishop_moves("e4", player_moves, opp_moves)
+            end
+        end
+
+        context "when white bishop is at e4 with player's own obstructing pieces at g6, g2, and b7" do
+            subject(:bishop_blocked_thrice) { described_class.new }
+
+            it "returns available moves [b1, c2, d3, f5, h1, g2, f3, d5, c6]" do
+                moves = ["b1", "c2", "d3", "f5", "f3", "d5", "c6"].sort
+                player_moves[:pawn3] = "g6"
+                player_moves[:knght2] = "g2"
+                player_moves[:rook1] = "b7"
+                player_moves[:knght1] = "b5"
+                expect(bishop_blocked_thrice.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
+                bishop_blocked_thrice.find_bishop_moves("e4", player_moves, opp_moves)
+            end
+        end
+
+        context "when white bishop is at e4 with player's own obstructing pieces at g6, g2, and b7" do
+            subject(:bishop_blocked_4) { described_class.new }
+
+            it "returns available moves [d3, f5, h1, g2, f3, d5, c6]" do
+                moves = ["d3", "f5", "f3", "d5", "c6"].sort
+                player_moves[:pawn4] = "g6"
+                player_moves[:knght2] = "g2"
+                player_moves[:rook1] = "b7"
+                player_moves[:pawn3] = "c2"
+                expect(bishop_blocked_4.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
+                bishop_blocked_4.find_bishop_moves("e4", player_moves, opp_moves)
+            end
+        end
+        
     end
 
     describe "#find_queen_moves" do

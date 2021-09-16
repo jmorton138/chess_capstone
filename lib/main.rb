@@ -54,7 +54,7 @@ class Gameboard
         puts ""
     end
 
-    def find_pawn_moves(start_pt, opp_moves)
+    def find_pawn_moves(start_pt, player_moves, opp_moves)
         #split starting point and increment column
         moves = []
         diag_moves = []
@@ -164,7 +164,11 @@ class Gameboard
             i += 1
             j += 1
             move = i.chr + j.to_s
-            moves.push(move)
+            if has_player_piece?(move, player_moves) && move !=start_pt
+                break
+            else
+                moves.push(move)
+            end
         end    
         #find down slope right moves
         i = split_point[0].ord
@@ -173,7 +177,11 @@ class Gameboard
             i += 1
             j -= 1
             move = i.chr + j.to_s
-            moves.push(move)
+            if has_player_piece?(move, player_moves) && move !=start_pt
+                break
+            else
+                moves.push(move)
+            end
         end
         
         #find up slope left moves
@@ -183,7 +191,11 @@ class Gameboard
             i -= 1
             j += 1
             move = i.chr + j.to_s
-            moves.push(move)
+            if has_player_piece?(move, player_moves) && move !=start_pt
+                break
+            else
+                moves.push(move)
+            end
         end
         #find down slope left moves
         i = split_point[0].ord
@@ -192,7 +204,11 @@ class Gameboard
             i -= 1
             j -= 1
             move = i.chr + j.to_s
-            moves.push(move)
+            if has_player_piece?(move, player_moves) && move !=start_pt
+                break
+            else
+                moves.push(move)
+            end
         end
         moves = moves.select {|item| grid.include?(item) }.sort
 
@@ -237,7 +253,7 @@ class Gameboard
         return false if player_moves.key(sliced[0]) == nil
         # determine type of chess piece
         piece_type = return_piece_type(sliced[0], player_moves)
-        valid_moves = return_available_moves(piece_type, sliced[0], opp_moves)
+        valid_moves = return_available_moves(piece_type, sliced[0], player_moves, opp_moves)
         #check if end point is in available moves returned from find_#{piece}_moves method
         if valid_moves.include?(sliced[1])
             return true
