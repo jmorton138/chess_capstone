@@ -233,7 +233,7 @@ class Gameboard
         moves.sort
     end
 
-    def find_king_moves(start_pt)
+    def find_king_moves(start_pt, player_moves, opp_moves)
         split_point = start_pt.split(//)
         paths = [[1, 1],
         [1, (-1)],
@@ -248,7 +248,7 @@ class Gameboard
             item[0] = (split_point[0].ord + item[0]).chr
             item[1] = (split_point[1].to_i + item[1]).to_s
             item = item.join()
-            if grid.include?(item) 
+            if grid.include?(item) && !has_player_piece?(item, player_moves)
                 sum.push(item)
             end
             sum

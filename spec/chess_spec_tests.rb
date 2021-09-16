@@ -380,6 +380,7 @@ describe Gameboard do
                 queen_moves.find_queen_moves("e4", player_moves, opp_moves)
             end
         end
+
     end
 
     describe "#find_king_moves" do
@@ -387,11 +388,55 @@ describe Gameboard do
             subject(:king_moves) { described_class.new }
 
             it "returns moves [d5, e5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = {}
+                opp_moves = {}
                 moves = ["d5", "e5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
-                expect(king_moves.find_king_moves("e4")).to eq(moves)
-                king_moves.find_king_moves("e4")
+                expect(king_moves.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
+                king_moves.find_king_moves("e4", player_moves, opp_moves)
             end
         end
+
+        #handle player pieces
+        context  "when white king is at e4 with obstructing piece at e5" do
+            subject(:king_blocked) { described_class.new }
+
+            it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = {}
+                player_moves[:pawn1] = "e5"
+                moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
+                expect(king_blocked.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
+                king_blocked.find_king_moves("e4", player_moves, opp_moves)
+            end
+        end
+
+        context  "when white king is at e4 with obstructing pieces at e5 and d4" do
+            subject(:king_blocked_twice) { described_class.new }
+
+            it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = {}
+                player_moves[:pawn1] = "e5"
+                player_moves[:knght2] = "d4"
+                moves = ["d5", "f5", "f4", "d3", "e3", "f3"].sort
+                expect(king_blocked_twice.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
+                king_blocked_twice.find_king_moves("e4", player_moves, opp_moves)
+            end
+        end
+
+        context  "when white king is at e4 with obstructing pieces at e5, e3 and d4" do
+            subject(:king_blocked_thrice) { described_class.new }
+
+            it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = {}
+                player_moves[:pawn1] = "e5"
+                player_moves[:knght2] = "d4"
+                player_moves[:bish1] = "e3"
+                moves = ["d5", "f5", "f4", "d3", "f3"].sort
+                expect(king_blocked_thrice.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
+                king_blocked_thrice.find_king_moves("e4", player_moves, opp_moves)
+            end
+        end
+                
+        #handle opponent pieces
     end
 
     describe "#validate_player_input" do
