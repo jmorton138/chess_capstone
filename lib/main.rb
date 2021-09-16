@@ -128,7 +128,7 @@ class Gameboard
 
     end
 
-    def find_knight_moves(start_pt, opp_moves)
+    def find_knight_moves(start_pt, player_moves, opp_moves)
         split_point = start_pt.split(//)
         paths = [
             [1, 2],
@@ -144,12 +144,13 @@ class Gameboard
                 item[0] = (split_point[0].ord + item[0]).chr
                 item[1] = (split_point[1].to_i + item[1]).to_s
                 item = item.join()
-                if grid.include?(item) 
+                if grid.include?(item) && !has_player_piece?(item, player_moves)
                     sum.push(item)
                 end
                 sum
             end
             moves.sort
+            
     end
 
     def find_bishop_moves(start_pt)
