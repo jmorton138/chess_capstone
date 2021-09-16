@@ -437,6 +437,18 @@ describe Gameboard do
         end
                 
         #handle opponent pieces
+        context "when white king is at e4 with opponent pieces adjacent at e5" do
+            subject(:king_with_check) { described_class.new }
+
+            it "returns moves [d5, f5, d4, f4, d3, e3, f3, e5]" do
+                player_moves = {}
+                opp_moves[:pawn1] = "e5"
+                moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
+                expect(king_with_check.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
+                king_with_check.find_king_moves("e4", player_moves, opp_moves)
+            end
+        end
+
     end
 
     describe "#validate_player_input" do
