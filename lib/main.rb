@@ -133,51 +133,6 @@ class Player
 
     end
 
-    def build_moves_hash(piece_color)
-
-        # if piece_color == "white"
-            # moves = {
-            #     pawn1: "a2",
-            #     pawn2: "b2",
-            #     pawn3: "c2",
-            #     pawn4: "d2",
-            #     pawn5: "e2",
-            #     pawn6: "f2",
-            #     pawn7: "g2",
-            #     pawn8: "h2",
-            #     rook1: "a1",
-            #     knght1: "b1",
-            #     bish1: "c1",
-            #     queen: "d1",
-            #     King: "e1",
-            #     bish2: "f1",
-            #     knght2: "g1",
-            #     rook2: "h1"
-            # }
- 
-        # elsif piece_color == "black"
-        #     moves = {
-        #         pawn1: "a7",
-        #         pawn2: "b7",
-        #         pawn3: "c7",
-        #         pawn4: "d7",
-        #         pawn5: "e7",
-        #         pawn6: "f7",
-        #         pawn7: "g7",
-        #         pawn8: "h7",
-        #         rook1: "a8",
-        #         knght1: "b8",
-        #         bish1: "c8",
-        #         queen: "d8",
-        #         King: "e8",
-        #         bish2: "f8",
-        #         knght2: "g8",
-        #         rook2: "h8"
-        #     }
-        # end
-        # moves
-    end
-
     def update_player_moves(start_pt, end_pt)
         key = nil
         moves.each do |item|
