@@ -129,7 +129,7 @@ class Player
             pawns << Piece.new(Pawn.new(i, position), piece_color)
             i += 1
         end 
-        pawns
+        pawns << Piece.new(Rook.new("a#{y-1}"), piece_color)
 
     end
 
@@ -164,13 +164,12 @@ class Checks
 end
 
 class Pawn < Piece
-    attr_accessor :id, :position
-    def initialize(id, position)
-        @id = id
+    attr_accessor :position
+    def initialize(position)
         @position = position
     end
 
-    def find_moves
+    def find_moves(opp_moves)
         start_pt = self.position
         moves = []
         diag_moves = []
@@ -194,18 +193,20 @@ class Pawn < Piece
         diag_l[1] = move_1[1]
         diag_l[0] = (diag_l[0].ord - 2).chr
         diag_l = diag_l.join()
-        # if opp_moves.key(diag_l) != nil
-        #     diag_moves.push(diag_l)
-        # end
-        # if opp_moves.key(diag_r) != nil
-        #     diag_moves.push(diag_r)
-        # end
+        if opp_moves.include?(diag_l)
+            diag_moves.push(diag_l)
+        end
+        if opp_moves.include?(diag_r)
+            diag_moves.push(diag_r)
+        end
         # diag_moves
-        # if opp_moves.key(move_1) != nil
-        #     moves = []
-        # end
+        if opp_moves.include?(move_1)
+            moves = []
+        elsif opp_moves.include?(move_2)
+            moves.delete(move_2)
+        end
         moves += diag_moves
-        p moves.sort
+        moves.sort
     end
 
     # def update_position(new_pos)
