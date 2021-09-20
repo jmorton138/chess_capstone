@@ -653,6 +653,16 @@ describe Player do
                 captured.capture?(move)
             end
         end
+
+        context "when player moves to unoccupied space" do
+            subject(:no_capture) { described_class.new("white") }
+
+            it "returns false" do
+                move = "a4a3"
+                expect(no_capture.capture?(move)).to eq(false)
+                no_capture.capture?(move)
+            end
+        end
     end
 #     describe "#update_player_moves" do
 #         context "when player moves knight1 from b1 to c3" do
