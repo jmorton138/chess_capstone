@@ -364,18 +364,24 @@ class Rook < Piece
         #x-axis moves
         x_axis.each do |letter|
             temp = letter + split_point[1]
-            # if has_player_piece?(temp, player_moves) && temp != start_pt
-            #     break
-            # else
-            #     moves.push(temp)
-            # end
-            moves.push(temp)
+            #return true if player_moves.key(space) != nil
+            if player_moves.include?(temp) && temp != start_pt
+            #if has_player_piece?(temp, player_moves) && temp != start_pt
+                break
+            else
+                moves.push(temp)
+            end
         end 
         #y-axis moves 
         y = 1
         until y > 8
             temp = split_point
             temp = temp[0] + y.to_s
+            if player_moves.include?(temp) && temp != start_pt
+                break
+            else
+                moves.push(temp)
+            end
             # if has_player_piece?(temp, player_moves) && temp != start_pt
             #     break
             # elsif has_opp_piece?(temp, opp_moves)
@@ -384,7 +390,6 @@ class Rook < Piece
             # else
             #     moves.push(temp) 
             # end
-            moves.push(temp) 
             y += 1 
         end
         moves = moves.uniq
