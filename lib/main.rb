@@ -399,21 +399,28 @@ class Rook < Piece
 end
 
 class Bishop < Piece
+    attr_accessor :position
 
-    def find_bishop_moves(start_pt, player_moves, opp_moves)
+    def initialize(position, piece_color)
+        @position = position
+        @piece_color = piece_color
+    end
+
+    def find_moves(player_moves, opp_moves)
+        start_pt = self.position
         split_point = start_pt.split(//)
         moves = []
         i = split_point[0].ord
         j = split_point[1].to_i
-        
+        grid = Gameboard.new.grid
         #find up slope right moves
         until j == 8
             i += 1
             j += 1
             move = i.chr + j.to_s
-            if has_player_piece?(move, player_moves) && move !=start_pt
+            if player_moves.include?(move) && move !=start_pt
                 break
-            elsif has_opp_piece?(move, opp_moves)
+            elsif opp_moves.include?(move) #has_opp_piece?(move, opp_moves)
                 moves.push(move)  
                 break
             else
@@ -427,9 +434,9 @@ class Bishop < Piece
             i += 1
             j -= 1
             move = i.chr + j.to_s
-            if has_player_piece?(move, player_moves) && move !=start_pt
+            if player_moves.include?(move) && move != start_pt 
                 break
-            elsif has_opp_piece?(move, opp_moves)
+            elsif opp_moves.include?(move)
                 moves.push(move)  
                 break
             else
@@ -444,9 +451,9 @@ class Bishop < Piece
             i -= 1
             j += 1
             move = i.chr + j.to_s
-            if has_player_piece?(move, player_moves) && move !=start_pt
+            if player_moves.include?(move) && move != start_pt 
                 break
-            elsif has_opp_piece?(move, opp_moves)
+            elsif opp_moves.include?(move)
                 moves.push(move)  
                 break
             else
@@ -460,9 +467,9 @@ class Bishop < Piece
             i -= 1
             j -= 1
             move = i.chr + j.to_s
-            if has_player_piece?(move, player_moves) && move !=start_pt
+            if player_moves.include?(move) && move != start_pt 
                 break
-            elsif has_opp_piece?(move, opp_moves)
+            elsif opp_moves.include?(move)
                 moves.push(move)  
                 break
             else
