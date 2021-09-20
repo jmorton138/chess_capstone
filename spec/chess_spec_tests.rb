@@ -134,16 +134,17 @@ describe Pawn do
         end
 
 #         #handle diagonals in both directions"
-#         context "when black pawn is at c6 and has opponnent's pawn at diagonal d5" do
-#             subject(:opp_p2_pawn_at_diag) { described_class.new }
+        context "when black pawn is at c6 and has opponnent's pawn at diagonal d5" do
+            subject(:opp_p2_pawn_at_diag) { described_class.new("c6", "black")}
 
-#             it "adds d5 to available moves" do
-#                 opp_moves[:pawn3] = "d5"
-#                 moves = ["c5", "d5"].sort
-#                 expect(opp_p2_pawn_at_diag.find_moves("c6", player_moves, opp_moves)).to eq(moves)
-#                 opp_p2_pawn_at_diag.find_moves("c6", player_moves, opp_moves)
-#             end
-#         end
+            it "adds d5 to available moves" do
+                opp_moves = ["d5"]
+                player_moves = []
+                moves = ["c5", "d5"].sort
+                expect(opp_p2_pawn_at_diag.find_moves(player_moves, opp_moves)).to eq(moves)
+                opp_p2_pawn_at_diag.find_moves(player_moves, opp_moves)
+            end
+        end
 #         context "when black pawn is at c7 and has opponnent's pawns at diagonal d6 and diagonal b6" do
 #             subject(:opp_p2_pawns_at_diags) { described_class.new }
 
