@@ -24,7 +24,6 @@ describe Pawn do
             end
         end
         
-        # handles being blocked by opponnents piece
         context "when white pawn at c2 is blocked by opponent piece at c3" do
             subject(:blocked_pawn) { described_class.new("c2", "white") }
 
@@ -36,7 +35,6 @@ describe Pawn do
             end
         end
 
-#         #handle diagonals in both directions"
         context "when white pawn has opponnent's pawn at diagonal d3" do
             subject(:opp_pawn_at_diag) { described_class.new("c2", "white") }
 
@@ -95,19 +93,6 @@ describe Pawn do
             end
         end
 
-#     end
-# ##############################
-
-        # context "when black pawn starts at a7 with no pawns at diagonal" do
-        #     subject(:simple_p2_pawn_move) { described_class.new("a7", "black") }
-        #     opp_moves = []
-        #     player_moves = ["a7"]
-        #     it "returns a6" do
-        #         expect(simple_p2_pawn_move.find_moves(player_moves, opp_moves)).to eq(["a6"])
-        #         simple_p2_pawn_move.find_moves(player_moves, opp_moves)
-        #     end
-        # end
-
         context "when black pawn makes first move at c7 with no pawns at diagonal" do
             subject(:init_p2_pawn) { described_class.new("c7", "black") }
             
@@ -120,7 +105,6 @@ describe Pawn do
             end
         end
         
-#         #handles being blocked by opponnents piece
         context "when black pawn at c7 is blocked by piece at c6" do
             subject(:blocked_p2_pawn) { described_class.new("c7", "black") }
   
@@ -133,7 +117,6 @@ describe Pawn do
             end
         end
 
-#         #handle diagonals in both directions"
         context "when black pawn is at c6 and has opponnent's pawn at diagonal d5" do
             subject(:opp_p2_pawn_at_diag) { described_class.new("c6", "black")}
 
@@ -174,47 +157,7 @@ describe Pawn do
 end
 
 # describe Gameboard do
-#     let(:opp_moves) {
-#         {
-#         pawn1: "a7",
-#         pawn2: "b7",
-#         pawn3: "c7",
-#         pawn4: "d7",
-#         pawn5: "e7",
-#         pawn6: "f7",
-#         pawn7: "g7",
-#         pawn8: "h7",
-#         rook1: "a8",
-#         knght1: "b8",
-#         bish1: "c8",
-#         queen: "d8",
-#         King: "e8",
-#         bish2: "f8",
-#         knght2: "g8",
-#         rook2: "h8"
-#     }
-#     }
 
-#     let(:player_moves)  {
-#                 {
-#                 pawn1: "a2",
-#                 pawn2: "b2",
-#                 pawn3: "c2",
-#                 pawn4: "d2",
-#                 pawn5: "e2",
-#                 pawn6: "f2",
-#                 pawn7: "g2",
-#                 pawn8: "h2",
-#                 rook1: "a1",
-#                 knght1: "b1",
-#                 bish1: "c1",
-#                 queen: "d1",
-#                 King: "e1",
-#                 bish2: "f1",
-#                 knght2: "g1",
-#                 rook2: "h1"
-#             }
-#         }
     
 #     describe "#find_rook_moves" do
 #         context "when white rook is at b1 with no obstructions" do
@@ -699,7 +642,18 @@ end
 #     end
 # end
 
-# describe Player do
+describe Player do
+    describe "#capture_check" do
+        context "when player moves to space occupied by opponent" do
+            subject(:captured) { described_class.new("white") }
+
+            it "changes end point a2 to 'captured'" do
+                move = "a3a2"
+                expect{ captured.capture?(move) }.to change { captured.pieces[0].type.position }.from("a2").to("captured")
+                captured.capture?(move)
+            end
+        end
+    end
 #     describe "#update_player_moves" do
 #         context "when player moves knight1 from b1 to c3" do
 #             subject(:update_player_moves) { described_class.new("white") }
@@ -723,7 +677,7 @@ end
 #             expect{ update_player_moves_bishop.update_player_moves(start_pt, end_pt) }.to change{ moves[:bish2] }.from("f1").to("d3")
 #         end
 #     end
-# end
+end
 
 
 
