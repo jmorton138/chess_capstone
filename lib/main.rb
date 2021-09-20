@@ -152,8 +152,14 @@ class Player
         end
         false
     end
-    # def return_player_moves_array
-    # end
+
+    def return_moves_array
+        array = []
+        self.pieces.map do |piece|
+            array << piece.type.position
+        end
+        array
+    end
 
 end
 
