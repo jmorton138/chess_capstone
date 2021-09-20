@@ -4,86 +4,106 @@ describe Pawn do
     describe "#find_moves" do
         
         context "when white pawn starts at a3 with no pawns at diagonal" do
-            subject(:simple_pawn_move) { described_class.new("a3") }
+            subject(:simple_pawn_move) { described_class.new("a3", "white") }
             
             it "returns a4" do
                 opp_moves = []
-                expect(simple_pawn_move.find_moves(opp_moves)).to eq(["a4"])
-                simple_pawn_move.find_moves(opp_moves)
+                player_moves = ["a3"]
+                expect(simple_pawn_move.find_moves(player_moves, opp_moves)).to eq(["a4"])
+                simple_pawn_move.find_moves(player_moves, opp_moves)
             end
         end
         
         context "when white pawn start makes first move at c2 with no pawns at diagonal" do
-            subject(:init_pawn) { described_class.new("c2") }
+            subject(:init_pawn) { described_class.new("c2", "white") }
             it "returns ['c3', 'c4']" do
                 opp_moves = []
-                expect(init_pawn.find_moves(opp_moves)).to eq(["c3", "c4"])
-                init_pawn.find_moves(opp_moves)
+                player_moves = ["c2"]
+                expect(init_pawn.find_moves(player_moves, opp_moves)).to eq(["c3", "c4"])
+                init_pawn.find_moves(player_moves, opp_moves)
             end
         end
         
         # handles being blocked by opponnents piece
         context "when white pawn at c2 is blocked by opponent piece at c3" do
-            subject(:blocked_pawn) { described_class.new("c2") }
+            subject(:blocked_pawn) { described_class.new("c2", "white") }
 
             it "returns empty array, no valid moves" do
                 opp_moves = ["c3"]
-                expect(blocked_pawn.find_moves(opp_moves)).to eq([])
-                blocked_pawn.find_moves(opp_moves)
+                player_moves = ["c2"]
+                expect(blocked_pawn.find_moves(player_moves, opp_moves)).to eq([])
+                blocked_pawn.find_moves(player_moves, opp_moves)
             end
         end
 
 #         #handle diagonals in both directions"
         context "when white pawn has opponnent's pawn at diagonal d3" do
-            subject(:opp_pawn_at_diag) { described_class.new("c2") }
+            subject(:opp_pawn_at_diag) { described_class.new("c2", "white") }
 
             it "adds d3 to available moves" do
                 opp_moves = ["d3"]
+                player_moves = ["c2"]
                 moves = ["c3", "c4", "d3"]
-                expect(opp_pawn_at_diag.find_moves(opp_moves)).to eq(moves)
-                opp_pawn_at_diag.find_moves(opp_moves)
+                expect(opp_pawn_at_diag.find_moves(player_moves, opp_moves)).to eq(moves)
+                opp_pawn_at_diag.find_moves(player_moves, opp_moves)
             end
         end
 
         context "when white pawn has opponnent's pawns at diagonal d3 and diagonal b3" do
-            subject(:opp_pawns_at_diags) { described_class.new("c2") }
+            subject(:opp_pawns_at_diags) { described_class.new("c2", "white") }
 
             it "adds b3 and d3 to available moves" do
                 opp_moves = ["d3", "b3"]
+                player_moves = ["c2"]
                 moves = ["b3", "c3", "c4", "d3"]
-                expect(opp_pawns_at_diags.find_moves(opp_moves)).to eq(moves)
-                opp_pawns_at_diags.find_moves(opp_moves)
+                expect(opp_pawns_at_diags.find_moves(player_moves, opp_moves)).to eq(moves)
+                opp_pawns_at_diags.find_moves(player_moves, opp_moves)
             end
         end
 
         context "when white pawn has opponnent's pawns at diagonal d3, diagonal b3, and blocked at c3" do
-            subject(:opp_pawns_at_diags_block) { described_class.new ("c2")}
+            subject(:opp_pawns_at_diags_block) { described_class.new("c2", "white") }
 
             it "adds b3 and d3 to available moves" do
                 opp_moves = ["d3", "b3", "c3"]
+                player_moves = ["c2"]
                 moves = ["b3", "d3"]
-                expect(opp_pawns_at_diags_block.find_moves(opp_moves)).to eq(moves)
-                opp_pawns_at_diags_block.find_moves(opp_moves)
+                expect(opp_pawns_at_diags_block.find_moves(player_moves, opp_moves)).to eq(moves)
+                opp_pawns_at_diags_block.find_moves(player_moves, opp_moves)
             end
         end
+
+        context "When white pawn has own piece one space ahead with no opp diagonal pieces" do 
+            subject(:pawn_self_block) { described_class.new("c2", "white") }
+
+            it "returns empty array" do
+                opp_moves = []
+                player_moves = ["c3"]
+                expect(pawn_self_block.find_moves(player_moves, opp_moves)).to eq([])
+                pawn_self_block.find_moves(player_moves, opp_moves)
+            end
+        end
+        
 
 
 #     end
 # ##############################
-#     describe "#find_p2_pawn_moves" do 
-#         # context "when black pawn starts at a7 with no pawns at diagonal" do
-#         #     subject(:simple_p2_pawn_move) { described_class.new }
-#         #     it "returns a6" do
-#         #         expect(simple_p2_pawn_move.find_p2_pawn_moves("a7", player_moves, opp_moves)).to eq(["a6"])
-#         #         simple_p2_pawn_move.find_p2_pawn_moves("a7", player_moves, opp_moves)
-#         #     end
-#         # end
+
+        context "when black pawn starts at a7 with no pawns at diagonal" do
+            subject(:simple_p2_pawn_move) { described_class.new("a7", "black") }
+            opp_moves = []
+            player_moves = ["a7"]
+            it "returns a6" do
+                expect(simple_p2_pawn_move.find_moves(player_moves, opp_moves)).to eq(["a6"])
+                simple_p2_pawn_move.find_moves(player_moves, opp_moves)
+            end
+        end
 
 #         context "when black pawn start makes first move at c7 with no pawns at diagonal" do
 #             subject(:init_p2_pawn) { described_class.new }
 #             it "returns ['c5', 'c6']" do
-#                 expect(init_p2_pawn.find_p2_pawn_moves("c7", player_moves, opp_moves)).to eq(["c5", "c6"])
-#                 init_p2_pawn.find_p2_pawn_moves("c7", player_moves, opp_moves)
+#                 expect(init_p2_pawn.find_moves("c7", player_moves, opp_moves)).to eq(["c5", "c6"])
+#                 init_p2_pawn.find_moves("c7", player_moves, opp_moves)
 #             end
 #         end
         
@@ -93,8 +113,8 @@ describe Pawn do
   
 #             it "returns empty array, no valid moves" do
 #                 opp_moves[:pawn3] = "c6"
-#                 expect(blocked_p2_pawn.find_p2_pawn_moves("c7", player_moves, opp_moves)).to eq([])
-#                 blocked_p2_pawn.find_p2_pawn_moves("c7", player_moves, opp_moves)
+#                 expect(blocked_p2_pawn.find_moves("c7", player_moves, opp_moves)).to eq([])
+#                 blocked_p2_pawn.find_moves("c7", player_moves, opp_moves)
 #             end
 #         end
 
@@ -105,8 +125,8 @@ describe Pawn do
 #             it "adds d5 to available moves" do
 #                 opp_moves[:pawn3] = "d5"
 #                 moves = ["c5", "d5"].sort
-#                 expect(opp_p2_pawn_at_diag.find_p2_pawn_moves("c6", player_moves, opp_moves)).to eq(moves)
-#                 opp_p2_pawn_at_diag.find_p2_pawn_moves("c6", player_moves, opp_moves)
+#                 expect(opp_p2_pawn_at_diag.find_moves("c6", player_moves, opp_moves)).to eq(moves)
+#                 opp_p2_pawn_at_diag.find_moves("c6", player_moves, opp_moves)
 #             end
 #         end
 #         context "when black pawn is at c7 and has opponnent's pawns at diagonal d6 and diagonal b6" do
@@ -116,8 +136,8 @@ describe Pawn do
 #                 opp_moves[:pawn3] = "d6"
 #                 opp_moves[:pawn4] = "b6"
 #                 moves = ["b6", "c6", "c5", "d6"].sort
-#                 expect(opp_p2_pawns_at_diags.find_p2_pawn_moves("c7", player_moves, opp_moves)).to eq(moves)
-#                 opp_p2_pawns_at_diags.find_p2_pawn_moves("c7", player_moves, opp_moves)
+#                 expect(opp_p2_pawns_at_diags.find_moves("c7", player_moves, opp_moves)).to eq(moves)
+#                 opp_p2_pawns_at_diags.find_moves("c7", player_moves, opp_moves)
 #             end
 #         end
 #         context "when black pawn is at c4 and has opponnent's pawns at diagonal d3, diagonal b3, and blocked at c3" do
@@ -128,11 +148,11 @@ describe Pawn do
 #                 opp_moves[:pawn4] = "b3"
 #                 opp_moves[:pawn5] = "c3"
 #                 moves = ["b3", "d3"]
-#                 expect(opp_p2_pawns_at_diags_block.find_p2_pawn_moves("c4", player_moves, opp_moves)).to eq(moves)
-#                 opp_p2_pawns_at_diags_block.find_p2_pawn_moves("c4", player_moves, opp_moves)
+#                 expect(opp_p2_pawns_at_diags_block.find_moves("c4", player_moves, opp_moves)).to eq(moves)
+#                 opp_p2_pawns_at_diags_block.find_moves("c4", player_moves, opp_moves)
 #             end
 #         end
-#     end
+
     end
 end
 
