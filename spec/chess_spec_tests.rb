@@ -156,21 +156,19 @@ describe Pawn do
     end
 end
 
-# describe Gameboard do
+describe Rook do
+        describe "#find_rook_moves" do
+        context "when white rook is at b1 with no obstructions" do
+            subject(:rook_moves) { described_class.new("b1", "white") }
 
-    
-#     describe "#find_rook_moves" do
-#         context "when white rook is at b1 with no obstructions" do
-#             subject(:rook_moves) { described_class.new }
-
-#             it "returns ['a1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8']" do
-#                 player_moves = {}
-#                 opp_moves = {}
-#                 moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
-#                 expect(rook_moves.find_rook_moves("b1", player_moves, opp_moves)).to eq(moves)
-#                 rook_moves.find_rook_moves("b1", player_moves, opp_moves)
-#             end
-#         end
+            it "returns ['a1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8']" do
+                player_moves = []
+                opp_moves = []
+                moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
+                expect(rook_moves.find_moves(player_moves, opp_moves)).to eq(moves)
+                rook_moves.find_moves(player_moves, opp_moves)
+            end
+        end
 
 #         context "when white rook is at c4 with no obstructions" do
 #             subject(:rook_moves_2) { described_class.new }
@@ -245,7 +243,14 @@ end
 #             end
 #         end
 
-#     end
+    end
+
+end
+
+# describe Gameboard do
+
+    
+
 
 #     describe "#find_knight_moves" do
 #         context "when white knight is at d3 with no obstructions" do
@@ -664,18 +669,27 @@ describe Player do
             end
         end
     end
-#     describe "#update_player_moves" do
-#         context "when player moves knight1 from b1 to c3" do
-#             subject(:update_player_moves) { described_class.new("white") }
 
-#             it "updates Player instance of knight1 from b1 to c3" do
-#                 moves = update_player_moves.moves
-#                 start_pt = "b1"
-#                 end_pt = "c3"
-#                 expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ moves[:knght1] }.from("b1").to("c3")
-#             end
-#         end
-#     end
+    describe "#return_king_moves_checks_array" do
+    end
+    describe "#checks_array_after_move" do
+    end
+
+
+
+
+    # describe "#update_player_moves" do
+    #     context "when player moves knight1 from b1 to c3" do
+    #         subject(:update_player_moves) { described_class.new("white") }
+
+    #         it "updates Player instance of knight1 from b1 to c3" do
+    #             moves = update_player_moves.moves
+    #             start_pt = "b1"
+    #             end_pt = "c3"
+    #             expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ moves[:knght1] }.from("b1").to("c3")
+    #         end
+    #     end
+    # end
 
 #     context "when player moves knight1 from f1 to d3" do
 #         subject(:update_player_moves_bishop) { described_class.new("white") }

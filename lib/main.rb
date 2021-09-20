@@ -269,10 +269,6 @@ class Pawn < Piece
         moves.sort
     end
 
-    # def update_position(new_pos)
-    #     self.position = new_pos
-    # end
-
     def find_p1_pawn_moves(start_pt, player_moves, opp_moves)
         #split starting point and increment column
         moves = []
@@ -354,15 +350,13 @@ end
 
 class Rook < Piece
     attr_accessor :position
-    def initialize(position)
+    def initialize(position, piece_color)
         @position = position
+        @piece_color = piece_color
     end
 
-    def test
-        puts "nope"
-    end
-
-    def find_rook_moves(start_pt, player_moves, opp_moves)
+    def find_moves(player_moves, opp_moves)
+        start_pt = self.position
         moves = []
         split_point = start_pt.split(//)
         x = 1
@@ -370,25 +364,27 @@ class Rook < Piece
         #x-axis moves
         x_axis.each do |letter|
             temp = letter + split_point[1]
-            if has_player_piece?(temp, player_moves) && temp != start_pt
-                break
-            else
-                moves.push(temp)
-            end
+            # if has_player_piece?(temp, player_moves) && temp != start_pt
+            #     break
+            # else
+            #     moves.push(temp)
+            # end
+            moves.push(temp)
         end 
         #y-axis moves 
         y = 1
         until y > 8
             temp = split_point
             temp = temp[0] + y.to_s
-            if has_player_piece?(temp, player_moves) && temp !=start_pt
-                break
-            elsif has_opp_piece?(temp, opp_moves)
-                moves.push(temp)  
-                break
-            else
-                moves.push(temp) 
-            end
+            # if has_player_piece?(temp, player_moves) && temp != start_pt
+            #     break
+            # elsif has_opp_piece?(temp, opp_moves)
+            #     moves.push(temp)  
+            #     break
+            # else
+            #     moves.push(temp) 
+            # end
+            moves.push(temp) 
             y += 1 
         end
         moves = moves.uniq
