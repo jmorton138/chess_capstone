@@ -141,6 +141,17 @@ class Player
         moves[key] = end_pt
     end
 
+    def capture?(move)
+        split = move.split(//)
+        end_pt = split[2] + split[3]
+        self.pieces.each do |piece|
+            if piece.type.position == end_pt
+                piece.type.position = "captured"
+                return
+            end
+        end
+        false
+    end
     # def return_player_moves_array
     # end
 
@@ -148,7 +159,6 @@ end
 
 
 class Piece 
-
     attr_reader :type
     attr_accessor :type, :color
 
@@ -156,8 +166,6 @@ class Piece
         @type = type
         @color = color
     end
-
-
 end
 
 class Moves
@@ -186,9 +194,9 @@ class Pawn < Piece
         move_1[1] = (move_1[1].to_i + y).to_s
         move_1 = move_1.join()
         moves.push(move_1)
-        if start_pt.split(//)[1] == "2"
+        if start_pt.split(//)[1] == "2" || start_pt.split(//)[1] == "7"
             move_2 = start_pt.split(//)
-            move_2[1] = (move_2[1].to_i + 2).to_s
+            move_2[1] = (move_2[1].to_i + (2*y)).to_s
             move_2 = move_2.join()
             moves.push(move_2)
         end
