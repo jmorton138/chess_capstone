@@ -476,8 +476,15 @@ class Bishop < Piece
 end
 
 class Knight < Piece
+    attr_accessor :position
 
-    def find_knight_moves(start_pt, player_moves, opp_moves)
+    def initialize(position, piece_color)
+        @position = position
+        @piece_color = piece_color
+    end
+
+    def find_moves(player_moves, opp_moves)
+        start_pt = self.position
         split_point = start_pt.split(//)
         paths = [
             [1, 2],
@@ -493,7 +500,7 @@ class Knight < Piece
                 item[0] = (split_point[0].ord + item[0]).chr
                 item[1] = (split_point[1].to_i + item[1]).to_s
                 item = item.join()
-                if grid.include?(item) && !has_player_piece?(item, player_moves)
+                if !player_moves.include?(item) #&& grid.include?(item) 
                     sum.push(item)
                 end
                 sum
