@@ -126,7 +126,7 @@ class Player
         self.piece_color == "black" ? y = 7 : y
         x_axis.each do |letter|
             position = letter + y.to_s
-            pawns << Piece.new(Pawn.new(i, position), piece_color)
+            pawns << Piece.new(Pawn.new(position, piece_color), piece_color)
             i += 1
         end 
         pawns << Piece.new(Rook.new("a#{y-1}"), piece_color)
@@ -140,6 +140,9 @@ class Player
         end 
         moves[key] = end_pt
     end
+
+    # def return_player_moves_array
+    # end
 
 end
 
@@ -165,18 +168,22 @@ end
 
 class Pawn < Piece
     attr_accessor :position
-    def initialize(position)
+    attr_reader :piece_color
+    def initialize(position, piece_color)
         @position = position
+        @piece_color = piece_color
     end
 
-    def find_moves(opp_moves)
+    def find_moves(player_moves, opp_moves)
         start_pt = self.position
         moves = []
         diag_moves = []
         move_1 = start_pt.split(//)
         diag_r = move_1
         diag_l = move_1
-        move_1[1] = (move_1[1].to_i + 1).to_s
+        y = 1
+        self.piece_color == "white" ? y : y = (-1)
+        move_1[1] = (move_1[1].to_i + y).to_s
         move_1 = move_1.join()
         moves.push(move_1)
         if start_pt.split(//)[1] == "2"
@@ -200,9 +207,9 @@ class Pawn < Piece
             diag_moves.push(diag_r)
         end
         # diag_moves
-        if opp_moves.include?(move_1)
+        if opp_moves.include?(move_1) || player_moves.include?(move_1)
             moves = []
-        elsif opp_moves.include?(move_2)
+        elsif opp_moves.include?(move_2) || player_moves.include?(move_2)
             moves.delete(move_2)
         end
         moves += diag_moves
