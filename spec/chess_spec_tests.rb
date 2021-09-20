@@ -251,31 +251,21 @@ describe Knight do
             knight_moves_bounds.find_moves(player_moves, opp_moves)
         end
     end
+    context "when white knight is at b3 with own pieces at c1 and c5" do
+        subject(:knight_moves_block) { described_class.new("b3", "white") }
+
+        it "only returns free moves on the board ['a1','a5', 'd2', 'd4']" do
+            player_moves = ["c1" , "c5"]
+            opp_moves = []
+            moves = ["a1","a5", "d2", "d4"].sort
+            expect(knight_moves_block.find_moves(player_moves, opp_moves)).to eq(moves)
+            knight_moves_block.find_moves(player_moves, opp_moves)
+        end
+    end
+
 end
 
 # describe Gameboard do
-
-    
-
-
-#     describe "#find_knight_moves" do
-
-
-
-
-#         context "when white knight is at b3 with own pieces at c1 and c5" do
-#             subject(:knight_moves_block) { described_class.new }
-
-#             it "only returns free moves on the board ['a1','a5', 'd2', 'd4']" do
-#                 player_moves[:pawn3] = "c5"
-#                 player_moves[:pawn4] = "d5"
-#                 player_moves[:rook1] = "a7"
-#                 moves = ["a1","a5", "d2", "d4"].sort
-#                 expect(knight_moves_block.find_knight_moves("b3", player_moves, opp_moves)).to eq(moves)
-#                 knight_moves_block.find_knight_moves("b3", player_moves, opp_moves)
-#             end
-#         end
-#     end
 
 #     describe "#find_bishop_moves" do
 #         context "when white bishop is at e4 with no obstructing pieces" do
