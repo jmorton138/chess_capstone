@@ -170,17 +170,17 @@ describe Rook do
             end
         end
 
-#         context "when white rook is at c4 with no obstructions" do
-#             subject(:rook_moves_2) { described_class.new }
+        context "when white rook is at c4 with no obstructions" do
+            subject(:rook_moves_2) { described_class.new("c4", "white") }
 
-#             it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3', 'c5', 'c6', 'c7', 'c8']" do
-#                 player_moves = {}
-#                 opp_moves = {}
-#                 moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"]
-#                 expect(rook_moves_2.find_rook_moves("c4", player_moves, opp_moves)).to eq(moves)
-#                 rook_moves_2.find_rook_moves("c4", player_moves, opp_moves)
-#             end
-#         end
+            it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3', 'c5', 'c6', 'c7', 'c8']" do
+                player_moves = []
+                opp_moves = []
+                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"]
+                expect(rook_moves_2.find_moves(player_moves, opp_moves)).to eq(moves)
+                rook_moves_2.find_moves(player_moves, opp_moves)
+            end
+        end
 
 #         context "when white rook is at c4 with player's own peice obstructing at c5" do
 #             subject(:rook_blocked_once) { described_class.new }
