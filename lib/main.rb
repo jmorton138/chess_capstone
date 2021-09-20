@@ -170,9 +170,7 @@ class Player
 
         #all of moves opponent could make on next turn
         opponent.pieces.each do |piece|
-            if piece != self
-                potential_moves << piece.type.find_moves(player_moves, opp_moves)
-            end
+            potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
         potential_moves.flatten
         ## is end_pt of king in potential_moves array
@@ -195,6 +193,14 @@ class Player
             end
         end
         #build array with this updated move
+        potential_moves = []
+        player_moves = dummy_player.pieces.map {|item| item.type.position}
+        opp_moves = opponent.return_moves_array
+        #all of moves opponent could make on next turn
+        opponent.pieces.each do |piece|  
+            potential_moves << piece.type.find_moves(opp_moves, player_moves)
+        end
+        potential_moves.flatten
     end
 
 end
