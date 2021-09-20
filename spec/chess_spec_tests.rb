@@ -228,17 +228,28 @@ end
 describe Knight do
     describe "#find_moves" do
         context "when white knight is at d3 with no obstructions" do
-        subject(:knight_moves) { described_class.new("d3", "white") }
+            subject(:knight_moves) { described_class.new("d3", "white") }
         
-        it "returns ['b2', 'b4', 'c1', 'c5', 'e1', 'e5', 'f2', 'f4']" do
-            moves = ["c1", "b2", "b4", "c5", "e5", "f4", "f2", "e1"].sort
-            player_moves = []
-            opp_moves = []
-            expect(knight_moves.find_moves(player_moves, opp_moves)).to eq(moves)
-            knight_moves.find_moves(player_moves, opp_moves)
+            it "returns ['b2', 'b4', 'c1', 'c5', 'e1', 'e5', 'f2', 'f4']" do
+                moves = ["c1", "b2", "b4", "c5", "e5", "f4", "f2", "e1"].sort
+                player_moves = []
+                opp_moves = []
+                expect(knight_moves.find_moves(player_moves, opp_moves)).to eq(moves)
+                knight_moves.find_moves(player_moves, opp_moves)
+            end
         end
     end
 
+    context "when white knight  is at b3" do
+        subject(:knight_moves_bounds) { described_class.new("b3", "white") }
+
+        it "only returns moves on the board ['a1','a5', 'c1', 'c5', 'd2', 'd4']" do
+            moves = ["a1","a5", "c1", "c5", "d2", "d4"].sort
+            player_moves = []
+            opp_moves = []
+            expect(knight_moves_bounds.find_moves(player_moves, opp_moves)).to eq(moves)
+            knight_moves_bounds.find_moves(player_moves, opp_moves)
+        end
     end
 end
 
@@ -250,17 +261,7 @@ end
 #     describe "#find_knight_moves" do
 
 
-#         context "when white knight  is at b3" do
-#             subject(:knight_moves_bounds) { described_class.new }
 
-#             it "only returns moves on the board ['a1','a5', 'c1', 'c5', 'd2', 'd4']" do
-#                 moves = ["a1","a5", "c1", "c5", "d2", "d4"].sort
-#                 player_moves = {}
-#                 opp_moves = {}
-#                 expect(knight_moves_bounds.find_knight_moves("b3", player_moves, opp_moves)).to eq(moves)
-#                 knight_moves_bounds.find_knight_moves("b3", player_moves, opp_moves)
-#             end
-#         end
 
 #         context "when white knight is at b3 with own pieces at c1 and c5" do
 #             subject(:knight_moves_block) { described_class.new }
