@@ -157,18 +157,18 @@ describe Pawn do
                 opp_p2_pawns_at_diags.find_moves(player_moves, opp_moves)
             end
         end
-#         context "when black pawn is at c4 and has opponnent's pawns at diagonal d3, diagonal b3, and blocked at c3" do
-#             subject(:opp_p2_pawns_at_diags_block) { described_class.new }
 
-#             it "adds b3 and d3 to available moves" do
-#                 opp_moves[:pawn3] = "d3"
-#                 opp_moves[:pawn4] = "b3"
-#                 opp_moves[:pawn5] = "c3"
-#                 moves = ["b3", "d3"]
-#                 expect(opp_p2_pawns_at_diags_block.find_moves("c4", player_moves, opp_moves)).to eq(moves)
-#                 opp_p2_pawns_at_diags_block.find_moves("c4", player_moves, opp_moves)
-#             end
-#         end
+        context "when black pawn is at c4 and has opponnent's pawns at diagonal d3, diagonal b3, and blocked at c3" do
+            subject(:opp_p2_pawns_at_diags_block) { described_class.new("c4", "black") }
+
+            it "adds b3 and d3 to available moves" do
+                opp_moves = ["d3", "b3", "c3"]
+                player_moves = []
+                moves = ["b3", "d3"]
+                expect(opp_p2_pawns_at_diags_block.find_moves(player_moves, opp_moves)).to eq(moves)
+                opp_p2_pawns_at_diags_block.find_moves(player_moves, opp_moves)
+            end
+        end
 
     end
 end
