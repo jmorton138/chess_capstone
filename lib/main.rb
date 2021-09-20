@@ -129,10 +129,11 @@ class Player
             pawns << Piece.new(Pawn.new(position, piece_color), piece_color)
             i += 1
         end 
-        pawns << Piece.new(Rook.new("a#{y-1}"), piece_color)
+        pawns << Piece.new(King.new("a#{y+4}", piece_color), piece_color)
 
     end
 
+    ##needs updating
     def update_player_moves(start_pt, end_pt)
         key = nil
         moves.each do |item|
@@ -161,6 +162,41 @@ class Player
         array
     end
 
+    # king moving to a space where is check
+    def return_king_moves_checks_array(opponent)
+        potential_moves = []
+        player_moves = self.return_moves_array
+        opp_moves = opponent.return_moves_array
+
+        #all of moves opponent could make on next turn
+        opponent.pieces.each do |piece|
+            if piece != self
+                potential_moves << piece.type.find_moves(player_moves, opp_moves)
+            end
+        end
+        potential_moves.flatten
+        ## is end_pt of king in potential_moves array
+    end
+
+    # if another piece moving to end_pt puts king in check
+    def checks_array_after_move(move, opponent)
+        split = move.split(//)
+        start_pt = split[0] + split[1]
+        end_pt = split[2] + split[3]
+        #create temp player class
+        dummy_player = Player.new(self.piece_color)
+        self.pieces.each_with_index do |item, index|
+            dummy_player.pieces[index].type.position  = item.type.position
+        end
+        #update dummy_player's pieces so move has been completed
+        dummy_player.pieces.each do |piece|
+            if piece.type.position == start_pt
+                piece.type.position = end_pt
+            end
+        end
+        #build array with this updated move
+    end
+
 end
 
 
@@ -172,9 +208,6 @@ class Piece
         @type = type
         @color = color
     end
-end
-
-class Moves
 end
 
 class Checks
@@ -477,9 +510,15 @@ class Queen < Piece
 end
 
 class King < Piece
+    attr_accessor :piece_color, :position
 
-    def find_king_moves(start_pt, player_moves, opp_moves)
-        split_point = start_pt.split(//)
+    def initialize(position, piece_color)
+        @position = position
+        @piece_color = piece_color
+    end
+
+    def find_moves(player_moves, opp_moves)
+        split_point = self.position.split(//)
         paths = [[1, 1],
         [1, (-1)],
         [(-1),(-1)],
@@ -488,18 +527,21 @@ class King < Piece
         [1, 0],
         [0, (-1)],
         [(-1), 0]]
+        moves = []
 
-        moves = paths.reduce([]) do |sum, item|
-            item[0] = (split_point[0].ord + item[0]).chr
-            item[1] = (split_point[1].to_i + item[1]).to_s
-            item = item.join()
-            if grid.include?(item) && !has_player_piece?(item, player_moves)
-                sum.push(item)
-            end
-            sum
-        end
-        moves.sort
+        # moves = paths.reduce([]) do |sum, item|
+        #     item[0] = (split_point[0].ord + item[0]).chr
+        #     item[1] = (split_point[1].to_i + item[1]).to_s
+        #     item = item.join()
+        #     if grid.include?(item) && !has_player_piece?(item, player_moves)
+        #         sum.push(item)
+        #     end
+        #     sum
+        # end
+        # moves.sort
     end
+
+
 end
 
 
