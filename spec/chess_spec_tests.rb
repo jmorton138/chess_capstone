@@ -263,6 +263,18 @@ describe Knight do
         end
     end
 
+    context "when white knight is at b3 with own pieces at c1 and c5 and opponent at a5" do
+        subject(:knight_moves_opp) { described_class.new("b3", "white") }
+
+        it "only returns free moves on the board ['a1','a5', 'd2', 'd4']" do
+            player_moves = ["c1" , "c5"]
+            opp_moves = ["a5"]
+            moves = ["a1","a5", "d2", "d4"].sort
+            expect(knight_moves_opp.find_moves(player_moves, opp_moves)).to eq(moves)
+            knight_moves_opp.find_moves(player_moves, opp_moves)
+        end
+    end
+
 end
 
 # describe Gameboard do
