@@ -70,8 +70,7 @@ class Gameboard
         #check if starting point has player's piece on it
         return false if player_moves.key(sliced[0]) == nil
         # determine type of chess piece
-        piece_type = return_piece_type(sliced[0], player_moves)
-        valid_moves = return_available_moves(piece_type, sliced[0], player_moves, opp_moves)
+        valid_moves = find_moves(player_moves, opp_moves)
         #check if end point is in available moves returned from find_#{piece}_moves method
         if valid_moves.include?(sliced[1])
             return true
@@ -80,23 +79,6 @@ class Gameboard
         end
     end
 
-
-    def return_available_moves(piece, start_pt, player_moves, opp_moves)
-        if piece == "pawn"
-            ###condition for determining p1 or p2
-            find_p1_pawn_moves(start_pt, player_moves, opp_moves)
-        elsif piece == "rook"
-            find_rook_moves(start_pt, player_moves, opp_moves)
-        elsif piece == "knight"
-            find_knight_moves(start_pt, player_moves, opp_moves)
-        elsif piece == "bishop"
-            find_bishop_moves(start_pt, player_moves, opp_moves)
-        elsif piece == "queen"
-            find_queen_moves(start_pt, player_moves, opp_moves)
-        elsif piece == "King"
-            find_king_moves(start_pt, player_moves, opp_moves)
-        end
-    end
 
 end
 
@@ -123,7 +105,6 @@ class Player
 
     end
 
-    ##needs updating
     def update_player_moves(start_pt, end_pt)
         self.pieces.each do |piece|
             if piece.type.position == start_pt
