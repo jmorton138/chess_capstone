@@ -576,20 +576,22 @@ describe Player do
     end
 
 
+    describe "#update_player_moves" do
+        context "when player moves knight1 from d2 to d3" do
+            subject(:update_player_moves) { described_class.new("white") }
+
+            it "updates Player instance of knight1 from b1 to c3" do
+                start_pt = "d2"
+                end_pt = "d3"
+                move = update_player_moves.pieces.select { |piece| piece.type.position == start_pt }
+                expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
+            end
+    end
+end
 
 
-    # describe "#update_player_moves" do
-    #     context "when player moves knight1 from b1 to c3" do
-    #         subject(:update_player_moves) { described_class.new("white") }
 
-    #         it "updates Player instance of knight1 from b1 to c3" do
-    #             moves = update_player_moves.moves
-    #             start_pt = "b1"
-    #             end_pt = "c3"
-    #             expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ moves[:knght1] }.from("b1").to("c3")
-    #         end
-    #     end
-    # end
+
 
 #     context "when player moves knight1 from f1 to d3" do
 #         subject(:update_player_moves_bishop) { described_class.new("white") }

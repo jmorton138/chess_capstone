@@ -125,11 +125,11 @@ class Player
 
     ##needs updating
     def update_player_moves(start_pt, end_pt)
-        key = nil
-        moves.each do |item|
-            key = item[0] if item[1] == start_pt
+        self.pieces.each do |piece|
+            if piece.type.position == start_pt
+                piece.type.position = end_pt
+            end
         end 
-        moves[key] = end_pt
     end
 
     def capture?(move)
