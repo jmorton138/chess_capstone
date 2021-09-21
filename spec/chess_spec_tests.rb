@@ -598,14 +598,16 @@ describe Player do
 
         end
 
-        # context "when player inputs coordinates a2a3(valid) at start of game" do
-        #     subject(:validate_player_input_valid) { described_class.new }
+        context "when player inputs coordinates a2a3(valid) at start of game" do
+            subject(:validate_player_input_valid) { described_class.new("white") }
         
-        #     it "returns true" do
-        #         expect(validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)).to eq(true)
-        #         validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
-        #     end
-        # end
+            it "returns true" do
+                player_moves = ["a2"]
+                opp_moves = []
+                expect(validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)).to eq(true)
+                validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
+            end
+        end
     end
 end
 
