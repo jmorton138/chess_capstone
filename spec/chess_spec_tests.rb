@@ -667,7 +667,16 @@ describe Player do
                 expect(is_king.is_king?(move)).to eq(true)
                 is_king.is_king?(move)
             end
+        end
 
+        context "when move is not a king" do
+            subject(:is_not_king) { described_class.new("white") }
+
+            it "returns false" do
+                move = "a2a3"
+                expect(is_not_king.is_king?(move)).to eq(false)
+                is_not_king.is_king?(move)
+            end
         end
     end
 
