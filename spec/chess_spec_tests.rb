@@ -425,68 +425,68 @@ describe King do
         end
     end
 
-#         #handle player pieces
-#         context  "when white king is at e4 with obstructing piece at e5" do
-#             subject(:king_blocked) { described_class.new }
+    #handle player pieces
+    context  "when white king is at e4 with obstructing piece at e5" do
+        subject(:king_blocked) { described_class.new("e4", "white") }
 
-#             it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
-#                 player_moves = {}
-#                 player_moves[:pawn1] = "e5"
-#                 moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
-#                 expect(king_blocked.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
-#                 king_blocked.find_king_moves("e4", player_moves, opp_moves)
-#             end
-#         end
+        it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+            player_moves = ["e5"]
+            opp_moves = []
+            moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
+            expect(king_blocked.find_moves(player_moves, opp_moves)).to eq(moves)
+            king_blocked.find_moves(player_moves, opp_moves)
+        end
+    end
 
-#         context  "when white king is at e4 with obstructing pieces at e5 and d4" do
-#             subject(:king_blocked_twice) { described_class.new }
+        # context  "when white king is at e4 with obstructing pieces at e5 and d4" do
+        #     subject(:king_blocked_twice) { described_class.new("e4", "white") }
 
-#             it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
-#                 player_moves = {}
-#                 player_moves[:pawn1] = "e5"
-#                 player_moves[:knght2] = "d4"
-#                 moves = ["d5", "f5", "f4", "d3", "e3", "f3"].sort
-#                 expect(king_blocked_twice.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
-#                 king_blocked_twice.find_king_moves("e4", player_moves, opp_moves)
-#             end
-#         end
+        #     it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+        #         player_moves = {}
+        #         player_moves[:pawn1] = "e5"
+        #         player_moves[:knght2] = "d4"
+        #         moves = ["d5", "f5", "f4", "d3", "e3", "f3"].sort
+        #         expect(king_blocked_twice.find_moves(player_moves, opp_moves)).to eq(moves)
+        #         king_blocked_twice.find_moves(player_moves, opp_moves)
+        #     end
+        # end
 
-#         context  "when white king is at e4 with obstructing pieces at e5, e3 and d4" do
-#             subject(:king_blocked_thrice) { described_class.new }
+        # context  "when white king is at e4 with obstructing pieces at e5, e3 and d4" do
+        #     subject(:king_blocked_thrice) { described_class.new("e4", "white") }
 
-#             it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
-#                 player_moves = {}
-#                 player_moves[:pawn1] = "e5"
-#                 player_moves[:knght2] = "d4"
-#                 player_moves[:bish1] = "e3"
-#                 moves = ["d5", "f5", "f4", "d3", "f3"].sort
-#                 expect(king_blocked_thrice.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
-#                 king_blocked_thrice.find_king_moves("e4", player_moves, opp_moves)
-#             end
-#         end
+        #     it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+        #         player_moves = {}
+        #         player_moves[:pawn1] = "e5"
+        #         player_moves[:knght2] = "d4"
+        #         player_moves[:bish1] = "e3"
+        #         moves = ["d5", "f5", "f4", "d3", "f3"].sort
+        #         expect(king_blocked_thrice.find_moves(player_moves, opp_moves)).to eq(moves)
+        #         king_blocked_thrice.find_moves(player_moves, opp_moves)
+        #     end
+        # end
                 
-#         #handle opponent pieces
-#         context "when white king is at e4 with opponent pieces adjacent at e5" do
-#             subject(:king_with_opp) { described_class.new }
+        # #handle opponent pieces
+        # context "when white king is at e4 with opponent pieces adjacent at e5" do
+        #     subject(:king_with_opp) { described_class.new("e4", "white") }
 
-#             it "returns moves [d5, f5, d4, f4, d3, e3, f3, e5]" do
-#                 player_moves = {}
-#                 opp_moves[:pawn1] = "e5"
-#                 moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
-#                 expect(king_with_opp.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
-#                 king_with_opp.find_king_moves("e4", player_moves, opp_moves)
-#             end
-#         end
+        #     it "returns moves [d5, f5, d4, f4, d3, e3, f3, e5]" do
+        #         player_moves = {}
+        #         opp_moves[:pawn1] = "e5"
+        #         moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
+        #         expect(king_with_opp.find_moves(player_moves, opp_moves)).to eq(moves)
+        #         king_with_opp.find_moves(player_moves, opp_moves)
+        #     end
+        # end
 
-#         # context "when moving to f5 puts king in check" do
-#         #     it "f5 is not returned in available moves [d5, d4, f4, d3, e3, f3, e5]" do
-#         #         player_moves = {}
-#         #         opp_moves[:pawn1] = "e5"
-#         #         moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
-#         #         expect(king_with_opp.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
-#         #         king_with_opp.find_king_moves("e4", player_moves, opp_moves)
-#         #     end
-#         # end
+        # context "when moving to f5 puts king in check" do
+        #     it "f5 is not returned in available moves [d5, d4, f4, d3, e3, f3, e5]" do
+        #         player_moves = {}
+        #         opp_moves[:pawn1] = "e5"
+        #         moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
+        #         expect(king_with_opp.find_moves(player_moves, opp_moves)).to eq(moves)
+        #         king_with_opp.find_moves(player_moves, opp_moves)
+        #     end
+        # end
 
 end
 
