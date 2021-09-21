@@ -97,16 +97,6 @@ class Gameboard
             find_king_moves(start_pt, player_moves, opp_moves)
         end
     end
-    
-    def has_opp_piece?(space, opp_moves)
-        return true if opp_moves.key(space) != nil
-        false
-    end
-
-    def has_player_piece?(space, player_moves)
-        return true if player_moves.key(space) != nil
-        false
-    end
 
 end
 
@@ -275,82 +265,6 @@ class Pawn < Piece
             moves = []
         elsif opp_moves.include?(move_2) || player_moves.include?(move_2)
             moves.delete(move_2)
-        end
-        moves += diag_moves
-        moves.sort
-    end
-
-    def find_p1_pawn_moves(start_pt, player_moves, opp_moves)
-        #split starting point and increment column
-        moves = []
-        diag_moves = []
-        move_1 = start_pt.split(//)
-        diag_r = move_1
-        diag_l = move_1
-        move_1[1] = (move_1[1].to_i + 1).to_s
-        move_1 = move_1.join()
-        moves.push(move_1)
-        if start_pt.split(//)[1] == "2"
-            move_2 = start_pt.split(//)
-            move_2[1] = (move_2[1].to_i + 2).to_s
-            move_2 = move_2.join()
-            moves.push(move_2)
-        end
-        #right diagonal edge case
-        diag_r[1] = move_1[1]
-        diag_r[0] = (diag_r[0].ord + 1).chr
-        diag_r = diag_r.join()
-        #left diagonal edge case
-        diag_l[1] = move_1[1]
-        diag_l[0] = (diag_l[0].ord - 2).chr
-        diag_l = diag_l.join()
-        if opp_moves.key(diag_l) != nil
-            diag_moves.push(diag_l)
-        end
-        if opp_moves.key(diag_r) != nil
-            diag_moves.push(diag_r)
-        end
-        diag_moves
-        if opp_moves.key(move_1) != nil
-            moves = []
-        end
-        moves += diag_moves
-        moves.sort
-    end
-
-    def find_p2_pawn_moves(start_pt, player_moves, opp_moves)
-        #split starting point and increment column
-        moves = []
-        diag_moves = []
-        move_1 = start_pt.split(//)
-        diag_r = move_1
-        diag_l = move_1
-        move_1[1] = (move_1[1].to_i - 1).to_s
-        move_1 = move_1.join()
-        moves.push(move_1)
-        if start_pt.split(//)[1] == "7"
-            move_2 = start_pt.split(//)
-            move_2[1] = (move_2[1].to_i - 2).to_s
-            move_2 = move_2.join()
-            moves.push(move_2)
-        end
-        #right diagonal edge case
-        diag_r[1] = move_1[1]
-        diag_r[0] = (diag_r[0].ord + 1).chr
-        diag_r = diag_r.join()
-        #left diagonal edge case
-        diag_l[1] = move_1[1]
-        diag_l[0] = (diag_l[0].ord - 2).chr
-        diag_l = diag_l.join()
-        if opp_moves.key(diag_l) != nil
-            diag_moves.push(diag_l)
-        end
-        if opp_moves.key(diag_r) != nil
-            diag_moves.push(diag_r)
-        end
-        diag_moves
-        if opp_moves.key(move_1) != nil
-            moves = []
         end
         moves += diag_moves
         moves.sort
