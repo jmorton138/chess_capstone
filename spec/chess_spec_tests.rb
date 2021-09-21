@@ -475,30 +475,8 @@ describe King do
             end
         end
 
-        # context "when moving to f5 puts king in check" do
-        #     subject(:king_checked) { described_class.new("e4", "white") }
-
-        #     it "f5 is not returned in available moves [d5, d4, f4, d3, e3, f3, e5]" do
-        #         player_moves = []
-        #         opp_moves = ["f5"]
-        #         moves = ["d5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
-        #         expect(king_checked.find_moves(player_moves, opp_moves)).to eq(moves)
-        #         king_checked.find_moves(player_moves, opp_moves)
-        #     end
-        # end
-
 end
 
-# describe Gameboard do
-
-
-
-
-
-
-
-
-#     end
 
 #     describe "#validate_player_input" do
 #         context "when player inputs coordinates b1b2(invalid) at start of game" do
@@ -520,76 +498,6 @@ end
 #             end
 #         end
 
-#         describe "#has_opp_piece?" do
-#             context "when space on board(c5) is occupied by an opponnents piece" do
-#                 subject(:opp_piece_true) { described_class.new }
-
-#                 it "returns true" do
-#                     opp_moves[:queen] = "c5"
-#                     expect(opp_piece_true.has_opp_piece?("c5", opp_moves)).to eq(true)
-#                     opp_piece_true.has_opp_piece?("c5", opp_moves)
-#                 end
-#             end
-#             context "when space on board(c5) is not occupied by an opponnents piece" do
-#                 subject(:opp_piece_false) { described_class.new }
-
-#                 it "returns false" do
-#                     expect(opp_piece_false.has_opp_piece?("c5", opp_moves)).to eq(false)
-#                     opp_piece_false.has_opp_piece?("c5", opp_moves)
-#                 end
-#             end
-#         end
-
-#         describe "#has_player_piece?" do
-#             context "when space on board(c6) is occupied by player's own piece" do
-#                 subject(:player_piece_true) { described_class.new }
-
-#                 it "returns true" do
-#                     player_moves[:queen] = "c6"
-#                     expect(player_piece_true.has_player_piece?("c6", player_moves)).to eq(true)
-#                     player_piece_true.has_player_piece?("c6", player_moves)
-#                 end
-#             end
-
-#             context "when space on board(c6) is not occupied by player's own piece" do
-#                 subject(:player_piece_false) { described_class.new }
-    
-#                 it "returns true" do
-#                     expect(player_piece_false.has_player_piece?("c6", player_moves)).to eq(false)
-#                     player_piece_false.has_player_piece?("c6", player_moves)
-#                 end
-#             end
-#         end
- 
-#     end
-
-#     describe "#return_piece_type" do
-#         context "when starting input coordinate is b1" do
-#             subject(:return_piece_type) { described_class.new }
-#             it "returns pawn" do
-#                 moves = {
-#                     pawn1: "a2",
-#                     pawn2: "b2",
-#                     pawn3: "c2",
-#                     pawn4: "d2",
-#                     pawn5: "e2",
-#                     pawn6: "f2",
-#                     pawn7: "g2",
-#                     pawn8: "h2",
-#                     rook1: "a1",
-#                     knght1: "b1",
-#                     bish1: "c1",
-#                     queen: "d1",
-#                     King: "e1",
-#                     bish2: "f1",
-#                     knght2: "g1",
-#                     rook2: "h1"
-#                 }
-#                 expect(return_piece_type.return_piece_type("b2", moves)).to eq("pawn")
-#                 return_piece_type.return_piece_type("b2", moves)
-#             end
-#         end
-#     end
 
 #     describe "#return_available_moves" do
 #         context "when piece/arg is a pawn at b2" do
@@ -616,19 +524,6 @@ end
 #             end
 #         end
 #     end
-
-#     # describe "#capture_piece" do
-#     #     context "when p1's pawn3 at c4 is captured" do
-#     #         subject(:piece_capture) { described_class.new }
-#     #         it "changes p1's :pawn3 to 'captured" do
-#     #             expect(piece_capture.capture_piece())
-#     #         end
-#     #     end
-#     # end
-
-#     describe "#update_p_moves" do
-#     end
-# end
 
 describe Player do
     describe "#capture_check" do
