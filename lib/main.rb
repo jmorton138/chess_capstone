@@ -474,7 +474,6 @@ class King < Piece
             end
             sum
         end
-        #if move is in checks array
         moves.sort
     end
 
