@@ -30,7 +30,8 @@ class Gameboard
     end
 
     def refresh_board
-        self.grid_with_pieces = self.grid
+        #new_grid = build_grid()
+        self.grid_with_pieces = build_grid()
     end
 
     def update_board(p1, p2)
@@ -86,17 +87,9 @@ class Player
             pawns << Piece.new(Pawn.new(position, piece_color), piece_color)
             i += 1
         end 
-        pawns << Piece.new(King.new("a#{y+4}", piece_color), piece_color)
+        pawns #<< Piece.new(King.new("a#{y+4}", piece_color), piece_color)
 
     end
-
-    # def update_player_moves(start_pt, end_pt)
-    #     self.pieces.each do |piece|
-    #         if piece.type.position == start_pt
-    #             piece.type.position = end_pt
-    #         end
-    #     end 
-    # end
 
     def update_player_moves(move)
         split = move.split(//)
