@@ -450,19 +450,17 @@ describe King do
             end
         end
 
-        # context  "when white king is at e4 with obstructing pieces at e5, e3 and d4" do
-        #     subject(:king_blocked_thrice) { described_class.new("e4", "white") }
+        context  "when white king is at e4 with obstructing pieces at e5, e3 and d4" do
+            subject(:king_blocked_thrice) { described_class.new("e4", "white") }
 
-        #     it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
-        #         player_moves = {}
-        #         player_moves[:pawn1] = "e5"
-        #         player_moves[:knght2] = "d4"
-        #         player_moves[:bish1] = "e3"
-        #         moves = ["d5", "f5", "f4", "d3", "f3"].sort
-        #         expect(king_blocked_thrice.find_moves(player_moves, opp_moves)).to eq(moves)
-        #         king_blocked_thrice.find_moves(player_moves, opp_moves)
-        #     end
-        # end
+            it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = ["e5", "d4", "e3"]
+                opp_moves = []
+                moves = ["d5", "f5", "f4", "d3", "f3"].sort
+                expect(king_blocked_thrice.find_moves(player_moves, opp_moves)).to eq(moves)
+                king_blocked_thrice.find_moves(player_moves, opp_moves)
+            end
+        end
                 
         # #handle opponent pieces
         # context "when white king is at e4 with opponent pieces adjacent at e5" do
