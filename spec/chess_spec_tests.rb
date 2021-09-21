@@ -410,25 +410,20 @@ describe Queen do
     end
 end
 
-# describe Gameboard do
+describe King do
+    describe "#find_moves" do
+        context "when white king is at e4 with no obstructing pieces or checks" do
+            subject(:king_moves) { described_class.new("e4", "white") }
 
-
-
-
-
-
-#     describe "#find_king_moves" do
-#         context "when white king is at e4 with no obstructing pieces or checks" do
-#             subject(:king_moves) { described_class.new }
-
-#             it "returns moves [d5, e5, f5, d4, f4, d3, e3, f3]" do
-#                 player_moves = {}
-#                 opp_moves = {}
-#                 moves = ["d5", "e5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
-#                 expect(king_moves.find_king_moves("e4", player_moves, opp_moves)).to eq(moves)
-#                 king_moves.find_king_moves("e4", player_moves, opp_moves)
-#             end
-#         end
+            it "returns moves [d5, e5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = []
+                opp_moves = []
+                moves = ["d5", "e5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
+                expect(king_moves.find_moves(player_moves, opp_moves)).to eq(moves)
+                king_moves.find_moves(player_moves, opp_moves)
+            end
+        end
+    end
 
 #         #handle player pieces
 #         context  "when white king is at e4 with obstructing piece at e5" do
@@ -492,6 +487,17 @@ end
 #         #         king_with_opp.find_king_moves("e4", player_moves, opp_moves)
 #         #     end
 #         # end
+
+end
+
+# describe Gameboard do
+
+
+
+
+
+
+
 
 #     end
 

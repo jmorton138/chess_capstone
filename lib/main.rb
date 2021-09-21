@@ -553,17 +553,18 @@ class King < Piece
         [0, (-1)],
         [(-1), 0]]
         moves = []
+        board = Gameboard.new
 
-        # moves = paths.reduce([]) do |sum, item|
-        #     item[0] = (split_point[0].ord + item[0]).chr
-        #     item[1] = (split_point[1].to_i + item[1]).to_s
-        #     item = item.join()
-        #     if grid.include?(item) && !has_player_piece?(item, player_moves)
-        #         sum.push(item)
-        #     end
-        #     sum
-        # end
-        # moves.sort
+        moves = paths.reduce([]) do |sum, item|
+            item[0] = (split_point[0].ord + item[0]).chr
+            item[1] = (split_point[1].to_i + item[1]).to_s
+            item = item.join()
+            if !player_moves.include?(item) && board.grid.include?(item) 
+                sum.push(item)
+            end
+            sum
+        end
+        moves.sort
     end
 
 
