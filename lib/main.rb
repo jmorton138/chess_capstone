@@ -203,6 +203,17 @@ class Player
         potential_moves.flatten
     end
 
+    def is_king?(move)
+        split = move.split(//)
+        start_pt = split[0] + split[1]
+        piece = self.pieces.select { |piece| piece.type.position == start_pt }
+        if piece[0].type.class == King
+            return true
+        else
+            return false
+        end
+    end
+
 end
 
 
@@ -564,8 +575,10 @@ class King < Piece
             end
             sum
         end
+        #if move is in checks array
         moves.sort
     end
+
 
 
 end

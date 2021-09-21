@@ -476,12 +476,14 @@ describe King do
         end
 
         # context "when moving to f5 puts king in check" do
+        #     subject(:king_checked) { described_class.new("e4", "white") }
+
         #     it "f5 is not returned in available moves [d5, d4, f4, d3, e3, f3, e5]" do
-        #         player_moves = {}
-        #         opp_moves[:pawn1] = "e5"
-        #         moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
-        #         expect(king_with_opp.find_moves(player_moves, opp_moves)).to eq(moves)
-        #         king_with_opp.find_moves(player_moves, opp_moves)
+        #         player_moves = []
+        #         opp_moves = ["f5"]
+        #         moves = ["d5", "d4", "f4", "d3", "e3", "f3", "e5"].sort
+        #         expect(king_checked.find_moves(player_moves, opp_moves)).to eq(moves)
+        #         king_checked.find_moves(player_moves, opp_moves)
         #     end
         # end
 
@@ -654,6 +656,19 @@ describe Player do
     describe "#return_king_moves_checks_array" do
     end
     describe "#checks_array_after_move" do
+    end
+
+    describe "#is_king?" do
+        context "when move is a king" do
+            subject(:is_king) { described_class.new("white") }
+
+            it "returns true" do
+                move = "a6d7"
+                expect(is_king.is_king?(move)).to eq(true)
+                is_king.is_king?(move)
+            end
+
+        end
     end
 
 
