@@ -170,7 +170,9 @@ class Player
         end
     end
 
-    def validate_player_input(input, player_moves, opp_moves)
+    def validate_player_input(input, opponent)
+        player_moves = self.return_moves_array
+        opp_moves = opponent.return_moves_array
         board = Gameboard.new
         return false if input.length > 4
         sliced = input.chars.each_slice(2).map(&:join)
@@ -181,6 +183,27 @@ class Player
         # find chess piece object and set as variable
         moving_piece = self.pieces.select { |piece| piece.type.position == sliced[0] }[0]
         valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
+        #handle possible checks
+        if self.is_king?(input)
+            checks = self.return_king_moves_checks_array(opponent)
+    
+            checks.each do |check|
+                if valid_moves.include?(check)
+                    valid_moves.delete(check)
+                end
+            end
+            valid_moves
+        else
+            checks = self.checks_array_after_move(input, opponent)
+        
+            checks.each do |check|
+                if valid_moves.include?(check)
+                    valid_moves.delete(check)
+                end
+            end
+            valid_moves
+        end
+        valid_moves
         #check if end point is in available moves returned from find_#{piece}_moves method
         if valid_moves.include?(sliced[1])
             return true

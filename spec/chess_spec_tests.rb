@@ -561,10 +561,9 @@ describe Player do
             subject(:validate_player_input_invalid) { described_class.new("white") }
        
             it "returns false" do
-                player_moves = []
-                opp_moves = []
-                expect(validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)).to eq(false)
-                validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)
+                opp = Player.new("black")
+                expect(validate_player_input_invalid.validate_player_input("b1b2", opp)).to eq(false)
+                validate_player_input_invalid.validate_player_input("b1b2", opp)
             end
 
         end
@@ -574,9 +573,9 @@ describe Player do
         
             it "returns true" do
                 player_moves = ["a2"]
-                opp_moves = []
-                expect(validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)).to eq(true)
-                validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
+                opp = Player.new("black")
+                expect(validate_player_input_valid.validate_player_input("a2a3", opp)).to eq(true)
+                validate_player_input_valid.validate_player_input("a2a3", opp)
             end
         end
 
@@ -585,9 +584,9 @@ describe Player do
 
             it "returns false" do
                 player_moves = ["a2"]
-                opp_moves = []
-                expect(invalid_end_pt.validate_player_input("a2a6", player_moves, opp_moves)).to eq(false)
-                invalid_end_pt.validate_player_input("a2a6", player_moves, opp_moves)
+                opp = Player.new("black")
+                expect(invalid_end_pt.validate_player_input("a2a6", opp)).to eq(false)
+                invalid_end_pt.validate_player_input("a2a6", opp)
             end
         end
     end
