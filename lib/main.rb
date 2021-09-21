@@ -90,7 +90,19 @@ class Player
 
     end
 
-    def update_player_moves(start_pt, end_pt)
+    # def update_player_moves(start_pt, end_pt)
+    #     self.pieces.each do |piece|
+    #         if piece.type.position == start_pt
+    #             piece.type.position = end_pt
+    #         end
+    #     end 
+    # end
+
+    def update_player_moves(move)
+        split = move.split(//)
+        start_pt = split[0] + split[1]
+        end_pt = split[2] + split[3]
+
         self.pieces.each do |piece|
             if piece.type.position == start_pt
                 piece.type.position = end_pt

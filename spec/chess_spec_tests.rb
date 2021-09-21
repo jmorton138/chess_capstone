@@ -536,8 +536,10 @@ describe Player do
             it "updates Player instance of knight1 from b1 to c3" do
                 start_pt = "d2"
                 end_pt = "d3"
+                input = "d2d3"
                 move = update_player_moves.pieces.select { |piece| piece.type.position == start_pt }
-                expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
+                expect{ update_player_moves.update_player_moves(input) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
+                update_player_moves.update_player_moves(input)
             end
         end
     
@@ -548,10 +550,11 @@ describe Player do
             it "updates Player instance of bishop from f1 to d3" do
                 start_pt = "f1"
                 end_pt = "d3"
+                input = "f1d3"
                 update_player_moves_bishop.pieces << Piece.new(Bishop.new("f1", "white"), "white")
                 move = update_player_moves_bishop.pieces.select { |piece| piece.type.position == start_pt }
-                expect{ update_player_moves_bishop.update_player_moves(start_pt, end_pt) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
-                update_player_moves_bishop.update_player_moves(start_pt, end_pt)
+                expect{ update_player_moves_bishop.update_player_moves(input) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
+                update_player_moves_bishop.update_player_moves(input)
             end
         end
     end
