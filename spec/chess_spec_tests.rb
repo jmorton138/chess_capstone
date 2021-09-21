@@ -341,33 +341,18 @@ describe Bishop do
         end
     end
 
-end
+    # blocked by opponent's pieces
+    context "when white bishop is at e4 and has opponent piece in path at g6" do
+        subject(:bishop_block_opp) { described_class.new("e4", "white") }
 
-# describe Gameboard do
-
-
-
-
-
-
-
-
-
-
-
-#         #blocked by opponent's pieces
-#         context "when white bishop is at e4 and has opponent piece in path at g6" do
-#             subject(:bishop_block_opp) { described_class.new }
-
-#             it "returns available moves [b1, c2, d3, f5, g6, h1, g2, f3, d5, c6, b7, a8]" do
-#                 player_moves = {}
-#                 opp_moves = {}
-#                 opp_moves[:rook1] = "g6"
-#                 moves = ["b1", "c2", "d3", "f5", "g6", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
-#                 expect(bishop_block_opp.find_bishop_moves("e4", player_moves, opp_moves)).to eq(moves)
-#                 bishop_block_opp.find_bishop_moves("e4", player_moves, opp_moves)
-#             end
-#         end
+        it "returns available moves [b1, c2, d3, f5, g6, h1, g2, f3, d5, c6, b7, a8]" do
+            player_moves = []
+            opp_moves = ["g6"]
+            moves = ["b1", "c2", "d3", "f5", "g6", "h1", "g2", "f3", "d5", "c6", "b7", "a8"].sort
+            expect(bishop_block_opp.find_moves(player_moves, opp_moves)).to eq(moves)
+            bishop_block_opp.find_moves(player_moves, opp_moves)
+        end
+    end
 
 #         context "when white bishop is at e4 and has opponent piece in path at g6 and g2" do
 #             subject(:bishop_block_opp_twice) { described_class.new }
@@ -415,6 +400,13 @@ end
 #             end
 #         end
 #     end
+
+end
+
+# describe Gameboard do
+
+
+
 
 #     describe "#find_queen_moves" do
 #         context "when white queen is at e4 with no obstructing pieces" do
