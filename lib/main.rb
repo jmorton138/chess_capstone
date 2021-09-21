@@ -62,22 +62,7 @@ class Gameboard
         puts ""
     end
 
-    def validate_player_input(input, player_moves, opp_moves)
-        return false if input.length > 4
-        sliced = input.chars.each_slice(2).map(&:join)
-        #check if starting point is point on the board
-        return false if !grid.include?(sliced[0])
-        #check if starting point has player's piece on it
-        return false if player_moves.key(sliced[0]) == nil
-        # determine type of chess piece
-        valid_moves = find_moves(player_moves, opp_moves)
-        #check if end point is in available moves returned from find_#{piece}_moves method
-        if valid_moves.include?(sliced[1])
-            return true
-        else
-            return false
-        end
-    end
+
 
 
 end
@@ -179,6 +164,25 @@ class Player
         start_pt = split[0] + split[1]
         piece = self.pieces.select { |piece| piece.type.position == start_pt }
         if piece[0].type.class == King
+            return true
+        else
+            return false
+        end
+    end
+
+    def validate_player_input(input, player_moves, opp_moves)
+        board = Gameboard.new
+        return false if input.length > 4
+        sliced = input.chars.each_slice(2).map(&:join)
+        #check if starting point is point on the board
+        return false if !board.grid.include?(sliced[0])
+        #check if starting point has player's piece on it
+        return false if !player_moves.include?(sliced[0])
+        # find chess piece object and set as variable
+        moving_piece = self.pieces.select { |piece| piece.type.position == sliced[0] }[0]
+        valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
+        #check if end point is in available moves returned from find_#{piece}_moves method
+        if valid_moves.include?(sliced[1])
             return true
         else
             return false

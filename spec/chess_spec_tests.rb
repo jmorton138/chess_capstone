@@ -478,25 +478,7 @@ describe King do
 end
 
 
-#     describe "#validate_player_input" do
-#         context "when player inputs coordinates b1b2(invalid) at start of game" do
-#             subject(:validate_player_input_invalid) { described_class.new }
-       
-#             it "returns false" do
-#                 expect(validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)).to eq(false)
-#                 validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)
-#             end
 
-#         end
-
-#         context "when player inputs coordinates a2a3(valid) at start of game" do
-#             subject(:validate_player_input_valid) { described_class.new }
-        
-#             it "returns true" do
-#                 expect(validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)).to eq(true)
-#                 validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
-#             end
-#         end
 
 
 #     describe "#return_available_moves" do
@@ -587,21 +569,44 @@ describe Player do
                 expect{ update_player_moves.update_player_moves(start_pt, end_pt) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
             end
         end
-    end
+    
 
-    context "when player moves bishop from f1 to d3" do
-        subject(:update_player_moves_bishop) { described_class.new("white") }
+        context "when player moves bishop from f1 to d3" do
+            subject(:update_player_moves_bishop) { described_class.new("white") }
 
-        it "updates Player instance of bishop from f1 to d3" do
-            start_pt = "f1"
-            end_pt = "d3"
-            update_player_moves_bishop.pieces << Piece.new(Bishop.new("f1", "white"), "white")
-            move = update_player_moves_bishop.pieces.select { |piece| piece.type.position == start_pt }
-            expect{ update_player_moves_bishop.update_player_moves(start_pt, end_pt) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
-            update_player_moves_bishop.update_player_moves(start_pt, end_pt)
+            it "updates Player instance of bishop from f1 to d3" do
+                start_pt = "f1"
+                end_pt = "d3"
+                update_player_moves_bishop.pieces << Piece.new(Bishop.new("f1", "white"), "white")
+                move = update_player_moves_bishop.pieces.select { |piece| piece.type.position == start_pt }
+                expect{ update_player_moves_bishop.update_player_moves(start_pt, end_pt) }.to change{ move[0].type.position }.from(start_pt).to(end_pt)
+                update_player_moves_bishop.update_player_moves(start_pt, end_pt)
+            end
         end
     end
 
+    describe "#validate_player_input" do
+        context "when player inputs coordinates b1b2(invalid) at start of game" do
+            subject(:validate_player_input_invalid) { described_class.new("white") }
+       
+            it "returns false" do
+                player_moves = []
+                opp_moves = []
+                expect(validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)).to eq(false)
+                validate_player_input_invalid.validate_player_input("b1b2", player_moves, opp_moves)
+            end
+
+        end
+
+        # context "when player inputs coordinates a2a3(valid) at start of game" do
+        #     subject(:validate_player_input_valid) { described_class.new }
+        
+        #     it "returns true" do
+        #         expect(validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)).to eq(true)
+        #         validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
+        #     end
+        # end
+    end
 end
 
 
