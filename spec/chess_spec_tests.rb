@@ -579,6 +579,17 @@ describe Player do
                 validate_player_input_valid.validate_player_input("a2a3", player_moves, opp_moves)
             end
         end
+
+        context "when player chooses move not in piece's available moves" do
+            subject(:invalid_end_pt) { described_class.new("white") }
+
+            it "returns false" do
+                player_moves = ["a2"]
+                opp_moves = []
+                expect(invalid_end_pt.validate_player_input("a2a6", player_moves, opp_moves)).to eq(false)
+                invalid_end_pt.validate_player_input("a2a6", player_moves, opp_moves)
+            end
+        end
     end
 end
 
