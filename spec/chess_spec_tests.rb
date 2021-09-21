@@ -478,35 +478,6 @@ describe King do
 end
 
 
-
-
-
-#     describe "#return_available_moves" do
-#         context "when piece/arg is a pawn at b2" do
-#             subject(:find_moves_pawn) { described_class.new }
-#             before do
-#                 allow(find_moves_pawn).to receive(:find_p1_pawn_moves).with("b2", player_moves, opp_moves)
-#             end
-#             it "receives #find_p1_pawn_moves" do
-#                 piece = "pawn"
-#                 expect(find_moves_pawn).to receive(:find_p1_pawn_moves).with("b2", player_moves, opp_moves)
-#                 find_moves_pawn.return_available_moves(piece, "b2", player_moves, opp_moves)
-#             end
-#         end
-
-#         context "when piece/arg is a knight at b4" do
-#             subject(:find_moves_knight) { described_class.new }
-#             before do
-#                 allow(find_moves_knight).to receive(:find_knight_moves).with("b4", player_moves, opp_moves)
-#             end
-#             it "receives #find_knight_moves" do
-#                 piece = "knight"
-#                 expect(find_moves_knight).to receive(:find_knight_moves).with("b4", player_moves, opp_moves)
-#                 find_moves_knight.return_available_moves(piece, "b4", player_moves, opp_moves)
-#             end
-#         end
-#     end
-
 describe Player do
     describe "#capture_check" do
         context "when player moves to space occupied by opponent" do
