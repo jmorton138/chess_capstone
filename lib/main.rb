@@ -86,7 +86,6 @@ class Player
         x_axis.each do |letter|
             position = letter + y.to_s
             pieces << Piece.new(Pawn.new(position, piece_color), piece_color)
-            #i += 1
         end 
         pieces
         x_axis.each do |letter|
@@ -98,13 +97,6 @@ class Player
             pieces << Piece.new(King.new(position, piece_color), piece_color) if letter == "e"
         end
         pieces
-            
-        #<< Piece.new(King.new("", piece_color), piece_color)
-        #rooks at a1, h1 and a8,h8
-        #knights at b1, g1 and b8, g8
-        #bishops at c1, f1 and c8, f8
-        #queen at d1 and d8
-        #king at e1 and e8
 
     end
 
@@ -221,16 +213,16 @@ class Player
             end
             valid_moves
             ##checkmate here?
-            if valid_moves.empty?
-                puts "game_over"
-                return false
-            end
+            # if valid_moves.empty?
+            #     puts "game_over"
+            #     return false
+            # end
             
         else
             checks = self.next_turn_moves_array(input, opponent)
             #player's king is at that location
             checks.each do |check|
-                if valid_moves.include?(check) && check == "d1" # player_king[0].position == check :when add king to pieces
+                if valid_moves.include?(check) && player_king[0].position == check
                     valid_moves.delete(check)
                 end
             end
