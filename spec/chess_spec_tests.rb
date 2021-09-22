@@ -485,8 +485,8 @@ describe Player do
 
             it "changes end point a2 to 'captured'" do
                 move = "a3a2"
-                expect{ captured.capture?(move) }.to change { captured.pieces[0].type.position }.from("a2").to("captured")
-                captured.capture?(move)
+                expect{ captured.capture(move) }.to change { captured.pieces[0].type.position }.from("a2").to("captured")
+                captured.capture(move)
             end
         end
 
@@ -495,15 +495,15 @@ describe Player do
 
             it "returns false" do
                 move = "a4a3"
-                expect(no_capture.capture?(move)).to eq(false)
-                no_capture.capture?(move)
+                expect(no_capture.capture(move)).to eq(false)
+                no_capture.capture(move)
             end
         end
     end
 
     describe "#return_king_moves_checks_array" do
     end
-    describe "#checks_array_after_move" do
+    describe "#next_turn_moves_array" do
     end
 
     describe "#is_king?" do

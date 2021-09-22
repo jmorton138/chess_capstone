@@ -103,7 +103,8 @@ class Player
         end 
     end
 
-    def capture?(move)
+
+    def capture(move)
         split = move.split(//)
         end_pt = split[2] + split[3]
         self.pieces.each do |piece|
@@ -125,20 +126,23 @@ class Player
 
     # king moving to a space where is check
     def return_king_moves_checks_array(opponent)
-        potential_moves = []
+        opp_potential_moves = []
         player_moves = self.return_moves_array
         opp_moves = opponent.return_moves_array
 
         #all of moves opponent could make on next turn
         opponent.pieces.each do |piece|
-            potential_moves << piece.type.find_moves(player_moves, opp_moves)
+            opp_potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
-        potential_moves.flatten
+        opp_potential_moves.flatten
         ## is end_pt of king in potential_moves array
     end
 
     # if another piece moving to end_pt puts king in check
-    def checks_array_after_move(move, opponent)
+
+    ###bug here. should return moves of piece that would put in check
+    
+    def next_turn_moves_array(move, opponent)
         split = move.split(//)
         start_pt = split[0] + split[1]
         end_pt = split[2] + split[3]
@@ -188,6 +192,7 @@ class Player
         # find chess piece object and set as variable
         moving_piece = self.pieces.select { |piece| piece.type.position == sliced[0] }[0]
         valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
+        player_king = self.pieces.select { |piece| piece.type.class == King }
         #handle possible checks
         if self.is_king?(input)
             checks = self.return_king_moves_checks_array(opponent)
@@ -199,10 +204,10 @@ class Player
             end
             valid_moves
         else
-            checks = self.checks_array_after_move(input, opponent)
-        
+            checks = self.next_turn_moves_array(input, opponent)
+            #player's king is at that location
             checks.each do |check|
-                if valid_moves.include?(check)
+                if valid_moves.include?(check) && check == "d1" # player_king[0].position == check :when add king to pieces
                     valid_moves.delete(check)
                 end
             end
