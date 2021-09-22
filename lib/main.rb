@@ -78,16 +78,33 @@ class Player
     def build_pieces
         x_axis = ["a", "b", "c", "d", "e", "f", "g", "h"]
         #x-axis moves
-        pawns = []
+        pieces = []
         i = 1
         y = 2
         self.piece_color == "black" ? y = 7 : y
+        self.piece_color == "black" ? i = 8 : i
         x_axis.each do |letter|
             position = letter + y.to_s
-            pawns << Piece.new(Pawn.new(position, piece_color), piece_color)
-            i += 1
+            pieces << Piece.new(Pawn.new(position, piece_color), piece_color)
+            #i += 1
         end 
-        pawns #<< Piece.new(King.new("a#{y+4}", piece_color), piece_color)
+        pieces
+        x_axis.each do |letter|
+            position = letter + i.to_s
+            pieces << Piece.new(Rook.new(position, piece_color), piece_color) if letter == "a" || letter == "h"
+            pieces << Piece.new(Knight.new(position, piece_color), piece_color) if letter == "b" || letter == "g"
+            pieces << Piece.new(Bishop.new(position, piece_color), piece_color) if letter == "c" || letter == "f"
+            pieces << Piece.new(Queen.new(position, piece_color), piece_color) if letter == "d"
+            pieces << Piece.new(King.new(position, piece_color), piece_color) if letter == "e"
+        end
+        pieces
+            
+        #<< Piece.new(King.new("", piece_color), piece_color)
+        #rooks at a1, h1 and a8,h8
+        #knights at b1, g1 and b8, g8
+        #bishops at c1, f1 and c8, f8
+        #queen at d1 and d8
+        #king at e1 and e8
 
     end
 
@@ -140,7 +157,7 @@ class Player
 
     # if another piece moving to end_pt puts king in check
 
-    ###bug here. should return moves of piece that would put in check
+    ###bug here? should return moves of piece that would put in check?
     
     def next_turn_moves_array(move, opponent)
         split = move.split(//)
@@ -203,6 +220,12 @@ class Player
                 end
             end
             valid_moves
+            ##checkmate here?
+            if valid_moves.empty?
+                puts "game_over"
+                return false
+            end
+            
         else
             checks = self.next_turn_moves_array(input, opponent)
             #player's king is at that location
