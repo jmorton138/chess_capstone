@@ -189,6 +189,17 @@ class Player
         end
     end
 
+    def king_in_check?(opponent)
+        king = self.pieces.select { |piece| piece.type.class == King }
+        opp_moves = self.return_opp_potential_moves(opponent).select { |move| move == king[0].type.position }
+        if opp_moves.empty?
+            return false
+        elsif !opp_moves.empty?
+            puts "Check"
+            return true
+        end
+    end
+
     def validate_player_input(input, opponent)
         player_moves = self.return_moves_array
         opp_moves = opponent.return_moves_array
