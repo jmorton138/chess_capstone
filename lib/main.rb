@@ -189,10 +189,10 @@ class Player
         split = move.split(//)
         start_pt = split[0] + split[1]
         piece = self.pieces.select { |piece| piece.type.position == start_pt }
-        if piece[0].type.class == King
-            return true
-        else
+        if piece[0] == nil || piece[0].type.class != King
             return false
+        elsif piece[0].type.class == King
+            return true
         end
     end
 
@@ -356,8 +356,9 @@ class Rook < Piece
             y += 1 
         end
         moves = moves.uniq
+
         st_pt_index = moves.index(start_pt)
-        moves.slice!(st_pt_index)
+        moves.slice!(st_pt_index) if st_pt_index != nil
         moves
 
     end

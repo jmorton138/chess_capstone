@@ -423,20 +423,19 @@ describe King do
                 king_moves.find_moves(player_moves, opp_moves)
             end
         end
-    end
 
-    #handle player pieces
-    context  "when white king is at e4 with obstructing piece at e5" do
-        subject(:king_blocked) { described_class.new("e4", "white") }
+        #handle player pieces
+        context  "when white king is at e4 with obstructing piece at e5" do
+            subject(:king_blocked) { described_class.new("e4", "white") }
 
-        it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
-            player_moves = ["e5"]
-            opp_moves = []
-            moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
-            expect(king_blocked.find_moves(player_moves, opp_moves)).to eq(moves)
-            king_blocked.find_moves(player_moves, opp_moves)
+            it "returns moves [d5, f5, d4, f4, d3, e3, f3]" do
+                player_moves = ["e5"]
+                opp_moves = []
+                moves = ["d5", "f5", "d4", "f4", "d3", "e3", "f3"].sort
+                expect(king_blocked.find_moves(player_moves, opp_moves)).to eq(moves)
+                king_blocked.find_moves(player_moves, opp_moves)
+            end
         end
-    end
 
         context  "when white king is at e4 with obstructing pieces at e5 and d4" do
             subject(:king_blocked_twice) { described_class.new("e4", "white") }
@@ -474,6 +473,7 @@ describe King do
                 king_with_opp.find_moves(player_moves, opp_moves)
             end
         end
+    end
 
 end
 
@@ -501,17 +501,17 @@ describe Player do
         end
     end
 
-    describe "#return_king_moves_checks_array" do
-    end
-    describe "#next_turn_moves_array" do
-    end
+    # describe "#return_king_moves_checks_array" do
+    # end
+    # describe "#next_turn_moves_array" do
+    # end
 
     describe "#is_king?" do
         context "when move is a king" do
             subject(:is_king) { described_class.new("white") }
 
             it "returns true" do
-                move = "a6d7"
+                move = "e1f2"
                 expect(is_king.is_king?(move)).to eq(true)
                 is_king.is_king?(move)
             end
@@ -592,6 +592,12 @@ describe Player do
                 invalid_end_pt.validate_player_input("a2a6", opp)
             end
         end
+
+        # context "when king has no available moves at h8" do
+        #     subject(:game_over) { described_class.new("white") }
+        #     it "puts game over" do
+        #     end
+        # end
     end
 end
 
