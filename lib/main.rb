@@ -134,7 +134,8 @@ class Player
     end
 
     # king moving to a space where is check
-    def return_king_moves_checks_array(opponent)
+    def return_opp_potential_moves(opponent)
+    #def return_king_moves_checks_array(opponent)
         opp_potential_moves = []
         player_moves = self.return_moves_array
         opp_moves = opponent.return_moves_array
@@ -204,11 +205,9 @@ class Player
         player_king = self.pieces.select { |piece| piece.type.class == King }
         #handle possible checks
         if self.is_king?(input)
-            checks = self.return_king_moves_checks_array(opponent)
-    
-            checks.each do |check|
-                if valid_moves.include?(check)
-                    valid_moves.delete(check)
+            self.return_opp_potential_moves(opponent).each do |move|
+                if valid_moves.include?(move)
+                    valid_moves.delete(move)
                 end
             end
             valid_moves
@@ -219,17 +218,17 @@ class Player
             # end
             
         else
-            checks = self.next_turn_moves_array(input, opponent)
             #player's king is at that location
-            checks.each do |check|
-                if valid_moves.include?(check) && player_king[0].position == check
-                    valid_moves.delete(check)
+            self.next_turn_moves_array(input, opponent).each do |move|
+                if valid_moves.include?(move) && player_king[0].position == move
+                    valid_moves.delete(move)
                 end
             end
             valid_moves
         end
         valid_moves
         #check if end point is in available moves returned from find_#{piece}_moves method
+        #different message for checks?
         if valid_moves.include?(sliced[1])
             return true
         else
