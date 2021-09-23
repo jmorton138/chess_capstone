@@ -39,12 +39,12 @@ class Gameboard
             index_plus_one = index + 1
             p1.pieces.select do |piece|
                 if piece.type.position == item
-                    self.grid_with_pieces[index] = piece.type.class
+                    self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
                 end
             end
             p2.pieces.select do |piece|
                 if piece.type.position == item
-                    self.grid_with_pieces[index] = piece.type.class
+                    self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
                 end
             end
         end
@@ -249,29 +249,23 @@ class Player
         valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
         player_king = self.pieces.select { |piece| piece.type.class == King }
         #handle possible checks
-        if self.is_king?(input)
-            self.return_opp_potential_moves(opponent).each do |move|
-                if valid_moves.include?(move)
-                    valid_moves.delete(move)
-                end
-            end
-            valid_moves
-            ##checkmate here?
-            # if valid_moves.empty?
-            #     puts "game_over"
-            #     return false
-            # end
-            
-        else
-            ###### is this block necessary if next turn moves already returns checks?
-            #player's king is at that location
-            # self.next_turn_moves_array(input, opponent).each do |move|
-            #     if valid_moves.include?(move) && player_king[0].position == move
-            #         valid_moves.delete(move)
-            #     end
-            # end
-            valid_moves
-        end
+        # if self.is_king?(input)
+        #     self.return_opp_potential_moves(opponent).each do |move|
+        #         if valid_moves.include?(move)
+        #             valid_moves.delete(move)
+        #         end
+        #     end
+        #     valid_moves
+        # else
+        #     ###### is this block necessary if next turn moves already returns checks?
+        #     #player's king is at that location
+        #     # self.next_turn_moves_array(input, opponent).each do |move|
+        #     #     if valid_moves.include?(move) && player_king[0].position == move
+        #     #         valid_moves.delete(move)
+        #     #     end
+        #     # end
+        #     valid_moves
+        # end
         valid_moves
         #check if end point is in available moves returned from find_#{piece}_moves method
         #different message for checks?
@@ -393,7 +387,6 @@ class Rook < Piece
             y += 1 
         end
         moves = moves.uniq
-
         st_pt_index = moves.index(start_pt)
         moves.slice!(st_pt_index) if st_pt_index != nil
         moves
