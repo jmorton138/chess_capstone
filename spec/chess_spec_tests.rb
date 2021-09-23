@@ -164,7 +164,7 @@ describe Rook do
             it "returns ['a1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8']" do
                 player_moves = []
                 opp_moves = []
-                moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"]
+                moves = ["a1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"].sort
                 expect(rook_moves.find_moves(player_moves, opp_moves)).to eq(moves)
                 rook_moves.find_moves(player_moves, opp_moves)
             end
@@ -176,7 +176,7 @@ describe Rook do
             it "returns ['a4', 'b4','d4', 'e4', 'f4', 'g4', 'h4', 'c1', 'c2', 'c3', 'c5', 'c6', 'c7', 'c8']" do
                 player_moves = []
                 opp_moves = []
-                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"]
+                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3", "c5", "c6", "c7", "c8"].sort
                 expect(rook_moves_2.find_moves(player_moves, opp_moves)).to eq(moves)
                 rook_moves_2.find_moves(player_moves, opp_moves)
             end
@@ -189,7 +189,7 @@ describe Rook do
                 player_moves = ["c4", "c5"]
            
                 opp_moves = []
-                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3"]
+                moves = ["a4", "b4","d4", "e4", "f4", "g4", "h4", "c1", "c2", "c3"].sort
                 expect(rook_blocked_once.find_moves(player_moves, opp_moves)).to eq(moves)
                 rook_blocked_once.find_moves(player_moves, opp_moves)
             end
@@ -202,7 +202,7 @@ describe Rook do
                 player_moves = ["f4", "d5", "c5"]
             
                 opp_moves = []
-                moves = ["a4", "b4","d4", "e4", "c1", "c2", "c3"]
+                moves = ["a4", "b4","d4", "e4", "c1", "c2", "c3"].sort
                 expect(rook_blocked_twice.find_moves(player_moves, opp_moves)).to eq(moves)
                 rook_blocked_twice.find_moves( player_moves, opp_moves)
             end
@@ -215,7 +215,7 @@ describe Rook do
             it "returns ['a4', 'b4','d4', 'e4', 'c1', 'c2', 'c3']" do
                 player_moves = ["f4", "d5", "c5"]
                 opp_moves = ["c2"]
-                moves = ["a4", "b4","d4", "e4", "c1", "c2"]
+                moves = ["a4", "b4","d4", "e4", "c1", "c2"].sort
                 expect(rook_blocked_opp.find_moves(player_moves, opp_moves)).to eq(moves)
                 rook_blocked_opp.find_moves(player_moves, opp_moves)
             end

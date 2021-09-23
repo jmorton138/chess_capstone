@@ -346,7 +346,7 @@ class Pawn < Piece
 end
 
 class Rook < Piece
-    attr_accessor :position
+    attr_accessor :position, :piece_color
     def initialize(position, piece_color)
         @position = position
         @piece_color = piece_color
@@ -371,8 +371,11 @@ class Rook < Piece
             end
         end 
         #y-axis moves 
+        y_axis = [1, 2, 3, 4, 5, 6, 7, 8]
         y = 1
-        until y > 8
+        z = 8
+        self.piece_color == "white" ? y_axis : y_axis = y_axis.reverse
+        for y in y_axis do
             temp = split_point
             temp = temp[0] + y.to_s
             if player_moves.include?(temp) && temp != start_pt
@@ -389,7 +392,7 @@ class Rook < Piece
         moves = moves.uniq
         st_pt_index = moves.index(start_pt)
         moves.slice!(st_pt_index) if st_pt_index != nil
-        moves
+        moves.sort
 
     end
 
