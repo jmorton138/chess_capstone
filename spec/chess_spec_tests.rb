@@ -221,6 +221,18 @@ describe Rook do
             end
         end
 
+        context "when black rook is at a8 with pawn at a5" do
+            subject(:black_rook_y) { described_class.new("a8", "black") }
+            
+            it "returns a7, a6" do
+                player_moves = ["a5", "b8"]
+                opp_moves = []
+                moves = ["a7", "a6"].sort
+                expect(black_rook_y.find_moves(player_moves, opp_moves)).to eq(moves)
+                black_rook_y.find_moves(player_moves, opp_moves)
+            end
+        end
+
     end
 
 end
@@ -274,6 +286,8 @@ describe Knight do
             knight_moves_opp.find_moves(player_moves, opp_moves)
         end
     end
+
+    
 end
 
 describe Bishop do
@@ -595,7 +609,10 @@ describe Player do
 
         # context "when king has no available moves at h8" do
         #     subject(:game_over) { described_class.new("white") }
+
         #     it "puts game over" do
+
+        #         expect(game_over.validate_player_input()).to eq(false)
         #     end
         # end
     end
