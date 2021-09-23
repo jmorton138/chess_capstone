@@ -150,8 +150,8 @@ class Player
 
     # if another piece moving to end_pt puts king in check
 
-    ###bug here? should return moves of piece that would put in check?
     
+    # returns opponents potential moves if player makes a certain move
     def next_turn_moves_array(move, opponent)
         split = move.split(//)
         start_pt = split[0] + split[1]
@@ -176,6 +176,7 @@ class Player
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
         end
         potential_moves.flatten
+        dummy_player.king_in_check?(opponent)
     end
 
     def is_king?(move)
@@ -198,6 +199,39 @@ class Player
             puts "Check"
             return true
         end
+    end
+
+    def checkmate?(opponent)
+        #for each potential_move by player see if this puts player's king is in check
+        player_potential_moves = []
+        opp_potential_moves = []
+        player_positions = self.return_moves_array
+        opp_positions = opponent.return_moves_array
+        #find all player's potential moves from current place
+        self.pieces.each do |piece|
+            joined = nil
+            piece.type.find_moves(player_positions, opp_positions).each do |move|
+                joined = piece.type.position + move
+                player_potential_moves << joined
+            end
+            player_potential_moves 
+        end
+        player_potential_moves
+        
+        
+        player_potential_moves.each do |move|
+            #array of opponent's potential moves for each of player's potential moves
+            opp_potential_moves << self.next_turn_moves_array(move, opponent)
+        end
+        opp_potential_moves
+        # if every potential move that you/self make oppononent still puts your king in check that's checkmate
+        #if all of player's potential moves have check, then checkmate == true
+        if opp_potential_moves.all?(true)
+            p "checkmate" 
+        else
+            p "no checkmate"
+        end
+
     end
 
     def validate_player_input(input, opponent)
@@ -229,12 +263,13 @@ class Player
             # end
             
         else
+            ###### is this block necessary if next turn moves already returns checks?
             #player's king is at that location
-            self.next_turn_moves_array(input, opponent).each do |move|
-                if valid_moves.include?(move) && player_king[0].position == move
-                    valid_moves.delete(move)
-                end
-            end
+            # self.next_turn_moves_array(input, opponent).each do |move|
+            #     if valid_moves.include?(move) && player_king[0].position == move
+            #         valid_moves.delete(move)
+            #     end
+            # end
             valid_moves
         end
         valid_moves
