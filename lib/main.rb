@@ -421,13 +421,30 @@ class Rook < Piece
             end
         end 
         #y-axis moves 
-        y_axis = [1, 2, 3, 4, 5, 6, 7, 8]
+        y_axis = ["1", "2", "3", "4", "5", "6", "7", "8"]
+        y_index = y_axis.index(split_point[1])
+        y_axis_up = y_axis[y_index..7]
+        y_axis_down = y_axis[0..y_index].reverse
         y = 1
         z = 8
-        self.piece_color == "white" ? y_axis : y_axis = y_axis.reverse
-        for y in y_axis do
+        #self.piece_color == "white" ? y_axis : y_axis = y_axis.reverse
+        # for y in y_axis do
+        #     temp = split_point
+        #     temp = temp[0] + y.to_s
+        #     if player_moves.include?(temp) && temp != start_pt
+        #         break
+        #     elsif opp_moves.include?(temp)
+        #         moves.push(temp)
+        #         break
+        #     else
+        #         moves.push(temp)
+        #     end
+        #     y += 1 
+        # end
+
+        y_axis_up.each do |num|
             temp = split_point
-            temp = temp[0] + y.to_s
+            temp = temp[0] + num.to_s
             if player_moves.include?(temp) && temp != start_pt
                 break
             elsif opp_moves.include?(temp)
@@ -436,9 +453,21 @@ class Rook < Piece
             else
                 moves.push(temp)
             end
-        
-            y += 1 
         end
+
+        y_axis_down.each do |num|
+            temp = split_point
+            temp = temp[0] + num.to_s
+            if player_moves.include?(temp) && temp != start_pt
+                break
+            elsif opp_moves.include?(temp)
+                moves.push(temp)
+                break
+            else
+                moves.push(temp)
+            end
+        end
+
         moves = moves.uniq
         st_pt_index = moves.index(start_pt)
         moves.slice!(st_pt_index) if st_pt_index != nil
