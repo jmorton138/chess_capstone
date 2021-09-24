@@ -212,10 +212,10 @@ describe Rook do
         context "when white rook is at c4 with player's own peices obstructing at c5 and at f4 and opponent at c2" do
             subject(:rook_blocked_opp) { described_class.new("c4", "white") }
             
-            it "returns ['a4', 'b4','d4', 'e4', 'c1', 'c2', 'c3']" do
+            it "returns ['a4', 'b4','d4', 'e4', 'c2', 'c3']" do
                 player_moves = ["f4", "d5", "c5"]
                 opp_moves = ["c2"]
-                moves = ["a4", "b4","d4", "e4", "c1", "c2"].sort
+                moves = ["a4", "b4","d4", "e4", "c2", "c3"].sort
                 expect(rook_blocked_opp.find_moves(player_moves, opp_moves)).to eq(moves)
                 rook_blocked_opp.find_moves(player_moves, opp_moves)
             end
