@@ -667,6 +667,16 @@ describe Player do
                 opp_potential_moves.next_turn_potential_moves("a2a3", opponent)
             end
         end
+
+        context "when black makes first move from b7 to b6" do
+            subject(:opp_moves_white) { described_class.new("black") }
+            it "returns a2 a3 b2 b3 c2 c3 d2 d3 e2 e3 f2 f3 g2 g3 h2 h3" do
+                opponent = Player.new("white")
+                moves = ["a4", "a3", "b4", "b3", "c4", "c3", "d4", "d3", "e4", "e3", "f4", "f3", "g4", "g3", "h4", "h3"].sort
+                expect(opp_moves_white.next_turn_potential_moves("b7b6", opponent)).to eq(moves)
+                opp_moves_white.next_turn_potential_moves("b7b6", opponent)
+            end
+        end
     end
 
     # describe "#return_opp_potential_moves" do
