@@ -421,7 +421,20 @@ describe Queen do
                 queen_moves.find_moves(player_moves, opp_moves)
             end
         end
+
+        context "when black queen is at d8 with piece at d5" do
+            subject(:queen_moves_black) { described_class.new("d8", "black") }
+
+            it "returns d7, d6" do
+                moves = ["d7", "d6"].sort
+                opp_moves = []
+                player_moves = ["d5", "c8", "e8", "c7", "e7" ]
+                expect(queen_moves_black.find_moves(player_moves, opp_moves)). to eq(moves)
+                queen_moves_black.find_moves(player_moves, opp_moves)
+            end
+        end
     end
+
 end
 
 describe King do
@@ -515,10 +528,8 @@ describe Player do
         end
     end
 
-    # describe "#return_king_moves_checks_array" do
-    # end
-    # describe "#next_turn_moves_array" do
-    # end
+
+
 
     describe "#is_king?" do
         context "when move is a king" do
@@ -607,6 +618,8 @@ describe Player do
             end
         end
 
+
+
         # context "when king has no available moves at h8" do
         #     subject(:game_over) { described_class.new("white") }
 
@@ -615,7 +628,49 @@ describe Player do
         #         expect(game_over.validate_player_input()).to eq(false)
         #     end
         # end
+
+
     end
+
+    
+    describe "#next_turn_potential_moves" do
+        context "when white makes first move with pawn from a2 to a3" do
+            subject(:opp_potential_moves) { described_class.new("white") }
+
+            it "returns a6, a5, b6, b5, c6, c5, d6, d5, e6, e5, f6, f5, g6, g5, h6, h6" do
+                opponent = Player.new("black")
+                moves = ["a6", "a5", "b6", "b5", "c6", "c5", "d6", "d5", "e6", "e5", "f6", "f5", "g6", "g5", "h6", "h5"].sort
+                expect(opp_potential_moves.next_turn_potential_moves("a2a3", opponent)).to eq(moves)
+                opp_potential_moves.next_turn_potential_moves("a2a3", opponent)
+            end
+        end
+
+        context "when white makes move with pawn from a2 to a3 when black has pieces at d5 and e5" do
+            subject(:opp_potential_moves) { described_class.new("white") }
+
+            before do
+     
+            end
+
+            it "returns a6, a5, b6, b5, c6, c5, d6, d5, e6, e5, f6, f5, g6, g5, h6, h6" do
+                opponent = Player.new("black")
+                opponent.pieces.each do |piece|
+                    if piece.type.position == "e7"
+                        piece.type.position = "e5"
+                    end
+                    if piece.type.position == "d7"
+                        piece.type.position = "d5"
+                    end
+                end
+                moves = ["a3", "a6", "a5", "b6", "b5", "c6", "d4", "h4", "e4", "d6", "e6", "f6", "f5", "g6", "g5", "h6", "h5", "d7", "g4", "h3", "e7", "c5", "b4"].sort.uniq
+                expect(opp_potential_moves.next_turn_potential_moves("a2a3", opponent)).to eq(moves)
+                opp_potential_moves.next_turn_potential_moves("a2a3", opponent)
+            end
+        end
+    end
+
+    # describe "#return_opp_potential_moves" do
+    # end
 end
 
 
