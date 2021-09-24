@@ -40,26 +40,60 @@ class Gameboard
             p1.pieces.select do |piece|
                 if piece.type.position == item
                     self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
+                    # if piece.type.class == Pawn
+                    #     self.grid_with_pieces[index] = " #{"\u2659".encode("utf-8")}" 
+                    # elsif piece.type.class == Rook
+                    #     self.grid_with_pieces[index] = " #{"\u2656".encode("utf-8")}"
+                    # elsif piece.type.class == Bishop
+                    #     self.grid_with_pieces[index] = " #{"\u2657".encode("utf-8")}"
+                    # elsif piece.type.class == Knight
+                    #     self.grid_with_pieces[index] = " #{"\u2658".encode("utf-8")}"
+                    # elsif piece.type.class == Queen
+                    #     self.grid_with_pieces[index] = " #{"\u2655".encode("utf-8")}" 
+                    # elsif piece.type.class == King
+                    #     self.grid_with_pieces[index] = " #{"\u2654".encode("utf-8")}" 
+                    # end
                 end
             end
             p2.pieces.select do |piece|
                 if piece.type.position == item
                     self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
                 end
+
+                # if piece.type.class == Pawn
+                #     self.grid_with_pieces[index] = " #{"\u265F".encode("utf-8")}"
+                # elsif piece.type.class == Rook
+                #     self.grid_with_pieces[index] = " #{"\u265C".encode("utf-8")}"
+                # elsif piece.type.class == Bishop
+                #     self.grid_with_pieces[index] = " #{"\u265D".encode("utf-8")}"
+                # elsif piece.type.class == Knight
+                #     self.grid_with_pieces[index] = " #{"\u265E".encode("utf-8")}"
+                # elsif piece.type.class == Queen
+                #     self.grid_with_pieces[index] = " #{"\u265B".encode("utf-8")}" 
+                # elsif piece.type.class == King
+                #     self.grid_with_pieces[index] = " #{"\u265A".encode("utf-8")}"
+                # end
+            #end
             end
         end
     end
 
     def display_grid
+        y = 8
+        print y
         grid_with_pieces.each_with_index do |item, index|
             index_plus_one = index + 1
             if index_plus_one % 8 == 0
-                    puts "  #{item}   "
-                puts "-------------------------------------------------------"
+                y -= 1
+                puts "  #{item}   "
+                puts "  ----------------------------------------------------"
+                print y unless y == 0
             else
-                    print "  #{item}   "
+                print "  #{item}   "
             end
         end
+        
+        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].each {|item| print "   #{item}   "}
         puts ""
     end
 
@@ -125,7 +159,7 @@ class Player
         false
     end
 
-    def return_moves_array
+    def return_positions_array
         array = []
         self.pieces.map do |piece|
             array << piece.type.position
@@ -137,8 +171,8 @@ class Player
     def return_opp_potential_moves(opponent)
     #def return_king_moves_checks_array(opponent)
         opp_potential_moves = []
-        player_moves = self.return_moves_array
-        opp_moves = opponent.return_moves_array
+        player_moves = self.return_positions_array
+        opp_moves = opponent.return_positions_array
 
         #all of moves opponent could make on next turn
         opponent.pieces.each do |piece|
@@ -152,7 +186,7 @@ class Player
 
     
     # returns opponents potential moves if player makes a certain move
-    def next_turn_moves_array(move, opponent)
+    def next_turn_potential_moves(move, opponent)
         split = move.split(//)
         start_pt = split[0] + split[1]
         end_pt = split[2] + split[3]
@@ -170,7 +204,7 @@ class Player
         #build array with this updated move
         potential_moves = []
         player_moves = dummy_player.pieces.map {|item| item.type.position}
-        opp_moves = opponent.return_moves_array
+        opp_moves = opponent.return_positions_array
         #all of moves opponent could make on next turn
         opponent.pieces.each do |piece|  
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
@@ -205,8 +239,8 @@ class Player
         #for each potential_move by player see if this puts player's king is in check
         player_potential_moves = []
         opp_potential_moves = []
-        player_positions = self.return_moves_array
-        opp_positions = opponent.return_moves_array
+        player_positions = self.return_positions_array
+        opp_positions = opponent.return_positions_array
         #find all player's potential moves from current place
         self.pieces.each do |piece|
             joined = nil
@@ -221,22 +255,20 @@ class Player
         
         player_potential_moves.each do |move|
             #array of opponent's potential moves for each of player's potential moves
-            opp_potential_moves << self.next_turn_moves_array(move, opponent)
+            opp_potential_moves << self.next_turn_potential_moves(move, opponent)
         end
         opp_potential_moves
         # if every potential move that you/self make oppononent still puts your king in check that's checkmate
         #if all of player's potential moves have check, then checkmate == true
         if opp_potential_moves.all?(true)
             p "checkmate" 
-        else
-            p "no checkmate"
         end
 
     end
 
     def validate_player_input(input, opponent)
-        player_moves = self.return_moves_array
-        opp_moves = opponent.return_moves_array
+        player_moves = self.return_positions_array
+        opp_moves = opponent.return_positions_array
         board = Gameboard.new
         return false if input.length > 4
         sliced = input.chars.each_slice(2).map(&:join)
@@ -249,14 +281,14 @@ class Player
         valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
         player_king = self.pieces.select { |piece| piece.type.class == King }
         #handle possible checks
-        # if self.is_king?(input)
-        #     self.return_opp_potential_moves(opponent).each do |move|
-        #         if valid_moves.include?(move)
-        #             valid_moves.delete(move)
-        #         end
-        #     end
-        #     valid_moves
-        # else
+        if self.is_king?(input)
+            self.return_opp_potential_moves(opponent).each do |move|
+                if valid_moves.include?(move)
+                    valid_moves.delete(move)
+                end
+            end
+            valid_moves
+        else
         #     ###### is this block necessary if next turn moves already returns checks?
         #     #player's king is at that location
         #     # self.next_turn_moves_array(input, opponent).each do |move|
@@ -264,8 +296,8 @@ class Player
         #     #         valid_moves.delete(move)
         #     #     end
         #     # end
-        #     valid_moves
-        # end
+            valid_moves
+        end
         valid_moves
         #check if end point is in available moves returned from find_#{piece}_moves method
         #different message for checks?
