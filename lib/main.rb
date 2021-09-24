@@ -195,16 +195,15 @@ class Player
         start_pt = split[0] + split[1]
         end_pt = split[2] + split[3]
         #create temp player class
-        dummy_player = Player.new(self.piece_color)
-        self.pieces.each_with_index do |item, index|
-            dummy_player.pieces[index].type.position  = item.type.position
-        end
+        dummy_player = create_dummy_player
+        dummy_player
         #update dummy_player's pieces so move has been completed
         dummy_player.pieces.each do |piece|
             if piece.type.position == start_pt
                 piece.type.position = end_pt
             end
         end
+        dummy_player
         #build array with this updated move
         potential_moves = []
         player_moves = dummy_player.pieces.map {|item| item.type.position}
@@ -213,7 +212,7 @@ class Player
         opponent.pieces.each do |piece|  
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
         end
-        potential_moves.flatten
+        potential_moves.flatten.uniq.sort
         #dummy_player.king_in_check?(opponent)
     end
 
@@ -395,7 +394,22 @@ class Rook < Piece
         x = 1
         x_axis = ["a", "b", "c", "d", "e", "f", "g", "h"]
         #x-axis moves
-        x_axis.each do |letter|
+        x_index = x_axis.index(split_point[0])
+        x_axis_r = x_axis[x_index..7]
+        x_axis_l = x_axis[0..x_index].reverse
+        x_axis_r.each do |letter|
+            temp = letter + split_point[1]
+            if player_moves.include?(temp) && temp != start_pt
+                break
+            elsif opp_moves.include?(temp)
+                moves.push(temp)
+                break
+            else
+                moves.push(temp)
+            end
+        end 
+
+        x_axis_l.each do |letter|
             temp = letter + split_point[1]
             if player_moves.include?(temp) && temp != start_pt
                 break

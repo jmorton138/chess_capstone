@@ -157,7 +157,7 @@ describe Pawn do
 end
 
 describe Rook do
-        describe "#find_rook_moves" do
+        describe "#find_moves" do
         context "when white rook is at b1 with no obstructions" do
             subject(:rook_moves) { described_class.new("b1", "white") }
 
@@ -230,6 +230,18 @@ describe Rook do
                 moves = ["a7", "a6"].sort
                 expect(black_rook_y.find_moves(player_moves, opp_moves)).to eq(moves)
                 black_rook_y.find_moves(player_moves, opp_moves)
+            end
+        end
+
+        context "when black rook is at d8 with pieces at d5, c8, c7, e7" do
+            subject(:black_rook_y2) { described_class.new("d8", "black") }
+            
+            it "returns d7, d6" do
+                player_moves = ["d5", "c8", "e8", "c7", "e7"]
+                opp_moves = []
+                moves = ["d7", "d6"].sort
+                expect(black_rook_y2.find_moves(player_moves, opp_moves)).to eq(moves)
+                black_rook_y2.find_moves(player_moves, opp_moves)
             end
         end
 
