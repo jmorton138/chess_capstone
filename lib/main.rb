@@ -167,9 +167,7 @@ class Player
         array
     end
 
-    # king moving to a space where is check
     def return_opp_potential_moves(opponent)
-    #def return_king_moves_checks_array(opponent)
         opp_potential_moves = []
         player_moves = self.return_positions_array
         opp_moves = opponent.return_positions_array
@@ -179,13 +177,19 @@ class Player
             opp_potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
         opp_potential_moves.flatten
-        ## is end_pt of king in potential_moves array
+        ## is end_pt of king in potential_moves array?
     end
 
     # if another piece moving to end_pt puts king in check
-
+    def create_dummy_player
+     dummy_player = Player.new(self.piece_color)
+        self.pieces.each_with_index do |item, index|
+            dummy_player.pieces[index].type.position  = item.type.position
+        end 
+    dummy_player   
+    end
     
-    # returns opponents potential moves if player makes a certain move
+    # returns opponents potential moves for next turn if player makes a certain move
     def next_turn_potential_moves(move, opponent)
         split = move.split(//)
         start_pt = split[0] + split[1]
@@ -210,7 +214,7 @@ class Player
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
         end
         potential_moves.flatten
-        dummy_player.king_in_check?(opponent)
+        #dummy_player.king_in_check?(opponent)
     end
 
     def is_king?(move)
