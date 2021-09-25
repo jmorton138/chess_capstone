@@ -214,8 +214,6 @@ class Player
             valid_moves
         end
         valid_moves
-        #check if end point is in available moves returned from find_#{piece}_moves method
-        #different message for checks?
         if valid_moves.include?(sliced[1])
             return true
         else
@@ -246,6 +244,8 @@ class Player
         dummy_player = create_dummy_player
         #puts dummy_player.piece_color
         #update dummy_player's pieces so move has been completed
+        #in theory king should have captured pawn so king is in queen's moves
+        #maybe because pawn isn't marked as captured in hypo it still block's queen
         dummy_player.pieces.each do |piece|
             if piece.type.position == start_pt
                 piece.type.position = end_pt
@@ -258,11 +258,18 @@ class Player
         player_moves = dummy_player.pieces.map {|item| item.type.position}
         opp_moves = opponent.return_positions_array
         #all of moves opponent could make on next turn
+        player_moves.each do |move|
+            if opp_moves.include?(move)
+                opp_moves.delete(move)
+            end
+            opp_moves
+        end
+        opp_moves
         opponent.pieces.each do |piece|  
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
             #potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
-        potential_moves.flatten.uniq.sort
+        p potential_moves.flatten.uniq.sort
         #dummy_player.king_in_check?(opponent)
     end
 
