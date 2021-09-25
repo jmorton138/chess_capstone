@@ -167,6 +167,63 @@ class Player
         array
     end
 
+    def validate_player_input(input, opponent)
+        
+        player_moves = self.return_positions_array
+        opp_moves = opponent.return_positions_array
+        board = Gameboard.new
+        return false if input.length > 4
+        sliced = input.chars.each_slice(2).map(&:join)
+        #check if starting point is point on the board
+        return false if !board.grid.include?(sliced[0])
+        #check if starting point has player's piece on it
+        return false if !player_moves.include?(sliced[0])
+        # find chess piece object and set as variable
+        moving_piece = self.pieces.select { |piece| piece.type.position == sliced[0] }[0]
+        valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
+        player_king = self.pieces.select { |piece| piece.type.class == King }
+        #handle possible checks
+        if self.is_king?(input)
+            #this turn if king moves is it putting itself in check
+            self.return_opp_potential_moves(opponent).each do |move|
+                curr_piece = opponent.pieces.select { |item| item.type.position == move }
+                if valid_moves.include?(move) && curr_piece[0] != nil && curr_piece[0].type.class == Pawn
+                    valid_moves.delete(move)
+                end
+            end
+            valid_moves
+            self.next_turn_potential_moves(input, opponent).each do |move|
+                if sliced[1] == move
+                    puts "That'd be a check"
+                    valid_moves.delete(move)
+                end
+                valid_moves
+            end
+        else
+            puts "here"
+        #     #player's king is at that location
+            self.next_turn_potential_moves(input, opponent).each do |move|
+                
+                if player_king[0].type.position == move
+                    puts "That'd be a check"
+                    valid_moves = []
+                end
+                valid_moves
+
+            end
+            valid_moves
+        end
+        valid_moves
+        #check if end point is in available moves returned from find_#{piece}_moves method
+        #different message for checks?
+        if valid_moves.include?(sliced[1])
+            return true
+        else
+            return false
+        end
+    end
+
+
     def return_opp_potential_moves(opponent)
         opp_potential_moves = []
         player_moves = self.return_positions_array
@@ -174,21 +231,12 @@ class Player
 
         #all of moves opponent could make on next turn
         opponent.pieces.each do |piece|
-            opp_potential_moves << piece.type.find_moves(player_moves, opp_moves)
+            opp_potential_moves << piece.type.find_moves(opp_moves, player_moves)
         end
-        opp_potential_moves.flatten
+        opp_potential_moves.flatten.uniq
         ## is end_pt of king in potential_moves array?
     end
 
-    # if another piece moving to end_pt puts king in check
-    def create_dummy_player
-     dummy_player = Player.new(self.piece_color)
-        self.pieces.each_with_index do |item, index|
-            dummy_player.pieces[index].type.position  = item.type.position
-        end 
-    dummy_player   
-    end
-    
     # returns opponents potential moves for next turn if player makes a certain move
     def next_turn_potential_moves(move, opponent)
         split = move.split(//)
@@ -196,12 +244,13 @@ class Player
         end_pt = split[2] + split[3]
         #create temp player class
         dummy_player = create_dummy_player
-        dummy_player
+        #puts dummy_player.piece_color
         #update dummy_player's pieces so move has been completed
         dummy_player.pieces.each do |piece|
             if piece.type.position == start_pt
                 piece.type.position = end_pt
             end
+            piece
         end
         dummy_player
         #build array with this updated move
@@ -211,9 +260,19 @@ class Player
         #all of moves opponent could make on next turn
         opponent.pieces.each do |piece|  
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
+            #potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
         potential_moves.flatten.uniq.sort
         #dummy_player.king_in_check?(opponent)
+    end
+
+    # if another piece moving to end_pt puts king in check
+    def create_dummy_player
+    dummy_player = Player.new(self.piece_color)
+        self.pieces.each_with_index do |item, index|
+            dummy_player.pieces[index].type.position  = item.type.position
+        end 
+    dummy_player   
     end
 
     def is_king?(move)
@@ -269,48 +328,7 @@ class Player
 
     end
 
-    def validate_player_input(input, opponent)
-        player_moves = self.return_positions_array
-        opp_moves = opponent.return_positions_array
-        board = Gameboard.new
-        return false if input.length > 4
-        sliced = input.chars.each_slice(2).map(&:join)
-        #check if starting point is point on the board
-        return false if !board.grid.include?(sliced[0])
-        #check if starting point has player's piece on it
-        return false if !player_moves.include?(sliced[0])
-        # find chess piece object and set as variable
-        moving_piece = self.pieces.select { |piece| piece.type.position == sliced[0] }[0]
-        valid_moves = moving_piece.type.find_moves(player_moves, opp_moves)
-        player_king = self.pieces.select { |piece| piece.type.class == King }
-        #handle possible checks
-        if self.is_king?(input)
-            self.return_opp_potential_moves(opponent).each do |move|
-                if valid_moves.include?(move)
-                    valid_moves.delete(move)
-                end
-            end
-            valid_moves
-        else
-        #     ###### is this block necessary if next turn moves already returns checks?
-        #     #player's king is at that location
-        #     # self.next_turn_moves_array(input, opponent).each do |move|
-        #     #     if valid_moves.include?(move) && player_king[0].position == move
-        #     #         valid_moves.delete(move)
-        #     #     end
-        #     # end
-            valid_moves
-        end
-        valid_moves
-        #check if end point is in available moves returned from find_#{piece}_moves method
-        #different message for checks?
-        if valid_moves.include?(sliced[1])
-            return true
-        else
-            return false
-        end
-    end
-
+    
 end
 
 
