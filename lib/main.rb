@@ -274,11 +274,11 @@ class Player
 
     # if another piece moving to end_pt puts king in check
     def create_dummy_player
-    dummy_player = Player.new(self.piece_color)
+        dummy_player = Player.new(self.piece_color)
         self.pieces.each_with_index do |item, index|
             dummy_player.pieces[index].type.position  = item.type.position
         end 
-    dummy_player   
+        dummy_player   
     end
 
     def is_king?(move)
@@ -306,9 +306,9 @@ class Player
         player_potential_moves = []
         opp_potential_moves = []
         checks = []
+        moves = []
         player_positions = self.return_positions_array
         opp_positions = opponent.return_positions_array
-        dummy_player = create_dummy_player
         #find all player's potential moves from current place
         self.pieces.each do |piece|
             joined = nil
@@ -321,17 +321,21 @@ class Player
         player_potential_moves
         
         player_potential_moves.each do |move|
+            dummy_player = create_dummy_player
             dummy_player.update_player_moves(move)
+            
             checks << dummy_player.king_in_check?(opponent)
-            #checks << move
+            #moves << move
+            dummy_player
         end
         checks
         #if all player_potential_moves put player in check
         if checks.all?(true)
             p "checkmate"
             return true 
+        else
+            return false
         end
-        false
 
     end
 
@@ -537,8 +541,6 @@ class Bishop < Piece
         until j <= 1
             i += 1
             j -= 1
-            puts "j #{j}"
-            #puts "i #{i}"
             move = i.chr + j.to_s
             if player_moves.include?(move) && move != start_pt 
                 break
