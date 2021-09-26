@@ -200,7 +200,6 @@ class Player
                 valid_moves
             end
         else
-            puts "here"
         #     #player's king is at that location
             self.next_turn_potential_moves(input, opponent).each do |move|
                 
@@ -324,13 +323,15 @@ class Player
         player_potential_moves.each do |move|
             dummy_player.update_player_moves(move)
             checks << dummy_player.king_in_check?(opponent)
-            checks << move
+            #checks << move
         end
         checks
         #if all player_potential_moves put player in check
         if checks.all?(true)
-            p "checkmate" 
+            p "checkmate"
+            return true 
         end
+        false
 
     end
 
@@ -517,7 +518,7 @@ class Bishop < Piece
         j = split_point[1].to_i
         grid = Gameboard.new.grid
         #find up slope right moves
-        until j == 8
+        until j >= 8
             i += 1
             j += 1
             move = i.chr + j.to_s
@@ -533,9 +534,11 @@ class Bishop < Piece
         #find down slope right moves
         i = split_point[0].ord
         j = split_point[1].to_i
-        until j == 1
+        until j <= 1
             i += 1
             j -= 1
+            puts "j #{j}"
+            #puts "i #{i}"
             move = i.chr + j.to_s
             if player_moves.include?(move) && move != start_pt 
                 break
@@ -550,7 +553,7 @@ class Bishop < Piece
         #find up slope left moves
         i = split_point[0].ord
         j = split_point[1].to_i
-        until j == 8
+        until j >= 8
             i -= 1
             j += 1
             move = i.chr + j.to_s
@@ -566,7 +569,7 @@ class Bishop < Piece
         #find down slope left moves
         i = split_point[0].ord
         j = split_point[1].to_i
-        until j == 1
+        until j <= 1
             i -= 1
             j -= 1
             move = i.chr + j.to_s
