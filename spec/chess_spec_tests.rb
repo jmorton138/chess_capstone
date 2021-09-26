@@ -736,25 +736,7 @@ describe Player do
                 opp_potential_moves_white.next_turn_potential_moves("b7b6", opponent)
             end
         end
-####
-        # context "when black makes move with pawn from b7 to b6 when black has pieces at d5 and e5" do
-        #     subject(:opp_potential_moves_capture_pawn) { described_class.new("black") }
-    
-        #     it "returns correct array of moves" do
-        #         opponent = Player.new("white")
-        #         opponent.pieces.each do |piece|
-        #             if piece.type.position == "e2"
-        #                 piece.type.position = "e4"
-        #             end
-        #             if piece.type.position == "d2"
-        #                 piece.type.position = "d4"
-        #             end
-        #         end
-        #         moves = ["a4", "a3", "b4", "b3", "c4", "c3", "d3", "e3", "f4", "f3", "g4", "g3", "h4", "h3", "d2", "g5", "h6", "g4", "h5", "e2", "b5", "a6", "d5", "e5"].sort.uniq
-        #         expect(opp_potential_moves_capture_pawn.next_turn_potential_moves("b7b6", opponent)).to eq(moves)
-        #         opp_potential_moves_capture_pawn.next_turn_potential_moves("b7b6", opponent)
-        #     end
-        # end
+
     end
 
 
@@ -799,7 +781,7 @@ describe Player do
                 white_checkmated.checkmate?(opponent)
             end
         end
-        ###
+
         context "when white king is at e1, white rook is at d8, black king is at g8 with black pawns at f7, g7, h7" do
             subject(:black_checkmated) { described_class.new("black") }
             it "returns true" do
@@ -826,7 +808,7 @@ describe Player do
                 black_checkmated.checkmate?(opponent)
             end
         end
-        ###
+
         context "when black has queen at e2 and white has king at e1" do
             subject(:white_almost_checkmated) { described_class.new("white") }
 
