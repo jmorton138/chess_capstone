@@ -269,7 +269,7 @@ class Player
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
             #potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
-        p potential_moves.flatten.uniq.sort
+        potential_moves.flatten.uniq.sort
         #dummy_player.king_in_check?(opponent)
     end
 
@@ -299,7 +299,6 @@ class Player
         if opp_moves.empty?
             return false
         elsif !opp_moves.empty?
-            puts "Check"
             return true
         end
     end
@@ -308,8 +307,10 @@ class Player
         #for each potential_move by player see if this puts player's king is in check
         player_potential_moves = []
         opp_potential_moves = []
+        checks = []
         player_positions = self.return_positions_array
         opp_positions = opponent.return_positions_array
+        dummy_player = create_dummy_player
         #find all player's potential moves from current place
         self.pieces.each do |piece|
             joined = nil
@@ -321,15 +322,14 @@ class Player
         end
         player_potential_moves
         
-        
         player_potential_moves.each do |move|
-            #array of opponent's potential moves for each of player's potential moves
-            opp_potential_moves << self.next_turn_potential_moves(move, opponent)
+            dummy_player.update_player_moves(move)
+            checks << dummy_player.king_in_check?(opponent)
+            checks << move
         end
-        opp_potential_moves
-        # if every potential move that you/self make oppononent still puts your king in check that's checkmate
-        #if all of player's potential moves have check, then checkmate == true
-        if opp_potential_moves.all?(true)
+        checks
+        #if all player_potential_moves put player in check
+        if checks.all?(true)
             p "checkmate" 
         end
 
