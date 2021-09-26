@@ -540,6 +540,18 @@ describe King do
                 king_with_opp.find_moves(player_moves, opp_moves)
             end
         end
+
+        context "when white king is at e1 with opponent piece at e2" do
+            subject(:king_with_opp_front) { described_class.new("e1", "white") }
+
+            it "returns moves [d1, e2]" do
+                player_moves = ["e1", "c1", "f1", "f2", "d2"]
+                opp_moves = ["e2"]
+                moves = ["d1", "e2"].sort
+                expect(king_with_opp_front.find_moves(player_moves, opp_moves)).to eq(moves)
+                king_with_opp_front.find_moves(player_moves, opp_moves)
+            end
+        end
     end
 
 end
@@ -763,7 +775,6 @@ describe Player do
     describe "#checkmate?" do
         context "when black king is at e8, black rook is at d1, white king is at g1 with white pawns at f2, g2, h2" do
             subject(:white_checkmated) { described_class.new("white") }
-
             it "returns true" do
                 opponent = Player.new("black")
                 opponent.pieces.each do |piece|
@@ -786,6 +797,31 @@ describe Player do
                 end
                 expect(white_checkmated.checkmate?(opponent)).to eq(true)
                 white_checkmated.checkmate?(opponent)
+            end
+        end
+
+        context "when black has queen at e2 and white has king at e1" do
+            subject(:white_almost_checkmated) { described_class.new("white") }
+
+            it "returns false" do
+                opponent = Player.new("black")
+                opponent.pieces.each do |piece|
+                    if piece.type.class == Queen
+                        piece.type.position = "e2"
+                    else
+                        piece
+                    end
+                end
+                white_almost_checkmated.pieces.each do |piece|
+                    if piece.type.position == "e2" || piece.type.class == Queen
+                        piece.type.position = "captured"
+     
+                    else
+                        piece
+                    end
+                end
+                expect(white_almost_checkmated.checkmate?(opponent)).to eq(false)
+                white_almost_checkmated.checkmate?(opponent)
             end
         end
     end
