@@ -304,7 +304,6 @@ class Player
     end
 
     def checkmate?(opponent)
-        #for each potential_move by player see if this puts player's king is in check
         player_potential_moves = []
         opp_potential_moves = []
         checks = []
