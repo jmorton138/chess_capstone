@@ -799,7 +799,34 @@ describe Player do
                 white_checkmated.checkmate?(opponent)
             end
         end
-
+        ###
+        context "when white king is at e1, white rook is at d8, black king is at g8 with black pawns at f7, g7, h7" do
+            subject(:black_checkmated) { described_class.new("black") }
+            it "returns true" do
+                opponent = Player.new("white")
+                opponent.pieces.each do |piece|
+                    if piece.type.class == Rook
+                        piece.type.position = "d8"
+                    elsif piece.type.class == King
+                        piece.type.position = "e1"
+                    else
+                        piece.type.position = "captured"
+                    end
+                end
+                black_checkmated.pieces.each do |piece|
+                    if piece.type.position == "f7" || piece.type.position == "g7" || piece.type.position == "h7"
+                        piece
+                    elsif piece.type.class == King
+                        piece.type.position = "g8"
+                    else
+                        piece.type.position = "captured"
+                    end
+                end
+                expect(black_checkmated.checkmate?(opponent)).to eq(true)
+                black_checkmated.checkmate?(opponent)
+            end
+        end
+        ###
         context "when black has queen at e2 and white has king at e1" do
             subject(:white_almost_checkmated) { described_class.new("white") }
 
@@ -822,6 +849,31 @@ describe Player do
                 end
                 expect(white_almost_checkmated.checkmate?(opponent)).to eq(false)
                 white_almost_checkmated.checkmate?(opponent)
+            end
+        end
+
+        context "when white has queen at e7 and black has king at e8" do
+            subject(:black_almost_checkmated) { described_class.new("black") }
+
+            it "returns false" do
+                opponent = Player.new("white")
+                opponent.pieces.each do |piece|
+                    if piece.type.class == Queen
+                        piece.type.position = "e7"
+                    else
+                        piece
+                    end
+                end
+                black_almost_checkmated.pieces.each do |piece|
+                    if piece.type.position == "e7" || piece.type.class == Queen
+                        piece.type.position = "captured"
+     
+                    else
+                        piece
+                    end
+                end
+                expect(black_almost_checkmated.checkmate?(opponent)).to eq(false)
+                black_almost_checkmated.checkmate?(opponent)
             end
         end
     end
