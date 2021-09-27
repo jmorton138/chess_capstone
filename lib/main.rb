@@ -33,7 +33,6 @@ class Gameboard
     end
 
     def refresh_board
-        #new_grid = build_grid()
         self.grid_with_pieces = build_grid()
     end
 
@@ -42,7 +41,6 @@ class Gameboard
             index_plus_one = index + 1
             p1.pieces.select do |piece|
                 if piece.type.position == item
-                #     #self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
       
                     if piece.type.class == Pawn
                         self.grid_with_pieces[index] = " #{"\u2659".encode("utf-8")}"
@@ -62,7 +60,6 @@ class Gameboard
             end
             p2.pieces.select do |piece|
                 if piece.type.position == item
-                    #self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
                     if piece.type.class == Pawn
                         self.grid_with_pieces[index] = " #{"\u265F".encode("utf-8")}".black
                     elsif piece.type.class == Rook
@@ -213,7 +210,7 @@ class Player
                 valid_moves
             end
         else
-        #     #player's king is at that location
+            # see if move would put player's king in check
             self.next_turn_potential_moves(input, opponent).each do |move|
                 
                 if player_king[0].type.position == move
@@ -469,20 +466,6 @@ class Rook < Piece
         y_axis_down = y_axis[0..y_index].reverse
         y = 1
         z = 8
-        #self.piece_color == "white" ? y_axis : y_axis = y_axis.reverse
-        # for y in y_axis do
-        #     temp = split_point
-        #     temp = temp[0] + y.to_s
-        #     if player_moves.include?(temp) && temp != start_pt
-        #         break
-        #     elsif opp_moves.include?(temp)
-        #         moves.push(temp)
-        #         break
-        #     else
-        #         moves.push(temp)
-        #     end
-        #     y += 1 
-        # end
 
         y_axis_up.each do |num|
             temp = split_point
@@ -541,7 +524,7 @@ class Bishop < Piece
             move = i.chr + j.to_s
             if player_moves.include?(move) && move !=start_pt
                 break
-            elsif opp_moves.include?(move) #has_opp_piece?(move, opp_moves)
+            elsif opp_moves.include?(move)
                 moves.push(move)  
                 break
             else
@@ -695,20 +678,4 @@ end
 
 
 
-
-# a8  b8  c8  d8  e8  f8  g8  h8 
-# --------------------------------
-#  a7  b7  c7  d7  e7  f7  g7  h7 
-# --------------------------------
-#  a6  b6  c6  d6  e6  f6  g6  h6 
-# --------------------------------
-#  a5  b5  c5  d5  e5  f5  g5  h5 
-# --------------------------------
-#  a4  b4  c4  d4  e4  f4  g4  h4 
-# --------------------------------
-#  a3  b3  c3  d3  e3  f3  g3  h3 
-# --------------------------------
-#  a2  b2  c2  d2  e2  f2  g2  h2 
-# --------------------------------
-#  a1  b1  c1  d1  e1  f1  g1  h1 
 
