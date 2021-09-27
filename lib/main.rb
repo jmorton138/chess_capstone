@@ -42,85 +42,72 @@ class Gameboard
             index_plus_one = index + 1
             p1.pieces.select do |piece|
                 if piece.type.position == item
-                    self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
-                    # if piece.type.class == Pawn
-                    #     self.grid_with_pieces[index] = " #{"\u2659".encode("utf-8")}" 
-                    # elsif piece.type.class == Rook
-                    #     self.grid_with_pieces[index] = " #{"\u2656".encode("utf-8")}"
-                    # elsif piece.type.class == Bishop
-                    #     self.grid_with_pieces[index] = " #{"\u2657".encode("utf-8")}"
-                    # elsif piece.type.class == Knight
-                    #     self.grid_with_pieces[index] = " #{"\u2658".encode("utf-8")}"
-                    # elsif piece.type.class == Queen
-                    #     self.grid_with_pieces[index] = " #{"\u2655".encode("utf-8")}" 
-                    # elsif piece.type.class == King
-                    #     self.grid_with_pieces[index] = " #{"\u2654".encode("utf-8")}" 
-                    # end
+                #     #self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
+      
+                    if piece.type.class == Pawn
+                        self.grid_with_pieces[index] = " #{"\u2659".encode("utf-8")}"
+                    elsif piece.type.class == Rook
+                        self.grid_with_pieces[index] = " #{"\u2656".encode("utf-8")}"
+                    elsif piece.type.class == Bishop
+                        self.grid_with_pieces[index] = " #{"\u2657".encode("utf-8")}"
+                    elsif piece.type.class == Knight
+                        self.grid_with_pieces[index] = " #{"\u2658".encode("utf-8")}"
+                    elsif piece.type.class == Queen
+                        self.grid_with_pieces[index] = " #{"\u2655".encode("utf-8")}" 
+                    elsif piece.type.class == King
+                        self.grid_with_pieces[index] = " #{"\u2654".encode("utf-8")}" 
+                    end
                 end
+                
             end
             p2.pieces.select do |piece|
                 if piece.type.position == item
-                    self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
+                    #self.grid_with_pieces[index] = piece.type.class.to_s[0..1]
+                    if piece.type.class == Pawn
+                        self.grid_with_pieces[index] = " #{"\u265F".encode("utf-8")}".black
+                    elsif piece.type.class == Rook
+                        self.grid_with_pieces[index] = " #{"\u265C".encode("utf-8")}".black
+                    elsif piece.type.class == Bishop
+                        self.grid_with_pieces[index] = " #{"\u265D".encode("utf-8")}".black
+                    elsif piece.type.class == Knight
+                        self.grid_with_pieces[index] = " #{"\u265E".encode("utf-8")}".black
+                    elsif piece.type.class == Queen
+                        self.grid_with_pieces[index] = " #{"\u265B".encode("utf-8")}".black
+                    elsif piece.type.class == King
+                        self.grid_with_pieces[index] = " #{"\u265A".encode("utf-8")}".black
+                    end
                 end
 
-                # if piece.type.class == Pawn
-                #     self.grid_with_pieces[index] = " #{"\u265F".encode("utf-8")}"
-                # elsif piece.type.class == Rook
-                #     self.grid_with_pieces[index] = " #{"\u265C".encode("utf-8")}"
-                # elsif piece.type.class == Bishop
-                #     self.grid_with_pieces[index] = " #{"\u265D".encode("utf-8")}"
-                # elsif piece.type.class == Knight
-                #     self.grid_with_pieces[index] = " #{"\u265E".encode("utf-8")}"
-                # elsif piece.type.class == Queen
-                #     self.grid_with_pieces[index] = " #{"\u265B".encode("utf-8")}" 
-                # elsif piece.type.class == King
-                #     self.grid_with_pieces[index] = " #{"\u265A".encode("utf-8")}"
-                # end
-            #end
             end
         end
     end
 
-    # def display_grid
-    #     y = 8
-    #     print y
-    #     grid_with_pieces.each_with_index do |item, index|
-    #         index_plus_one = index + 1
-    #         if index_plus_one % 8 == 0
-    #             y -= 1
-    #             puts "  #{item}   "
-    #             puts "  ----------------------------------------------------"
-    #             print y unless y == 0
-    #         else
-    #             print "  #{item}   ".on_red
-    #         end
-    #     end
-        
-    #     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].each {|item| print "   #{item}   "}
-    #     puts ""
-    # end
-
     def display_grid
         y = 8
-        print y
+        print "#{y} "
         grid_with_pieces.each_with_index do |item, index|
+            if item[0] == "a" || item[0] == "b" || item[0] == "c" || item[0] == "d" || item[0] == "e" || item[0] == "f" || item[0] == "g" || item[0] == "h"
+                
+                item = "  "
+            end
             index_plus_one = index + 1
             if index_plus_one % 8 == 0
                 y -= 1
-                puts "  #{item}   ".on_light_magenta if y.odd?
-                puts "  #{item}   ".on_light_cyan if y.even?
-                #puts "  ----------------------------------------------------"
-                print y unless y == 0
+                
+                puts " #{item}  ".on_light_magenta if y.odd?
+                puts " #{item}  ".on_light_cyan if y.even?
+                print "#{y} " unless y == 0
             elsif y.even?
-                print "  #{item}   ".on_light_cyan if index.even?
-                print "  #{item}   ".on_light_magenta if index.odd?
+                print " #{item}  ".on_light_cyan if index.even?
+                print " #{item}  ".on_light_magenta if index.odd?
             elsif y.odd?
-                print "  #{item}   ".on_light_magenta if index.even?
-                print "  #{item}   ".on_light_cyan if index.odd?
+                print " #{item}  ".on_light_magenta if index.even?
+                print " #{item}  ".on_light_cyan if index.odd?
             end
+            
         end
         
-        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].each {|item| print "   #{item}   "}
+        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].each {|item| print "    #{item}"}
         puts ""
     end
 
