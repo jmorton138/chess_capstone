@@ -1,3 +1,6 @@
+require 'colorize'
+
+
 class Gameboard
     attr_accessor :grid, :grid_with_pieces
 
@@ -78,6 +81,25 @@ class Gameboard
         end
     end
 
+    # def display_grid
+    #     y = 8
+    #     print y
+    #     grid_with_pieces.each_with_index do |item, index|
+    #         index_plus_one = index + 1
+    #         if index_plus_one % 8 == 0
+    #             y -= 1
+    #             puts "  #{item}   "
+    #             puts "  ----------------------------------------------------"
+    #             print y unless y == 0
+    #         else
+    #             print "  #{item}   ".on_red
+    #         end
+    #     end
+        
+    #     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].each {|item| print "   #{item}   "}
+    #     puts ""
+    # end
+
     def display_grid
         y = 8
         print y
@@ -85,11 +107,16 @@ class Gameboard
             index_plus_one = index + 1
             if index_plus_one % 8 == 0
                 y -= 1
-                puts "  #{item}   "
-                puts "  ----------------------------------------------------"
+                puts "  #{item}   ".on_light_magenta if y.odd?
+                puts "  #{item}   ".on_light_cyan if y.even?
+                #puts "  ----------------------------------------------------"
                 print y unless y == 0
-            else
-                print "  #{item}   "
+            elsif y.even?
+                print "  #{item}   ".on_light_cyan if index.even?
+                print "  #{item}   ".on_light_magenta if index.odd?
+            elsif y.odd?
+                print "  #{item}   ".on_light_magenta if index.even?
+                print "  #{item}   ".on_light_cyan if index.odd?
             end
         end
         
