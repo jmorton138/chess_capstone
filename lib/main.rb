@@ -241,7 +241,6 @@ class Player
             opp_potential_moves << piece.type.find_moves(opp_moves, player_moves)
         end
         opp_potential_moves.flatten.uniq
-        ## is end_pt of king in potential_moves array?
     end
 
     # returns opponents potential moves for next turn if player makes a certain move
@@ -251,10 +250,7 @@ class Player
         end_pt = split[2] + split[3]
         #create temp player class
         dummy_player = create_dummy_player
-        #puts dummy_player.piece_color
         #update dummy_player's pieces so move has been completed
-        #in theory king should have captured pawn so king is in queen's moves
-        #maybe because pawn isn't marked as captured in hypo it still block's queen
         dummy_player.pieces.each do |piece|
             if piece.type.position == start_pt
                 piece.type.position = end_pt
@@ -276,10 +272,8 @@ class Player
         opp_moves
         opponent.pieces.each do |piece|  
             potential_moves << piece.type.find_moves(opp_moves, player_moves)
-            #potential_moves << piece.type.find_moves(player_moves, opp_moves)
         end
         potential_moves.flatten.uniq.sort
-        #dummy_player.king_in_check?(opponent)
     end
 
     # if another piece moving to end_pt puts king in check
@@ -335,13 +329,11 @@ class Player
             dummy_player.update_player_moves(move)
             
             checks << dummy_player.king_in_check?(opponent)
-            #moves << move
             dummy_player
         end
         checks
         #if all player_potential_moves put player in check
         if checks.all?(true)
-            p "checkmate"
             return true 
         else
             return false
