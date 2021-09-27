@@ -86,8 +86,7 @@ class Gameboard
         y = 8
         print "#{y} "
         grid_with_pieces.each_with_index do |item, index|
-            if item[0] == "a" || item[0] == "b" || item[0] == "c" || item[0] == "d" || item[0] == "e" || item[0] == "f" || item[0] == "g" || item[0] == "h"
-                
+            if item[0].ord >= 97 && item[0].ord <= 104                
                 item = "  "
             end
             index_plus_one = index + 1
