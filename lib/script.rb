@@ -1,35 +1,103 @@
 require_relative '../lib/main.rb'
+require 'colorize'
 
-board = Gameboard.new
 p1 = Player.new("white")
-p board.find_rook_moves("c4", p1.moves)
-#p1.update_player_moves("b1", "c3")
-# p p1.moves[:knght1]
-# # p board.validate_player_input("b3b4", p1.moves)
-
 p2 = Player.new("black")
-# p board.return_piece_type("e1",p1.moves)
-# p2.moves.each do |item|
-#     item if item[1] == "a7"
-# end
-# p p2.moves.key("a7")
+board = Gameboard.new
+puts ""
+puts ""
+puts "***************CHESS****************".light_cyan
+puts ""
 
-#board.display_grid(board.grid, p1.moves, p2.moves)
+puts "How to Play:"
+puts ""
+puts "To enter a move type in two sets of coordinates on the board when prompted.
+For example, if you want to move your pawn from a2 to a3, you simply type a2a3."
 
+puts "A move will be invalid if the move doesn't exist on the board or is against the rules of chess."
+puts ""
+puts "This includes: "
+puts "Moves that put your King into check i.e., into a position where your opponent could take your King."
+puts "Moves that are not allowed for the type of chess piece at the starting coordinates."
+puts "Moves that are occupied by the player's own piece."
+puts ""
+puts "How to win: "
+puts ""
+puts "When a player has no possible moves that would prevent their King from being put into check,
+that is checkmate. That player loses the game."
+puts "Let's get started. Press 1 to begin the game."
+puts ""
+start = gets.chomp.to_i
+until start == 1 do
+    puts "Please press 1 to begin the game."
+    start = gets.chomp.to_i
+end
+puts ""
 
+# render board with players
+board.update_board(p1, p2)
+board.display_grid
+while true do
+    #arrays of each player's positions
+    p1_moves = p1.return_positions_array
+    p2_moves = p2.return_positions_array
+    # prompt player 1
+    puts ""
+    puts "Enter move Player 1:"
+    puts ""
+    # receive player 1 input
+    move = gets.chomp.to_s
+    # Loop until p1 user input valid
+    until p1.validate_player_input(move, p2) == true
+        puts "Invalid input. Please enter a valid move."
+        move = gets.chomp.to_s
+    end
+    puts ""
+    puts ""
+    p2.capture(move)
+    #update Player instance and gameboard
+    p1.update_player_moves(move)
+    board.refresh_board
+    board.update_board(p1, p2)
+    board.display_grid
+    puts ""
+    #check if last move put's opp(p2) in check
+    puts "Player 2 now in check" if p2.king_in_check?(p1) == true
+    #check if last move put's opp(p2) into checkmate
+    if p2.checkmate?(p1) == true
+        puts "Checkmate. Player 1 wins!"
+        return false
+    end
+    #check for p2 checkmate
+    p1_moves = p1.return_positions_array
+    p2_moves = p2.return_positions_array
+    # prompt player 2
+    puts ""
+    puts "Enter move Player 2:"
+    puts ""
+    # receive player 1 input
+    move = gets.chomp.to_s
+    # Loop until p2 user input valid
+    until p2.validate_player_input(move, p1) == true
+        puts "Invalid input. Please enter a valid move."
+        move = gets.chomp.to_s
+    end
+    puts ""
+    puts ""
+    p1.capture(move)
+    #update Player instance and gameboard
+    p2.update_player_moves(move)
+    board.refresh_board
+    board.update_board(p1, p2)
+    board.display_grid
+    puts ""
+    #check if last move put's opp(p2) in check
+    puts "Player 1 now in check" if p1.king_in_check?(p2) == true
+    #check if last move put's p1 into checkmate
+    if p1.checkmate?(p2) == true
+        puts "Checkmate. Player 2 wins!"
+        return false
+    end
 
-# a8  b8  c8  d8  e8  f8  g8  h8 
-# --------------------------------
-#  a7  b7  c7  d7  e7  f7  g7  h7 
-# --------------------------------
-#  a6  b6  c6  d6  e6  f6  g6  h6 
-# --------------------------------
-#  a5  b5  c5  d5  e5  f5  g5  h5 
-# --------------------------------
-#  a4  b4  c4  d4  e4  f4  g4  h4 
-# --------------------------------
-#  a3  b3  c3  d3  e3  f3  g3  h3 
-# --------------------------------
-#  a2  b2  c2  d2  e2  f2  g2  h2 
-# --------------------------------
-#  a1  b1  c1  d1  e1  f1  g1  h1 
+end
+
