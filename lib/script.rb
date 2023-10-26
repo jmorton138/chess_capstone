@@ -1,5 +1,6 @@
-require_relative '../lib/main.rb'
 require 'colorize'
+require_relative 'gameboard'
+require_relative 'player'
 
 p1 = Player.new("white")
 p2 = Player.new("black")
